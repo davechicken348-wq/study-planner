@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#16a34a">
+  <meta name="description" content="Learn how StudyPlanner uses spaced repetition to help you remember more and study smarter.">
+  <title>How It Works - StudyPlanner</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="header-simple">
+    <div class="container">
+      <div class="header-content-simple">
+        <a href="index.html" class="logo-link">
+          <i class="fas fa-graduation-cap"></i>
+          <span>StudyPlanner</span>
+        </a>
+        <nav class="nav-simple">
+          <a href="index.html">Home</a>
+          <a href="dashboard.html" class="btn-primary-small">Dashboard</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container-narrow">
+        <h1>How It Works</h1>
+        <p>Master the science of learning in 3 simple steps</p>
+      </div>
+    </section>
+
+    <!-- Interactive Demo -->
+    <section class="content-section">
+      <div class="container-narrow">
+        <div class="demo-showcase">
+          <h2 class="section-title">See It In Action</h2>
+          <div class="demo-tabs">
+            <button class="demo-tab active" data-demo="create">Create Session</button>
+            <button class="demo-tab" data-demo="timer">Use Timer</button>
+            <button class="demo-tab" data-demo="review">Mark Complete</button>
+          </div>
+          
+          <div class="demo-display">
+            <div class="demo-content active" data-demo="create">
+              <div class="demo-animation">
+                <div class="animated-form">
+                  <div class="form-field"><span>Subject:</span> <div class="typing-text">Biology</div></div>
+                  <div class="form-field"><span>Date:</span> <div class="date-text">Today</div></div>
+                  <div class="form-field"><span>Duration:</span> <div class="duration-text">30 min</div></div>
+                  <button class="animated-btn">Add Session</button>
+                </div>
+                <div class="arrow-flow">→</div>
+                <div class="animated-list">
+                  <div class="list-item slide-in">Biology - Today</div>
+                </div>
+              </div>
+              <p class="demo-description">Add your study topic with details. The system schedules your first review automatically.</p>
+            </div>
+            
+            <div class="demo-content" data-demo="timer">
+              <div class="demo-animation">
+                <div class="animated-timer">
+                  <div class="timer-circle">
+                    <svg class="timer-svg" viewBox="0 0 100 100">
+                      <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
+                      <circle class="timer-progress" cx="50" cy="50" r="45"></circle>
+                    </svg>
+                    <div class="timer-text">25:00</div>
+                  </div>
+                  <div class="timer-controls-demo">
+                    <div class="control-btn">▶</div>
+                    <div class="control-btn">⏸</div>
+                    <div class="control-btn">↻</div>
+                  </div>
+                </div>
+              </div>
+              <p class="demo-description">Focus with built-in timer. Choose presets or set custom duration. Stay on track!</p>
+            </div>
+            
+            <div class="demo-content" data-demo="review">
+              <div class="demo-animation">
+                <div class="review-flow">
+                  <div class="review-card">
+                    <div class="card-title">Biology</div>
+                    <div class="card-level">Level 0</div>
+                    <button class="mark-done-btn">Mark Done ✓</button>
+                  </div>
+                  <div class="arrow-flow">→</div>
+                  <div class="review-card completed">
+                    <div class="card-title">Biology</div>
+                    <div class="card-level">Level 1</div>
+                    <div class="next-review">Next: +2 days</div>
+                  </div>
+                </div>
+              </div>
+              <p class="demo-description">Mark sessions complete to level up. Each level doubles the review interval!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Science -->
+    <section class="content-section alt">
+      <div class="container-narrow">
+        <h2 class="section-title">The Science Behind It</h2>
+        <div class="science-grid">
+          <div class="science-card">
+            <div class="science-icon"><i class="fas fa-brain"></i></div>
+            <h3>Spaced Repetition</h3>
+            <p>Review material at increasing intervals to fight the forgetting curve and move information into long-term memory.</p>
+          </div>
+          <div class="science-card">
+            <div class="science-icon"><i class="fas fa-chart-line"></i></div>
+            <h3>80% Better Retention</h3>
+            <p>Studies show spaced repetition improves long-term memory retention by up to 80% compared to traditional cramming.</p>
+          </div>
+          <div class="science-card">
+            <div class="science-icon"><i class="fas fa-clock"></i></div>
+            <h3>Optimal Timing</h3>
+            <p>Our algorithm schedules reviews at scientifically proven intervals: 1, 2, 4, 8, 16 days and beyond.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Algorithm -->
+    <section class="content-section">
+      <div class="container-narrow">
+        <div class="algorithm-showcase">
+          <h2 class="section-title">The Algorithm Explained</h2>
+          <div class="formula-display">
+            <div class="formula-box-animated">
+              <code>Next Review = Current Date + (1 day × 2<sup>level</sup>)</code>
+            </div>
+          </div>
+          <div class="level-progression">
+            <div class="level-item">
+              <div class="level-badge">0</div>
+              <div class="level-info">
+                <strong>First Review</strong>
+                <span>After 1 day</span>
+              </div>
+            </div>
+            <div class="progression-arrow">→</div>
+            <div class="level-item">
+              <div class="level-badge">1</div>
+              <div class="level-info">
+                <strong>Second Review</strong>
+                <span>After 2 days</span>
+              </div>
+            </div>
+            <div class="progression-arrow">→</div>
+            <div class="level-item">
+              <div class="level-badge">2</div>
+              <div class="level-info">
+                <strong>Third Review</strong>
+                <span>After 4 days</span>
+              </div>
+            </div>
+            <div class="progression-arrow">→</div>
+            <div class="level-item">
+              <div class="level-badge">3</div>
+              <div class="level-info">
+                <strong>Fourth Review</strong>
+                <span>After 8 days</span>
+              </div>
+            </div>
+            <div class="progression-arrow">→</div>
+            <div class="level-item">
+              <div class="level-badge">∞</div>
+              <div class="level-info">
+                <strong>Mastery</strong>
+                <span>Intervals keep doubling</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Tips -->
+    <section class="content-section alt">
+      <div class="container-narrow">
+        <h2 class="section-title">Pro Tips for Success</h2>
+        <div class="tips-grid">
+          <div class="tip-card">
+            <div class="tip-icon">💡</div>
+            <h3>Be Consistent</h3>
+            <p>Review on schedule. Consistency is key to building long-term memory.</p>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">⏱️</div>
+            <h3>Use the Timer</h3>
+            <p>25-30 minute focused sessions work best. Take breaks between sessions.</p>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">📝</div>
+            <h3>Add Notes</h3>
+            <p>Write what you'll focus on. Specific goals lead to better retention.</p>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">🎯</div>
+            <h3>Don't Skip Reviews</h3>
+            <p>Each review strengthens memory. Skipping resets your progress.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="content-section">
+      <div class="container-narrow">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fas fa-question-circle"></i>
+              <strong>How long should each study session be?</strong>
+            </div>
+            <div class="faq-answer">25-30 minutes is optimal for focused learning. Take 5-10 minute breaks between sessions.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fas fa-question-circle"></i>
+              <strong>What if I miss a review?</strong>
+            </div>
+            <div class="faq-answer">No problem! Just review when you can. The system will continue from where you left off.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fas fa-question-circle"></i>
+              <strong>Can I use this for any subject?</strong>
+            </div>
+            <div class="faq-answer">Absolutely! Spaced repetition works for languages, sciences, history, exams, certifications, and more.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">
+              <i class="fas fa-question-circle"></i>
+              <strong>Is my data safe?</strong>
+            </div>
+            <div class="faq-answer">Yes! All data stays on your device. No servers, no tracking, complete privacy.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container-narrow">
+        <h2>Ready to Start Learning Smarter?</h2>
+        <p>Join students who are mastering their subjects with spaced repetition</p>
+        <a href="dashboard.html" class="btn-primary btn-large">
+          <span>Get Started Free</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-modern">
+    <div class="container">
+      <div class="footer-content-modern">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>StudyPlanner</span>
+          </div>
+          <p>Science-backed learning for everyone</p>
+        </div>
+        <div class="footer-links-modern">
+          <div class="footer-col">
+            <h4>Product</h4>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="features.html">Features</a>
+            <a href="how-it-works.html">How It Works</a>
+          </div>
+          <div class="footer-col">
+            <h4>About</h4>
+            <a href="index.html#testimonials">Testimonials</a>
+            <a href="mission.html">Our Mission</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom-modern">
+        <p>&copy; 2024 StudyPlanner. Free forever.</p>
+        <p><i class="fas fa-lock"></i> 100% Private • No Tracking • No Ads</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="utils.js"></script>
+  <script>
+    // Demo tabs
+    document.querySelectorAll('.demo-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const demo = tab.dataset.demo;
+        document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.demo-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`.demo-content[data-demo="${demo}"]`).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

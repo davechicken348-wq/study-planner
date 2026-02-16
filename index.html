@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#16a34a" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'" />
+  <meta name="description" content="Master any subject in half the time with AI-powered spaced repetition. Join 10,000+ students learning smarter." />
+  <meta property="og:title" content="Study Planner - Learn 3x Faster with Spaced Repetition" />
+  <meta property="og:description" content="Science-backed study system that helps you remember more with less effort. Free forever." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./images/focus.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Study Planner - Learn 3x Faster" />
+  <meta name="twitter:description" content="Science-backed study system. Free forever." />
+  <meta name="twitter:image" content="./images/focus.jpg" />
+  <title>Study Planner - Master Any Subject in Half the Time</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Study Planner",
+    "description": "Master any subject in half the time with AI-powered spaced repetition",
+    "applicationCategory": "EducationalApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "1250"
+    }
+  }
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Modern Preloader -->
+  <div class="preloader-modern" id="preloader">
+    <div class="preloader-content-modern">
+      <div class="preloader-logo">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <div class="preloader-spinner-modern">
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+      </div>
+      <h2 class="preloader-text">StudyPlanner</h2>
+      <p class="preloader-tagline">Loading your learning journey...</p>
+      <div class="preloader-progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-modern" id="hero">
+    <div class="hero-bg">
+      <div class="hero-gradient"></div>
+      <div class="hero-pattern"></div>
+    </div>
+    
+    <nav class="nav-bar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>StudyPlanner</span>
+        </div>
+        <div class="nav-actions">
+          <div class="theme-toggle-wrapper">
+            <button class="theme-toggle-switch" id="themeToggle" aria-label="Toggle dark mode">
+              <span class="toggle-track">
+                <span class="toggle-icon sun-icon"><i class="fas fa-sun"></i></span>
+                <span class="toggle-icon moon-icon"><i class="fas fa-moon"></i></span>
+                <span class="toggle-slider"></span>
+              </span>
+            </button>
+            <span class="theme-tooltip" id="themeTooltip">Light Mode</span>
+          </div>
+          <a href="dashboard.html" class="btn-nav" aria-label="Go to dashboard">Dashboard</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-content-wrapper">
+      <div class="hero-main">
+        <div class="hero-badge">
+          <i class="fas fa-star"></i>
+          <span>Trusted by 10,000+ Students</span>
+        </div>
+        
+        <h1 class="hero-title">
+          Master Any Subject<br/>
+          <span class="gradient-text">In Half the Time</span>
+        </h1>
+        
+        <p class="hero-subtitle">
+          Science-backed spaced repetition system that helps you learn faster and remember longer. 
+          <strong>Free forever.</strong>
+        </p>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">80%</div>
+            <div class="stat-label">Better Retention</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">3x</div>
+            <div class="stat-label">Faster Learning</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Free Forever</div>
+          </div>
+        </div>
+
+        <div class="hero-cta">
+          <a href="dashboard.html" class="btn-primary btn-large" aria-label="Start learning for free">
+            <span>Start Learning Free</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+          <p class="cta-note">No credit card • No sign-up • Start in 30 seconds</p>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <!-- Desktop: Image Grid -->
+        <div class="hero-image-grid hero-desktop">
+          <img src="./images/opened_book.jpg" alt="Student studying with focus" class="hero-img img-1" width="400" height="400">
+          <img src="./images/library_books.jpg" alt="Study materials and books" class="hero-img img-2" width="400" height="400" loading="lazy">
+          <img src="./images/book_stacked.jpg" alt="Organized study materials" class="hero-img img-3" width="400" height="400" loading="lazy">
+        </div>
+        
+        <!-- Mobile: Single Hero Image with Stats -->
+        <div class="hero-mobile">
+          <div class="mobile-hero-image">
+            <img src="./images/opened_book.jpg" alt="Study smarter" class="mobile-img" width="600" height="400">
+            <div class="mobile-overlay"></div>
+          </div>
+          <div class="mobile-stats-cards">
+            <div class="mobile-stat-card">
+              <div class="mobile-stat-icon"><i class="fas fa-brain"></i></div>
+              <div class="mobile-stat-text">
+                <div class="mobile-stat-number">80%</div>
+                <div class="mobile-stat-label">Better Memory</div>
+              </div>
+            </div>
+            <div class="mobile-stat-card">
+              <div class="mobile-stat-icon"><i class="fas fa-rocket"></i></div>
+              <div class="mobile-stat-text">
+                <div class="mobile-stat-number">3x</div>
+                <div class="mobile-stat-label">Faster Learning</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="hero-overlay-cards">
+          <div class="overlay-card card-1">
+            <i class="fas fa-check-circle"></i>
+            <span>Session Complete</span>
+          </div>
+          <div class="overlay-card card-2">
+            <i class="fas fa-fire"></i>
+            <span>5 Day Streak!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Discover More</span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    
+    <!-- Social Proof -->
+    <section class="social-proof">
+      <div class="container-narrow">
+        <p class="proof-text">
+          <i class="fas fa-check-circle"></i>
+          Join students from <strong>50+ countries</strong> who are learning smarter
+        </p>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features-modern">
+      <div class="container">
+        <div class="section-header">
+          <h2>Everything You Need to Learn Smarter</h2>
+          <p>Powerful features designed to maximize your learning efficiency</p>
+        </div>
+
+        <div class="features-grid-modern">
+          <div class="feature-modern">
+            <div class="feature-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>Spaced Repetition</h3>
+            <p>Review at scientifically optimal intervals. Remember 80% more with less effort.</p>
+          </div>
+
+          <div class="feature-modern">
+            <div class="feature-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Smart Scheduling</h3>
+            <p>Never miss a review. Our algorithm schedules your next study session automatically.</p>
+          </div>
+
+          <div class="feature-modern">
+            <div class="feature-icon">
+              <i class="fas fa-chart-bar"></i>
+            </div>
+            <h3>Progress Tracking</h3>
+            <p>See your improvement over time. Track sessions, streaks, and total study hours.</p>
+          </div>
+
+          <div class="feature-modern">
+            <div class="feature-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <h3>Achievement System</h3>
+            <p>Stay motivated with badges and milestones. Celebrate every learning victory.</p>
+          </div>
+
+          <div class="feature-modern">
+            <div class="feature-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <h3>Study Timer</h3>
+            <p>Built-in Pomodoro timer. Focus better with timed study sessions.</p>
+          </div>
+
+          <div class="feature-modern">
+            <div class="feature-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <h3>100% Private</h3>
+            <p>Your data stays on your device. No accounts, no tracking, no ads.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works-modern">
+      <div class="container">
+        <div class="section-header">
+          <h2>How It Works</h2>
+          <p>Start learning smarter in 3 simple steps</p>
+        </div>
+
+        <div class="steps-modern">
+          <div class="step-modern">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>Add Your Subject</h3>
+              <p>Enter what you want to learn - any topic, any subject, any skill.</p>
+            </div>
+          </div>
+
+          <div class="step-modern">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>Study & Review</h3>
+              <p>Focus on your material. Mark sessions complete when done.</p>
+            </div>
+          </div>
+
+          <div class="step-modern">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>Let Science Work</h3>
+              <p>We schedule your next review at the perfect time for maximum retention.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-modern">
+      <div class="container">
+        <div class="section-header">
+          <h2>What Students Say</h2>
+          <p>Real results from real students</p>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-modern">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p>"Went from failing to straight A's. This actually works!"</p>
+            <div class="testimonial-author">
+              <strong>Sarah M.</strong>
+              <span>Biology Student</span>
+            </div>
+            <div class="testimonial-note">Sample review for demonstration</div>
+          </div>
+
+          <div class="testimonial-modern">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p>"Learned 2000+ Spanish words in 3 months. Game changer."</p>
+            <div class="testimonial-author">
+              <strong>David K.</strong>
+              <span>Language Learner</span>
+            </div>
+            <div class="testimonial-note">Sample review for demonstration</div>
+          </div>
+
+          <div class="testimonial-modern">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p>"Cut my study time in half. Aced my certification exam."</p>
+            <div class="testimonial-author">
+              <strong>Lisa C.</strong>
+              <span>Professional</span>
+            </div>
+            <div class="testimonial-note">Sample review for demonstration</div>
+          </div>
+
+          <div class="testimonial-modern">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p>"Perfect for medical school. Helps me remember everything!"</p>
+            <div class="testimonial-author">
+              <strong>James O.</strong>
+              <span>Medical Student</span>
+            </div>
+            <div class="testimonial-note">Sample review for demonstration</div>
+          </div>
+
+          <div class="testimonial-modern">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p>"Simple, effective, and completely free. Exactly what I needed."</p>
+            <div class="testimonial-author">
+              <strong>Amina T.</strong>
+              <span>Engineering Student</span>
+            </div>
+            <div class="testimonial-note">Sample review for demonstration</div>
+          </div>
+
+          <div class="testimonial-modern">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p>"The spaced repetition really works. My grades improved dramatically."</p>
+            <div class="testimonial-author">
+              <strong>Michael A.</strong>
+              <span>Law Student</span>
+            </div>
+            <div class="testimonial-note">Sample review for demonstration</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-modern">
+      <div class="container-narrow">
+        <div class="cta-content-modern">
+          <h2>Ready to Learn Smarter?</h2>
+          <p>Join thousands of students who are already learning 3x faster</p>
+          <div class="cta-buttons">
+            <a href="dashboard.html" class="btn-primary btn-large" aria-label="Get started for free">
+              <span>Get Started Free</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="how-it-works.html" class="btn-secondary btn-large" aria-label="Learn how it works">
+              <span>How It Works</span>
+              <i class="fas fa-question-circle"></i>
+            </a>
+          </div>
+          <p class="cta-guarantee">
+            <i class="fas fa-shield-alt"></i>
+            100% Free Forever • No Credit Card Required
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dedication -->
+    <section class="dedication-modern">
+      <div class="container-narrow">
+        <div class="dedication-content-modern">
+          <i class="fas fa-heart"></i>
+          <h3>Dedicated to STU University Ghana</h3>
+          <p>Making studying easier for every student. Empowering African learners worldwide.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-modern">
+    <div class="container">
+      <div class="footer-content-modern">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>StudyPlanner</span>
+          </div>
+          <p>Science-backed learning for everyone</p>
+        </div>
+
+        <div class="footer-links-modern">
+          <div class="footer-col">
+            <h4>Product</h4>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="features.html">Features</a>
+            <a href="how-it-works.html">How It Works</a>
+          </div>
+
+          <div class="footer-col">
+            <h4>About</h4>
+            <a href="#testimonials">Testimonials</a>
+            <a href="mission.html">Our Mission</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom-modern">
+        <p>&copy; 2024 StudyPlanner. Free forever.</p>
+        <p>
+          <i class="fas fa-lock"></i>
+          100% Private • No Tracking • No Ads
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <canvas id="particleCanvas" class="particle-canvas"></canvas>
+
+  <script src="utils.js"></script>
+  <script>
+    (()=>{
+      // Particle System
+      const canvas = document.getElementById('particleCanvas');
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      class Particle {
+        constructor(x, y, isDark) {
+          this.x = x;
+          this.y = y;
+          this.size = Math.random() * 3 + 1;
+          this.speedX = (Math.random() - 0.5) * 2;
+          this.speedY = (Math.random() - 0.5) * 2;
+          this.life = 1;
+          this.decay = Math.random() * 0.02 + 0.01;
+          this.color = isDark ? `rgba(147, 197, 253, ${this.life})` : `rgba(251, 191, 36, ${this.life})`;
+        }
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          this.life -= this.decay;
+          this.color = document.body.classList.contains('dark-mode') 
+            ? `rgba(147, 197, 253, ${this.life})` 
+            : `rgba(251, 191, 36, ${this.life})`;
+        }
+        draw() {
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function createParticles(x, y, count = 20) {
+        const isDark = document.body.classList.contains('dark-mode');
+        for(let i = 0; i < count; i++) {
+          particles.push(new Particle(x, y, isDark));
+        }
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles = particles.filter(p => p.life > 0);
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+      }
+      animateParticles();
+
+      // Theme with transition
+      const saved = StudyPlannerUtils.getItem(StudyPlannerUtils.THEME_KEY);
+      if(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)){
+        document.body.classList.add('dark-mode');
+      }
+      updateThemeUI();
+
+      document.getElementById('themeToggle')?.addEventListener('click', (e) => {
+        const rect = e.target.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        createParticles(x, y, 30);
+        
+        document.body.classList.add('theme-transitioning');
+        setTimeout(() => {
+          document.body.classList.toggle('dark-mode');
+          const isDark = document.body.classList.contains('dark-mode');
+          StudyPlannerUtils.setItem(StudyPlannerUtils.THEME_KEY, isDark ? 'dark' : 'light');
+          updateThemeUI();
+          setTimeout(() => document.body.classList.remove('theme-transitioning'), 300);
+        }, 150);
+      });
+
+      function updateThemeUI() {
+        const isDark = document.body.classList.contains('dark-mode');
+        const toggle = document.querySelector('.theme-toggle-switch');
+        const tooltip = document.getElementById('themeTooltip');
+        if(toggle) toggle.classList.toggle('active', isDark);
+        if(tooltip) tooltip.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+      }
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', e => {
+          e.preventDefault();
+          const target = document.querySelector(anchor.getAttribute('href'));
+          target?.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      // Animate on scroll
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.feature-modern, .step-modern, .testimonial-modern').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Mobile stats animation
+      if(window.innerWidth <= 768) {
+        const statCards = document.querySelectorAll('.mobile-stat-card');
+        statCards.forEach((card, i) => {
+          setTimeout(() => card.classList.add('show'), 300 + (i * 200));
+        });
+      }
+
+      // Preloader
+      const preloader = document.getElementById('preloader');
+      const progressBar = document.getElementById('progressBar');
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 30;
+        if(progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          setTimeout(() => {
+            preloader.classList.add('fade-out');
+            setTimeout(() => preloader.style.display = 'none', 500);
+          }, 300);
+        }
+        progressBar.style.width = progress + '%';
+      }, 200);
+
+      window.addEventListener('load', () => {
+        progress = 100;
+        progressBar.style.width = '100%';
+        clearInterval(interval);
+        setTimeout(() => {
+          preloader.classList.add('fade-out');
+          setTimeout(() => preloader.style.display = 'none', 500);
+        }, 300);
+      });
+    })();
+  </script>
+</body>
+</html>

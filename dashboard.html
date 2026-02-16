@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#16a34a" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'" />
+  <meta name="description" content="Track your learning journey with spaced repetition. Monitor sessions, achievements, and study progress." />
+  <meta property="og:title" content="Study Planner Dashboard" />
+  <meta property="og:description" content="Track your learning journey with spaced repetition." />
+  <title>Dashboard - Study Planner</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Modern Preloader -->
+  <div class="preloader-modern" id="preloader">
+    <div class="preloader-content-modern">
+      <div class="preloader-logo">
+        <i class="fas fa-book"></i>
+      </div>
+      <div class="preloader-spinner-modern">
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring"></div>
+      </div>
+      <h2 class="preloader-text">Dashboard</h2>
+      <p class="preloader-tagline">Preparing your study sessions...</p>
+      <div class="preloader-progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modern Header -->
+  <header class="dashboard-header">
+    <div class="header-container">
+      <div class="header-left">
+        <div class="logo-section">
+          <i class="fas fa-graduation-cap"></i>
+          <span>StudyPlanner</span>
+        </div>
+        <nav class="header-nav">
+          <a href="#stats" class="nav-link active" title="View your statistics"><i class="fas fa-chart-line"></i> Overview</a>
+          <a href="#sessions" class="nav-link" title="Manage your sessions"><i class="fas fa-list"></i> Sessions</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <button class="settings-btn" id="settingsBtn" title="Customize">
+          <i class="fas fa-cog"></i>
+        </button>
+        <div class="theme-toggle-wrapper">
+          <button class="theme-toggle-switch" id="themeToggle" aria-label="Toggle dark mode">
+            <span class="toggle-track">
+              <span class="toggle-icon sun-icon"><i class="fas fa-sun"></i></span>
+              <span class="toggle-icon moon-icon"><i class="fas fa-moon"></i></span>
+              <span class="toggle-slider"></span>
+            </span>
+          </button>
+          <span class="theme-tooltip" id="themeTooltip">Light Mode</span>
+        </div>
+        <a href="index.html" class="btn-back"><i class="fas fa-home"></i> Home</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard -->
+  <main class="dashboard-main" id="main-content">
+    <div class="dashboard-container">
+      
+      <!-- Welcome Section -->
+      <section class="welcome-section">
+        <div class="welcome-content">
+          <h1>Welcome back! 👋</h1>
+          <p>Track your progress and stay on top of your learning goals</p>
+        </div>
+        <div class="quick-actions">
+          <button class="quick-btn" onclick="document.getElementById('subject').focus()" title="Create a new study session">
+            <i class="fas fa-plus"></i> New Session
+          </button>
+          <button class="quick-btn" id="startQuickTimer" title="Start a 25-minute timer">
+            <i class="fas fa-play"></i> Quick Timer
+          </button>
+          <a href="how-it-works.html" class="quick-btn help-link" title="Learn how to use StudyPlanner">
+            <i class="fas fa-question-circle"></i> How It Works
+          </a>
+        </div>
+      </section>
+
+      <!-- Stats Grid -->
+      <section class="stats-grid" id="stats">
+        <div class="stat-card-modern">
+          <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-completed">0</div>
+            <div class="stat-label">Completed</div>
+          </div>
+        </div>
+        <div class="stat-card-modern">
+          <div class="stat-icon fire"><i class="fas fa-fire"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-streak">0</div>
+            <div class="stat-label">Day Streak</div>
+          </div>
+        </div>
+        <div class="stat-card-modern">
+          <div class="stat-icon"><i class="fas fa-clock"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-hours">0h</div>
+            <div class="stat-label">Total Hours</div>
+          </div>
+        </div>
+        <div class="stat-card-modern">
+          <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-badges">0</div>
+            <div class="stat-label">Badges</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Two Column Layout -->
+      <div class="dashboard-grid">
+        
+        <!-- Left Column -->
+        <div class="dashboard-left">
+          
+          <!-- Add Session Card -->
+          <div class="card-modern">
+            <div class="card-header">
+              <h2><i class="fas fa-plus-circle"></i> Add Study Session</h2>
+            </div>
+            <form id="sessionForm" novalidate>
+              <div class="form-group-modern">
+                <label for="subject">Subject</label>
+                <input id="subject" required placeholder="e.g. Mathematics, Spanish">
+              </div>
+              <div class="form-row-modern">
+                <div class="form-group-modern">
+                  <label for="date">Date</label>
+                  <input id="date" type="date" required>
+                </div>
+                <div class="form-group-modern">
+                  <label for="time">Time</label>
+                  <input id="time" type="time">
+                </div>
+              </div>
+              <div class="form-group-modern">
+                <label for="duration">Duration (minutes)</label>
+                <input id="duration" type="number" min="1" value="30">
+              </div>
+              <div class="form-group-modern">
+                <label for="notes">Notes (optional)</label>
+                <textarea id="notes" placeholder="What will you focus on?" rows="3"></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn-primary-modern">
+                  <i class="fas fa-check"></i> Add Session
+                </button>
+                <button type="button" id="importSample" class="btn-secondary-modern">
+                  <i class="fas fa-download"></i> Load Sample
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Sessions List -->
+          <div class="card-modern" id="sessions">
+            <div class="card-header">
+              <h2><i class="fas fa-list"></i> Your Sessions</h2>
+              <div class="filter-tabs">
+                <button class="tab-btn active" data-filter="all">All</button>
+                <button class="tab-btn" data-filter="upcoming">Upcoming</button>
+                <button class="tab-btn" data-filter="completed">Completed</button>
+              </div>
+            </div>
+            <ul id="sessionList" class="session-list-modern"></ul>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="dashboard-right">
+          
+          <!-- Timer Card -->
+          <div class="card-modern timer-card">
+            <div class="card-header">
+              <h3><i class="fas fa-stopwatch"></i> Study Timer</h3>
+            </div>
+            <input type="hidden" id="timerMinutes" value="25">
+            <div class="timer-display-modern" id="timerDisplay">25:00</div>
+            <div class="timer-controls-modern">
+              <button class="timer-btn-modern start" id="startTimer">
+                <i class="fas fa-play"></i>
+              </button>
+              <button class="timer-btn-modern pause" id="pauseTimer">
+                <i class="fas fa-pause"></i>
+              </button>
+              <button class="timer-btn-modern reset" id="resetTimer">
+                <i class="fas fa-redo"></i>
+              </button>
+            </div>
+            <div class="timer-presets">
+              <button class="preset-btn" data-minutes="25" title="Set timer to 25 minutes">25m</button>
+              <button class="preset-btn" data-minutes="30" title="Set timer to 30 minutes">30m</button>
+              <button class="preset-btn" data-minutes="45" title="Set timer to 45 minutes">45m</button>
+              <button class="preset-btn" data-minutes="60" title="Set timer to 60 minutes">60m</button>
+            </div>
+          </div>
+
+          <!-- Achievements Card -->
+          <div class="card-modern">
+            <div class="card-header">
+              <h3><i class="fas fa-trophy"></i> Achievements</h3>
+            </div>
+            <div class="badges-grid-modern" id="badges-grid"></div>
+          </div>
+
+          <!-- Next Review Card -->
+          <div class="card-modern next-review-card">
+            <div class="card-header">
+              <h3><i class="fas fa-calendar-alt"></i> Next Review</h3>
+            </div>
+            <div class="next-review-content">
+              <div class="next-review-date" id="stat-next">No sessions scheduled</div>
+              <p class="next-review-text">Stay consistent with your reviews!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dedication -->
+      <div class="dedication-card">
+        <i class="fas fa-heart"></i>
+        <div>
+          <strong>Dedicated to STU University Ghana</strong>
+          <p>Empowering African learners worldwide</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <canvas id="particleCanvas" class="particle-canvas"></canvas>
+
+  <!-- Welcome Modal -->
+  <div class="welcome-modal" id="welcomeModal">
+    <div class="welcome-content">
+      <button class="welcome-close" id="welcomeClose">&times;</button>
+      <div class="welcome-header">
+        <i class="fas fa-graduation-cap"></i>
+        <h2>Welcome to StudyPlanner! 🎓</h2>
+        <p>Learn how to use the dashboard in 30 seconds</p>
+      </div>
+      
+      <div class="demo-container">
+        <div class="demo-screen">
+          <div class="demo-step active" data-step="1">
+            <div class="demo-visual">
+              <div class="demo-form">
+                <div class="demo-input"></div>
+                <div class="demo-input short"></div>
+                <div class="demo-button">Add Session</div>
+              </div>
+              <div class="demo-arrow">→</div>
+              <div class="demo-list">
+                <div class="demo-item"></div>
+              </div>
+            </div>
+            <p><strong>1. Add Sessions</strong> - Create study sessions with subject and date</p>
+          </div>
+          
+          <div class="demo-step" data-step="2">
+            <div class="demo-visual">
+              <div class="demo-timer">25:00</div>
+              <div class="demo-controls">
+                <div class="demo-btn">▶</div>
+                <div class="demo-btn">⏸</div>
+                <div class="demo-btn">↻</div>
+              </div>
+            </div>
+            <p><strong>2. Use Timer</strong> - Track your study time with presets</p>
+          </div>
+          
+          <div class="demo-step" data-step="3">
+            <div class="demo-visual">
+              <div class="demo-stats">
+                <div class="demo-stat">✓ 5</div>
+                <div class="demo-stat">🔥 3</div>
+                <div class="demo-stat">⏱ 2.5h</div>
+                <div class="demo-stat">🏆 2</div>
+              </div>
+            </div>
+            <p><strong>3. Track Progress</strong> - Monitor stats and earn badges</p>
+          </div>
+        </div>
+        
+        <div class="demo-dots">
+          <span class="dot active" data-step="1"></span>
+          <span class="dot" data-step="2"></span>
+          <span class="dot" data-step="3"></span>
+        </div>
+      </div>
+      
+      <div class="welcome-footer">
+        <button class="btn-secondary-modern" id="skipWelcome">Skip</button>
+        <button class="btn-primary-modern" id="startWelcome">Get Started</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Button -->
+  <button class="help-btn" id="helpBtn" title="Help & Guide">
+    <i class="fas fa-question"></i>
+  </button>
+
+  <!-- Settings Modal -->
+  <div class="settings-modal" id="settingsModal">
+    <div class="settings-content">
+      <div class="settings-header">
+        <h2><i class="fas fa-cog"></i> Customize</h2>
+        <button class="settings-close" id="settingsClose">&times;</button>
+      </div>
+      
+      <div class="settings-body">
+        <!-- Font Size -->
+        <div class="setting-group">
+          <label class="setting-label">
+            <i class="fas fa-text-height"></i> Font Size
+          </label>
+          <div class="setting-options">
+            <button class="setting-btn" data-font="small">Small</button>
+            <button class="setting-btn active" data-font="medium">Medium</button>
+            <button class="setting-btn" data-font="large">Large</button>
+          </div>
+        </div>
+
+        <!-- Color Theme -->
+        <div class="setting-group">
+          <label class="setting-label">
+            <i class="fas fa-palette"></i> Color Theme
+          </label>
+          <div class="setting-options">
+            <button class="theme-color-btn active" data-theme="green" style="background:#16a34a" title="Green"></button>
+            <button class="theme-color-btn" data-theme="blue" style="background:#2563eb" title="Blue"></button>
+            <button class="theme-color-btn" data-theme="purple" style="background:#9333ea" title="Purple"></button>
+            <button class="theme-color-btn" data-theme="red" style="background:#dc2626" title="Red"></button>
+            <button class="theme-color-btn" data-theme="orange" style="background:#ea580c" title="Orange"></button>
+          </div>
+        </div>
+
+        <!-- Reduced Motion -->
+        <div class="setting-group">
+          <label class="setting-label">
+            <i class="fas fa-running"></i> Animations
+          </label>
+          <div class="setting-toggle">
+            <label class="toggle-switch">
+              <input type="checkbox" id="motionToggle" checked>
+              <span class="toggle-slider-setting"></span>
+            </label>
+            <span class="toggle-label">Enable animations</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-footer">
+        <button class="btn-secondary-modern" id="resetSettings">Reset to Default</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="utils.js"></script>
+  <script src="app.js" defer></script>
+  <script>
+    // Particle System
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+      constructor(x, y, isDark) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 2;
+        this.speedY = (Math.random() - 0.5) * 2;
+        this.life = 1;
+        this.decay = Math.random() * 0.02 + 0.01;
+        this.color = isDark ? `rgba(147, 197, 253, ${this.life})` : `rgba(251, 191, 36, ${this.life})`;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.life -= this.decay;
+        this.color = document.body.classList.contains('dark-mode') 
+          ? `rgba(147, 197, 253, ${this.life})` 
+          : `rgba(251, 191, 36, ${this.life})`;
+      }
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function createParticles(x, y, count = 20) {
+      const isDark = document.body.classList.contains('dark-mode');
+      for(let i = 0; i < count; i++) {
+        particles.push(new Particle(x, y, isDark));
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles = particles.filter(p => p.life > 0);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // Theme Toggle
+    const saved = StudyPlannerUtils.getItem(StudyPlannerUtils.THEME_KEY);
+    if(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)){
+      document.body.classList.add('dark-mode');
+    }
+
+    function updateThemeUI() {
+      const isDark = document.body.classList.contains('dark-mode');
+      const toggle = document.querySelector('.theme-toggle-switch');
+      const tooltip = document.getElementById('themeTooltip');
+      if(toggle) toggle.classList.toggle('active', isDark);
+      if(tooltip) tooltip.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+    }
+    updateThemeUI();
+
+    document.getElementById('themeToggle')?.addEventListener('click', (e) => {
+      const rect = e.target.getBoundingClientRect();
+      createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 30);
+      document.body.classList.add('theme-transitioning');
+      setTimeout(() => {
+        document.body.classList.toggle('dark-mode');
+        StudyPlannerUtils.setItem(StudyPlannerUtils.THEME_KEY, document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        updateThemeUI();
+        setTimeout(() => document.body.classList.remove('theme-transitioning'), 300);
+      }, 150);
+    });
+
+    // Filter tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Preloader
+    const preloader = document.getElementById('preloader');
+    const progressBar = document.getElementById('progressBar');
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += Math.random() * 30;
+      if(progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+        setTimeout(() => {
+          preloader.classList.add('fade-out');
+          setTimeout(() => preloader.style.display = 'none', 500);
+        }, 300);
+      }
+      progressBar.style.width = progress + '%';
+    }, 200);
+
+    window.addEventListener('load', () => {
+      progress = 100;
+      progressBar.style.width = '100%';
+      clearInterval(interval);
+      setTimeout(() => {
+        preloader.classList.add('fade-out');
+        setTimeout(() => preloader.style.display = 'none', 500);
+      }, 300);
+    });
+
+    // Settings System
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsModal = document.getElementById('settingsModal');
+    const settingsClose = document.getElementById('settingsClose');
+    const resetSettings = document.getElementById('resetSettings');
+    const motionToggle = document.getElementById('motionToggle');
+
+    // Load saved settings
+    const fontSize = StudyPlannerUtils.getItem('font_size') || 'medium';
+    const colorTheme = StudyPlannerUtils.getItem('color_theme') || 'green';
+    const reduceMotion = StudyPlannerUtils.getItem('reduce_motion') === 'true';
+
+    document.body.classList.add(`font-${fontSize}`);
+    if(colorTheme !== 'green') document.body.classList.add(`theme-${colorTheme}`);
+    if(reduceMotion) document.body.classList.add('reduce-motion');
+    motionToggle.checked = !reduceMotion;
+
+    document.querySelectorAll('.setting-btn').forEach(btn => {
+      if(btn.dataset.font === fontSize) btn.classList.add('active');
+    });
+    document.querySelectorAll('.theme-color-btn').forEach(btn => {
+      if(btn.dataset.theme === colorTheme) btn.classList.add('active');
+    });
+
+    // Open/Close Settings
+    settingsBtn?.addEventListener('click', () => {
+      settingsModal.classList.add('active');
+    });
+
+    settingsClose?.addEventListener('click', () => {
+      settingsModal.classList.remove('active');
+    });
+
+    settingsModal?.addEventListener('click', (e) => {
+      if(e.target.id === 'settingsModal') settingsModal.classList.remove('active');
+    });
+
+    // Font Size
+    document.querySelectorAll('.setting-btn[data-font]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const size = btn.dataset.font;
+        document.querySelectorAll('.setting-btn[data-font]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.body.className = document.body.className.replace(/font-\w+/g, '');
+        document.body.classList.add(`font-${size}`);
+        StudyPlannerUtils.setItem('font_size', size);
+      });
+    });
+
+    // Color Theme
+    document.querySelectorAll('.theme-color-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.dataset.theme;
+        document.querySelectorAll('.theme-color-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.body.className = document.body.className.replace(/theme-\w+/g, '');
+        if(theme !== 'green') document.body.classList.add(`theme-${theme}`);
+        StudyPlannerUtils.setItem('color_theme', theme);
+      });
+    });
+
+    // Reduced Motion
+    motionToggle?.addEventListener('change', () => {
+      if(motionToggle.checked) {
+        document.body.classList.remove('reduce-motion');
+        StudyPlannerUtils.setItem('reduce_motion', 'false');
+      } else {
+        document.body.classList.add('reduce-motion');
+        StudyPlannerUtils.setItem('reduce_motion', 'true');
+      }
+    });
+
+    // Reset Settings
+    resetSettings?.addEventListener('click', () => {
+      StudyPlannerUtils.setItem('font_size', 'medium');
+      StudyPlannerUtils.setItem('color_theme', 'green');
+      StudyPlannerUtils.setItem('reduce_motion', 'false');
+      location.reload();
+    });
+  </script>
+</body>
+</html>
