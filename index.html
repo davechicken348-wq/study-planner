@@ -16,13 +16,12 @@
   <meta name="twitter:image" content="./images/focus.jpg" />
   <title>Study Planner - Master Any Subject in Half the Time</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="preload" href="styles.css" as="style">
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -638,8 +637,8 @@
 
   <canvas id="particleCanvas" class="particle-canvas"></canvas>
 
-  <script src="utils.js"></script>
-  <script src="navigation.js"></script>
+  <script src="utils.js" defer></script>
+  <script src="navigation.js" defer></script>
   <script>
     (()=>{
       // Particle System
@@ -681,7 +680,7 @@
         }
       }
 
-      function createParticles(x, y, count = 20) {
+      function createParticles(x, y, count = 10) {
         const isDark = document.body.classList.contains('dark-mode');
         for(let i = 0; i < count; i++) {
           particles.push(new Particle(x, y, isDark));
@@ -770,7 +769,7 @@
         }
         
         // Auto-slide every 4 seconds
-        setInterval(nextSlide, 4000);
+        setInterval(nextSlide, 5000);
         
         // Dot click handlers
         dots.forEach((dot, index) => {
@@ -809,20 +808,36 @@
       });
     })();
 
-    // Stars particle effect
-    (function() {
-      const container = document.getElementById('starsContainer');
-      const starCount = 100;
-      for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
-        star.style.animationDelay = Math.random() * 3 + 's';
-        container.appendChild(star);
-      }
-    })();
+    // Stars particle effect - defer to idle time
+    if('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        const container = document.getElementById('starsContainer');
+        const starCount = 50;
+        for (let i = 0; i < starCount; i++) {
+          const star = document.createElement('div');
+          star.className = 'star';
+          star.style.left = Math.random() * 100 + '%';
+          star.style.top = Math.random() * 100 + '%';
+          star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+          star.style.animationDelay = Math.random() * 3 + 's';
+          container.appendChild(star);
+        }
+      });
+    } else {
+      setTimeout(() => {
+        const container = document.getElementById('starsContainer');
+        const starCount = 50;
+        for (let i = 0; i < starCount; i++) {
+          const star = document.createElement('div');
+          star.className = 'star';
+          star.style.left = Math.random() * 100 + '%';
+          star.style.top = Math.random() * 100 + '%';
+          star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+          star.style.animationDelay = Math.random() * 3 + 's';
+          container.appendChild(star);
+        }
+      }, 1000);
+    }
 
     // FAQ Accordion
     document.querySelectorAll('.faq-question').forEach(btn => {
