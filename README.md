@@ -1,8 +1,9 @@
-# 📚 StudyPlanner
+# 📚 StudyPlanner v1.1
 
 > Master any subject in half the time with science-backed spaced repetition
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://YOUR_USERNAME.github.io/study-planner/)
+[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://davechicken348-wq.github.io/study-planner/)
+[![Version](https://img.shields.io/badge/version-1.1-blue)](https://github.com/davechicken348-wq/study-planner)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 ## ✨ Features
@@ -11,17 +12,27 @@
 - ⏱️ **Study Timer** - Built-in Pomodoro timer with presets
 - 📊 **Progress Tracking** - Monitor sessions, streaks, and study hours
 - 🏆 **Achievements** - Unlock badges as you hit milestones
+- 🎨 **Custom Themes** - 6 preset colors + custom color picker
 - 🌙 **Dark Mode** - Beautiful theme with smooth transitions
-- 📱 **Mobile Responsive** - Works perfectly on all devices
+- 📱 **Mobile Navigation** - Responsive menu with quick access FAB
 - 🔒 **100% Private** - All data stays on your device
 - 🆓 **Free Forever** - No ads, no tracking, no paywalls
 
+## 🆕 What's New in v1.1
+
+- ✅ Custom color picker for unlimited theme customization
+- ✅ Mobile-friendly navigation menu
+- ✅ Floating Action Button (FAB) for quick access to customization
+- ✅ Enhanced navigation across all pages
+- ✅ Improved mobile responsiveness
+
 ## 🚀 Quick Start
 
-1. Visit the [live demo](https://YOUR_USERNAME.github.io/study-planner/)
+1. Visit the [live demo](https://davechicken348-wq.github.io/study-planner/)
 2. Click "Get Started Free"
 3. Add your first study session
-4. Start learning smarter!
+4. Customize your theme using the FAB menu (bottom-right)
+5. Start learning smarter!
 
 ## 💡 How It Works
 
@@ -41,7 +52,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/study-planner.git
+git clone https://github.com/davechicken348-wq/study-planner.git
 
 # Navigate to directory
 cd study-planner

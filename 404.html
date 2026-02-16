@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>404 - Page Not Found | StudyPlanner</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="theme-toggle-404">
+    <button class="theme-toggle-switch" id="themeToggle" aria-label="Toggle dark mode">
+      <span class="toggle-track">
+        <span class="toggle-icon sun-icon"><i class="fas fa-sun"></i></span>
+        <span class="toggle-icon moon-icon"><i class="fas fa-moon"></i></span>
+        <span class="toggle-slider"></span>
+      </span>
+    </button>
+  </div>
+
+  <div class="error-page">
+    <div class="error-content">
+      <div class="error-icon">
+        <i class="fas fa-book-dead"></i>
+      </div>
+      <h1 class="error-code">404</h1>
+      <h2 class="error-title">Page Not Found</h2>
+      <p class="error-message">Oops! The page you're looking for doesn't exist. It might have been moved or deleted.</p>
+      <div class="error-actions">
+        <a href="index.html" class="btn-primary btn-large">
+          <i class="fas fa-home"></i>
+          <span>Go Home</span>
+        </a>
+        <a href="dashboard.html" class="btn-secondary btn-large">
+          <i class="fas fa-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="utils.js"></script>
+  <script src="navigation.js"></script>
+  <script>
+    // Theme Toggle - matches index.html implementation
+    const themeToggle = document.getElementById('themeToggle');
+    
+    // Load saved theme on page load
+    const savedTheme = StudyPlannerUtils.getItem(StudyPlannerUtils.THEME_KEY);
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.body.classList.add('dark-mode');
+      themeToggle.classList.add('active');
+    }
+    
+    // Theme toggle with transition
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.add('theme-transitioning');
+      setTimeout(() => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        StudyPlannerUtils.setItem(StudyPlannerUtils.THEME_KEY, isDark ? 'dark' : 'light');
+        themeToggle.classList.toggle('active', isDark);
+        setTimeout(() => document.body.classList.remove('theme-transitioning'), 300);
+      }, 150);
+    });
+  </script>
+</body>
+</html>

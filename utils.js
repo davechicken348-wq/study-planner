@@ -125,10 +125,35 @@ document.documentElement.style.scrollBehavior = 'smooth';
 // Apply color theme globally
 (function() {
   const theme = StudyPlannerUtils.getItem('color_theme', 'green');
-  if (theme !== 'green') {
+  if (theme === 'custom') {
+    const customColor = StudyPlannerUtils.getItem('custom_color');
+    if (customColor) {
+      const rgb = hexToRgb(customColor);
+      const darker = shadeColor(customColor, -20);
+      const lighter = shadeColor(customColor, 20);
+      document.documentElement.style.setProperty('--primary-color', customColor);
+      document.documentElement.style.setProperty('--primary-rgb', rgb);
+      document.documentElement.style.setProperty('--primary-dark', darker);
+      document.documentElement.style.setProperty('--primary-light', lighter);
+    }
+  } else if (theme !== 'green') {
     document.body.classList.add('theme-' + theme);
   }
 })();
+
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '22, 163, 74';
+}
+
+function shadeColor(color, percent) {
+  const num = parseInt(color.replace('#', ''), 16);
+  const amt = Math.round(2.55 * percent);
+  const R = Math.min(255, Math.max(0, (num >> 16) + amt));
+  const G = Math.min(255, Math.max(0, (num >> 8 & 0x00FF) + amt));
+  const B = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
+  return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
+}
 
 // Handle skip link
 document.addEventListener('DOMContentLoaded', () => {
