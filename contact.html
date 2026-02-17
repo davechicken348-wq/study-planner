@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact Us - StudyPlanner</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Quick Access FAB -->
+  <div class="fab-container">
+    <button class="fab-main" id="fabMain" aria-label="Quick actions">
+      <i class="fas fa-ellipsis-v"></i>
+    </button>
+    <div class="fab-menu" id="fabMenu">
+      <a href="dashboard.html#customization" class="fab-item" title="Customize">
+        <i class="fas fa-palette"></i>
+      </a>
+      <a href="dashboard.html" class="fab-item" title="Dashboard">
+        <i class="fas fa-tachometer-alt"></i>
+      </a>
+      <a href="contact.html" class="fab-item" title="Contact">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>StudyPlanner</span>
+      </div>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="nav-actions" id="navActions">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="faq.html" class="nav-link">FAQ</a>
+        <a href="study-tips.html" class="nav-link">Study Tips</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <div class="theme-toggle-wrapper">
+          <button class="theme-toggle-switch" id="themeToggle" aria-label="Toggle dark mode">
+            <span class="toggle-track">
+              <span class="toggle-icon sun-icon"><i class="fas fa-sun"></i></span>
+              <span class="toggle-icon moon-icon"><i class="fas fa-moon"></i></span>
+              <span class="toggle-slider"></span>
+            </span>
+          </button>
+        </div>
+        <a href="dashboard.html" class="btn-nav">Dashboard</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="contact-hero">
+    <div class="container">
+      <div class="contact-hero-content">
+        <div class="contact-badge">
+          <i class="fas fa-comments"></i>
+          <span>We're Here to Help</span>
+        </div>
+        <h1>Get in Touch</h1>
+        <p>Have questions about StudyPlanner? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="contact-main">
+    <div class="container">
+      <div class="contact-layout">
+        <div class="contact-form-section">
+          <div class="form-header">
+            <h2>Send us a Message</h2>
+            <p>Fill out the form below and we'll get back to you within 24 hours</p>
+          </div>
+          <form class="contact-form-modern" id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name"><i class="fas fa-user"></i> Full Name</label>
+                <input type="text" id="name" placeholder="John Doe" required>
+              </div>
+              <div class="form-group">
+                <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                <input type="email" id="email" placeholder="john@example.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject"><i class="fas fa-tag"></i> Subject</label>
+              <input type="text" id="subject" placeholder="How can we help you?" required>
+            </div>
+            <div class="form-group">
+              <label for="message"><i class="fas fa-comment-dots"></i> Message</label>
+              <textarea id="message" rows="6" placeholder="Tell us more about your question or feedback..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary btn-large btn-full">
+              <span>Send Message</span>
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+
+        <div class="contact-info-section">
+          <div class="contact-info-card">
+            <div class="info-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <h3>Email Us</h3>
+            <p>support@studyplanner.com</p>
+            <span class="info-note">We reply within 24 hours</span>
+          </div>
+
+          <div class="contact-info-card">
+            <div class="info-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3>Our Location</h3>
+            <p>Accra, Ghana</p>
+            <span class="info-note">West Africa</span>
+          </div>
+
+          <div class="contact-info-card">
+            <div class="info-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <h3>Working Hours</h3>
+            <p>Mon - Fri: 9AM - 6PM</p>
+            <span class="info-note">GMT Timezone</span>
+          </div>
+
+          <div class="contact-social">
+            <h3>Connect With Us</h3>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Facebook">
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer-modern">
+    <div class="container">
+      <div class="footer-content-modern">
+        <div class="footer-brand-modern">
+          <div class="footer-logo-modern">
+            <i class="fas fa-graduation-cap"></i>
+            <span>StudyPlanner</span>
+          </div>
+          <p>Empowering students worldwide with science-backed spaced repetition. Learn smarter, remember longer, achieve more.</p>
+          <div class="footer-social">
+            <a href="#" class="footer-social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer-social-link" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="footer-social-link" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="footer-social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-links-modern">
+          <div class="footer-col-modern">
+            <h4>Product</h4>
+            <a href="dashboard.html"><i class="fas fa-chart-line"></i> Dashboard</a>
+            <a href="features.html"><i class="fas fa-star"></i> Features</a>
+            <a href="how-it-works.html"><i class="fas fa-lightbulb"></i> How It Works</a>
+          </div>
+
+          <div class="footer-col-modern">
+            <h4>Company</h4>
+            <a href="mission.html"><i class="fas fa-heart"></i> Our Mission</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="index.html#faq"><i class="fas fa-question-circle"></i> FAQ</a>
+          </div>
+
+          <div class="footer-col-modern">
+            <h4>Resources</h4>
+            <a href="#"><i class="fas fa-book"></i> Study Tips</a>
+            <a href="#"><i class="fas fa-graduation-cap"></i> For Students</a>
+            <a href="#"><i class="fas fa-chalkboard-teacher"></i> For Educators</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom-modern">
+        <div class="footer-bottom-left">
+          <p>&copy; 2024 StudyPlanner. Made with <i class="fas fa-heart"></i> for STU University Ghana.</p>
+        </div>
+        <div class="footer-bottom-right">
+          <span class="footer-badge"><i class="fas fa-shield-alt"></i> 100% Free Forever</span>
+          <span class="footer-badge"><i class="fas fa-lock"></i> Privacy First</span>
+          <span class="footer-badge"><i class="fas fa-ban"></i> No Ads</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="utils.js"></script>
+  <script src="navigation.js"></script>
+  <script>
+    // Theme Toggle - matches index.html implementation
+    const themeToggle = document.getElementById('themeToggle');
+    
+    // Load saved theme on page load
+    const savedTheme = StudyPlannerUtils.getItem(StudyPlannerUtils.THEME_KEY);
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.body.classList.add('dark-mode');
+      themeToggle.classList.add('active');
+    }
+    
+    // Theme toggle with transition
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.add('theme-transitioning');
+      setTimeout(() => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        StudyPlannerUtils.setItem(StudyPlannerUtils.THEME_KEY, isDark ? 'dark' : 'light');
+        themeToggle.classList.toggle('active', isDark);
+        setTimeout(() => document.body.classList.remove('theme-transitioning'), 300);
+      }, 150);
+    });
+
+    // Contact Form
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.innerHTML = '<span>Sending...</span><i class="fas fa-spinner fa-spin"></i>';
+      setTimeout(() => {
+        btn.innerHTML = '<span>Message Sent!</span><i class="fas fa-check"></i>';
+        btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        setTimeout(() => {
+          e.target.reset();
+          btn.innerHTML = '<span>Send Message</span><i class="fas fa-paper-plane"></i>';
+          btn.style.background = '';
+        }, 2000);
+      }, 1500);
+    });
+
+    // Back to Top
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
