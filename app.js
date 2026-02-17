@@ -271,23 +271,81 @@
     qs('pauseTimer').disabled = true;
   }
 
-  // Set today's date as default
+  // Set today's date as default and min date
   const today = new Date();
-  dateInput.value = today.toISOString().slice(0,10);
+  const todayStr = today.toISOString().slice(0,10);
+  dateInput.value = todayStr;
+  dateInput.setAttribute('min', todayStr);
 
   form.addEventListener('submit', (e)=>{
     e.preventDefault();
-    if(!StudyPlannerUtils.validateForm('sessionForm')){
-      StudyPlannerUtils.showNotification('Please fill in all required fields', 'warning');
+    
+    // Enhanced validation
+    const subjectVal = subject.value.trim();
+    const durationVal = parseInt(duration.value, 10);
+    const dateVal = dateInput.value;
+    const notesVal = notes.value.trim();
+    
+    // Subject validation
+    if(!subjectVal || subjectVal.length < 2){
+      StudyPlannerUtils.showNotification('Subject must be at least 2 characters', 'warning');
+      subject.focus();
       return;
     }
+    if(subjectVal.length > 100){
+      StudyPlannerUtils.showNotification('Subject must be less than 100 characters', 'warning');
+      subject.focus();
+      return;
+    }
+    
+    // Duration validation
+    if(!durationVal || durationVal < 1){
+      StudyPlannerUtils.showNotification('Duration must be at least 1 minute', 'warning');
+      duration.focus();
+      return;
+    }
+    if(durationVal > 480){
+      StudyPlannerUtils.showNotification('Duration cannot exceed 8 hours (480 minutes)', 'warning');
+      duration.focus();
+      return;
+    }
+    
+    // Date validation
+    if(!dateVal){
+      StudyPlannerUtils.showNotification('Please select a date', 'warning');
+      dateInput.focus();
+      return;
+    }
+    const selectedDate = new Date(dateVal);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 1);
+    if(selectedDate < today){
+      StudyPlannerUtils.showNotification('Cannot schedule sessions in the past', 'warning');
+      dateInput.focus();
+      return;
+    }
+    if(selectedDate > maxDate){
+      StudyPlannerUtils.showNotification('Cannot schedule more than 1 year ahead', 'warning');
+      dateInput.focus();
+      return;
+    }
+    
+    // Notes validation
+    if(notesVal.length > 500){
+      StudyPlannerUtils.showNotification('Notes must be less than 500 characters', 'warning');
+      notes.focus();
+      return;
+    }
+    
     const s = {
       id: uid(),
-      subject: subject.value.trim(),
-      date: dateInput.value,
+      subject: subjectVal,
+      date: dateVal,
       time: timeInput.value,
-      duration: parseInt(duration.value,10)||30,
-      notes: notes.value.trim(),
+      duration: durationVal,
+      notes: notesVal,
       level: 0,
       createdAt: new Date().toISOString()
     };
