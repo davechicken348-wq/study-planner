@@ -1,9 +1,9 @@
-# 📚 StudyPlanner v1.1
+# 📚 StudyPlanner v1.2
 
 > Master any subject in half the time with science-backed spaced repetition
 
 [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://davechicken348-wq.github.io/study-planner/)
-[![Version](https://img.shields.io/badge/version-1.1-blue)](https://github.com/davechicken348-wq/study-planner)
+[![Version](https://img.shields.io/badge/version-1.2-blue)](https://github.com/davechicken348-wq/study-planner)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 ## ✨ Features
@@ -17,6 +17,13 @@
 - 📱 **Mobile Navigation** - Responsive menu with quick access FAB
 - 🔒 **100% Private** - All data stays on your device
 - 🆓 **Free Forever** - No ads, no tracking, no paywalls
+
+## 🆕 What's New in v1.2
+
+- ✅ **Export Data** - Download your study data as JSON
+- ✅ **Study Notes** - Add notes to each study session
+- ✅ **Enhanced Mobile Menu** - Improved overlay navigation
+- ✅ **Better Accessibility** - Keyboard shortcuts and ARIA labels
 
 ## 🆕 What's New in v1.1
 

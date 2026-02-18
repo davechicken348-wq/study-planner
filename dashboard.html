@@ -43,31 +43,17 @@
   <!-- Modern Header -->
   <header class="dashboard-header">
     <div class="header-container">
-      <div class="header-left">
-        <div class="logo-section">
-          <i class="fas fa-graduation-cap"></i>
-          <span>StudyPlanner</span>
-        </div>
-        <nav class="header-nav">
-          <a href="#stats" class="nav-link active" title="View your statistics"><i class="fas fa-chart-line"></i> Overview</a>
-          <a href="#sessions" class="nav-link" title="Manage your sessions"><i class="fas fa-list"></i> Sessions</a>
-        </nav>
-      </div>
-      <div class="header-right">
+      <div class="header-actions">
+        <a href="index.html" class="btn-back"><i class="fas fa-home"></i></a>
         <button class="settings-btn" id="settingsBtn" title="Customize">
           <i class="fas fa-cog"></i>
         </button>
-        <div class="theme-toggle-wrapper">
-          <button class="theme-toggle-switch" id="themeToggle" aria-label="Toggle dark mode">
-            <span class="toggle-track">
-              <span class="toggle-icon sun-icon"><i class="fas fa-sun"></i></span>
-              <span class="toggle-icon moon-icon"><i class="fas fa-moon"></i></span>
-              <span class="toggle-slider"></span>
-            </span>
-          </button>
-          <span class="theme-tooltip" id="themeTooltip">Light Mode</span>
-        </div>
-        <a href="index.html" class="btn-back"><i class="fas fa-home"></i> Home</a>
+      </div>
+      <div class="logo-section">
+        <i class="fas fa-graduation-cap"></i>
+        <span>StudyPlanner</span>
+      </div>
+      <div class="header-actions">
       </div>
     </div>
   </header>
@@ -88,6 +74,9 @@
           </button>
           <button class="quick-btn" id="startQuickTimer" title="Start a 25-minute timer">
             <i class="fas fa-play"></i> Quick Timer
+          </button>
+          <button class="quick-btn" id="exportData" title="Export your study data">
+            <i class="fas fa-download"></i> Export Data
           </button>
           <a href="how-it-works.html" class="quick-btn help-link" title="Learn how to use StudyPlanner">
             <i class="fas fa-question-circle"></i> How It Works

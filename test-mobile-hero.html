@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Hero Test</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f0fdf4;
+    }
+
+    /* Mobile Hero Section */
+    .hero-mobile {
+      position: relative;
+      min-height: 70vh;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    /* Background Carousel */
+    .mobile-hero-carousel {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .mobile-carousel-track {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .mobile-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1000ms ease;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .mobile-slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.75) 100%);
+      z-index: 1;
+    }
+
+    .mobile-slide.active {
+      opacity: 1;
+    }
+
+    /* Content */
+    .mobile-hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 32px 20px;
+      text-align: center;
+    }
+
+    .mobile-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .mobile-title {
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin: 0 0 16px;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .mobile-gradient {
+      background: linear-gradient(135deg, #6ee7b7, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+    }
+
+    .mobile-subtitle {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.95);
+      margin: 0 0 24px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    .mobile-subtitle strong {
+      color: #6ee7b7;
+    }
+
+    .mobile-quick-stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .mobile-stat-number {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    .mobile-stat-label {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.85);
+      margin-top: 4px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+
+    .mobile-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #6ee7b7, #34d399);
+      color: #000;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 6px 20px rgba(16,185,129,0.5);
+      transition: all 300ms;
+      margin-bottom: 16px;
+    }
+
+    .mobile-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(16,185,129,0.6);
+    }
+
+    /* Carousel Dots */
+    .carousel-dots-mobile {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .dot-mobile {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      border: none;
+      cursor: pointer;
+      transition: all 400ms;
+    }
+
+    .dot-mobile.active {
+      background: #fff;
+      width: 24px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-mobile">
+    <div class="mobile-hero-carousel">
+      <div class="mobile-carousel-track">
+        <div class="mobile-slide active" style="background-image:url('./images/opened_book.webp')"></div>
+        <div class="mobile-slide" style="background-image:url('./images/library_books.webp')"></div>
+        <div class="mobile-slide" style="background-image:url('./images/book_stacked.webp')"></div>
+        <div class="mobile-slide" style="background-image:url('./images/arranged_books.webp')"></div>
+        <div class="mobile-slide" style="background-image:url('./images/color_books.webp')"></div>
+        <div class="mobile-slide" style="background-image:url('./images/organized.webp')"></div>
+      </div>
+    </div>
+    <div class="mobile-hero-content">
+      <div class="mobile-badge">
+        <i class="fas fa-star"></i>
+        <span>10,000+ Students</span>
+      </div>
+      <h1 class="mobile-title">Master Any Subject<br><span class="mobile-gradient">In Half the Time</span></h1>
+      <p class="mobile-subtitle">Science-backed spaced repetition. <strong>Free forever.</strong></p>
+      <div class="mobile-quick-stats">
+        <div class="mobile-stat">
+          <div class="mobile-stat-number">80%</div>
+          <div class="mobile-stat-label">Better Retention</div>
+        </div>
+        <div class="mobile-stat">
+          <div class="mobile-stat-number">3x</div>
+          <div class="mobile-stat-label">Faster Learning</div>
+        </div>
+        <div class="mobile-stat">
+          <div class="mobile-stat-number">100%</div>
+          <div class="mobile-stat-label">Free Forever</div>
+        </div>
+      </div>
+      <a href="#" class="mobile-cta-btn">
+        <span>Start Learning Free</span>
+        <i class="fas fa-arrow-right"></i>
+      </a>
+      <div class="carousel-dots-mobile">
+        <span class="dot-mobile active" data-slide="0"></span>
+        <span class="dot-mobile" data-slide="1"></span>
+        <span class="dot-mobile" data-slide="2"></span>
+        <span class="dot-mobile" data-slide="3"></span>
+        <span class="dot-mobile" data-slide="4"></span>
+        <span class="dot-mobile" data-slide="5"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Carousel functionality
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.mobile-slide');
+    const dots = document.querySelectorAll('.dot-mobile');
+    
+    function showSlide(index) {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
+    }
+    
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+    
+    // Auto-slide every 5 seconds
+    setInterval(nextSlide, 5000);
+    
+    // Dot click handlers
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -473,4 +473,29 @@
     }
   }, 1000);
 
+  // Export Data Functionality
+  qs('exportData')?.addEventListener('click', () => {
+    const exportData = {
+      version: '1.2',
+      exportDate: new Date().toISOString(),
+      sessions: sessions,
+      stats: {
+        totalSessions: sessions.length,
+        completedSessions: sessions.filter(s => s.level > 0).length,
+        totalMinutes: sessions.filter(s => s.level > 0).reduce((sum, s) => sum + (s.duration || 30), 0),
+        currentStreak: calculateStreak()
+      },
+      badges: BADGE_DEFINITIONS.filter(b => b.check()).map(b => ({id: b.id, name: b.name, description: b.description}))
+    };
+    
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `studyplanner-export-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    StudyPlannerUtils.showNotification('Data exported successfully!', 'success');
+  });
+
 })();
