@@ -1192,9 +1192,13 @@ body.dark-mode .faq-cta{background:linear-gradient(135deg, rgba(52,211,153,0.1),
 body.dark-mode .faq-cta h2{color:#f1f5f9}
 body.dark-mode .faq-cta p{color:#cbd5e1}
 @media (max-width:768px){
-  .page-hero .container{grid-template-columns:1fr}
-  .hero-image-wrapper{height:300px;margin-top:40px}
-  .hero-img-1,.hero-img-2{width:200px;height:200px}
+  .page-hero{padding:80px 0 60px}
+  .page-hero .container{grid-template-columns:1fr;text-align:center}
+  .page-hero-content{max-width:100%}
+  .hero-image-wrapper{height:250px;margin-top:30px;display:flex;justify-content:center;align-items:center;gap:15px}
+  .hero-img-1,.hero-img-2{position:relative;width:180px;height:180px;top:auto;left:auto;right:auto;bottom:auto}
+  .hero-img-1{transform:translateY(-8px)}
+  .hero-img-2{transform:translateY(8px)}
 }
 
 /* Tips Page */
