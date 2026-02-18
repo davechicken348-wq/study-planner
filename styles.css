@@ -1201,6 +1201,13 @@ body.dark-mode .faq-cta p{color:#cbd5e1}
   .hero-img-2{transform:translateY(8px)}
 }
 
+@media (max-width:425px){
+  .hero-image-wrapper{height:300px;margin-top:40px;display:block}
+  .hero-img-1,.hero-img-2{position:absolute;width:200px;height:200px}
+  .hero-img-1{top:0;left:0;z-index:2;transform:none}
+  .hero-img-2{bottom:0;right:0;z-index:1;transform:none}
+}
+
 /* Tips Page */
 .tips-page{padding:80px 0}
 .tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
