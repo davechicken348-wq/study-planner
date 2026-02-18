@@ -4,6 +4,11 @@ function initNavigation() {
   const mobileMenuToggle = document.getElementById('mobileMenuToggle');
   const navActions = document.getElementById('navActions');
   
+  // Ensure menu starts closed
+  if (navActions) {
+    navActions.classList.remove('active');
+  }
+  
   if (mobileMenuToggle && navActions) {
     // Create overlay element
     let overlay = document.querySelector('.menu-overlay');
@@ -12,6 +17,10 @@ function initNavigation() {
       overlay.className = 'menu-overlay';
       document.body.appendChild(overlay);
     }
+    
+    // Ensure overlay starts hidden
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
 
     // Toggle menu
     const toggleMenu = () => {
