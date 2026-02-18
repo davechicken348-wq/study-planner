@@ -933,10 +933,11 @@ img:not([data-src]){opacity:1}
 .mobile-menu-toggle.active{color:#fff}
 
 /* Mobile Menu Overlay */
-.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:10000;opacity:0;visibility:hidden;transition:all 400ms cubic-bezier(0.4,0,0.2,1)}
-.menu-overlay.active{opacity:1;visibility:visible}
+.menu-overlay{display:none}
 
 @media(max-width:768px){
+.menu-overlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:10000;opacity:0;visibility:hidden;transition:all 400ms cubic-bezier(0.4,0,0.2,1)}
+.menu-overlay.active{opacity:1;visibility:visible}
 .mobile-menu-toggle{display:block}
 .nav-actions{position:fixed;top:0;right:-100%;width:85%;max-width:400px;height:100vh;background:linear-gradient(135deg,rgba(255,255,255,0.98),rgba(255,255,255,0.95));backdrop-filter:blur(20px);flex-direction:column;gap:0;padding:80px 32px 32px;overflow-y:auto;transition:right 400ms cubic-bezier(0.4,0,0.2,1);box-shadow:-8px 0 32px rgba(0,0,0,0.2);z-index:10001}
 .nav-actions.active{right:0}
