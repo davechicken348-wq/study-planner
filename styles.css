@@ -1191,6 +1191,13 @@ body.dark-mode .faq-category.active{background:#34d399;color:#0f172a}
 body.dark-mode .faq-cta{background:linear-gradient(135deg, rgba(52,211,153,0.1), rgba(52,211,153,0.05));border-color:rgba(52,211,153,0.2)}
 body.dark-mode .faq-cta h2{color:#f1f5f9}
 body.dark-mode .faq-cta p{color:#cbd5e1}
+@media (max-width:1024px){
+  .page-hero .container{grid-template-columns:1fr;text-align:center}
+  .page-hero-content{margin:0 auto}
+  .hero-image-wrapper{height:350px;margin-top:40px}
+  .hero-img-1,.hero-img-2{width:240px;height:240px}
+}
+
 @media (max-width:768px){
   .page-hero .container{grid-template-columns:1fr}
   .hero-image-wrapper{height:300px;margin-top:40px}
