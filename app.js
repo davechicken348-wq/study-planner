@@ -12,11 +12,16 @@
   const timeInput = qs('time');
   const duration = qs('duration');
   const notes = qs('notes');
+  const tagsInput = qs('tags');
+  const importFile = qs('importFile');
+  const exportCsvBtn = qs('exportCsv');
+  const tagFiltersContainer = document.getElementById('tagFilters');
   const sessionList = qs('sessionList');
   const importSample = qs('importSample');
 
   let sessions = [];
   let currentFilter = 'all';
+  let currentFilterTag = null;
   let timerInterval = null;
   let timerSeconds = 0;
 
@@ -143,6 +148,7 @@
     let filtered = sessions;
     if(currentFilter === 'upcoming') filtered = sessions.filter(s => s.date >= today && s.level === 0);
     if(currentFilter === 'completed') filtered = sessions.filter(s => s.level > 0);
+    if(currentFilterTag) filtered = filtered.filter(s => (s.tags||[]).includes(currentFilterTag));
     
     if(filtered.length===0){
       const li = document.createElement('li');
@@ -161,6 +167,19 @@
       if(s.level > 0) li.classList.add('completed');
       const left = document.createElement('div');
       left.innerHTML = `<strong>${escapeHtml(s.subject)}</strong><div class="meta">${s.date}${s.time ? ' '+s.time : ''} • ${s.duration} mins${s.level > 0 ? ' • Level ' + s.level : ''}</div>`;
+      if(s.tags && s.tags.length){
+        const tagWrap = document.createElement('div');
+        tagWrap.style.marginTop = '8px';
+        s.tags.forEach(t=>{
+          const chip = document.createElement('button');
+          chip.className = 'tag-chip';
+          chip.textContent = t;
+          chip.title = 'Filter by ' + t;
+          chip.onclick = () => { currentFilterTag = t; updateTagFilters(); render(); };
+          tagWrap.appendChild(chip);
+        });
+        left.appendChild(tagWrap);
+      }
       const right = document.createElement('div');
       right.className = 'session-actions';
 
@@ -213,6 +232,8 @@
       li.appendChild(right);
       sessionList.appendChild(li);
     });
+    // update tag filters after render
+    updateTagFilters();
   }
 
   function escapeHtml(str){ return (str||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]) }
@@ -346,6 +367,7 @@
       time: timeInput.value,
       duration: durationVal,
       notes: notesVal,
+      tags: (tagsInput && tagsInput.value) ? tagsInput.value.split(',').map(t=>t.trim()).filter(Boolean) : [],
       level: 0,
       createdAt: new Date().toISOString()
     };
@@ -377,6 +399,26 @@
     });
   });
 
+  // Tag filters: build dynamic filters from session tags
+  function updateTagFilters(){
+    if(!tagFiltersContainer) return;
+    const tags = new Set();
+    sessions.forEach(s=> (s.tags||[]).forEach(t=> tags.add(t)));
+    tagFiltersContainer.innerHTML = '';
+    const allBtn = document.createElement('button');
+    allBtn.className = 'tab-btn' + (currentFilterTag? '' : ' active');
+    allBtn.textContent = 'All Tags';
+    allBtn.onclick = () => { currentFilterTag = null; updateTagFilters(); render(); };
+    tagFiltersContainer.appendChild(allBtn);
+    Array.from(tags).sort().forEach(t => {
+      const b = document.createElement('button');
+      b.className = 'tab-btn' + (currentFilterTag===t ? ' active' : '');
+      b.textContent = t;
+      b.onclick = () => { currentFilterTag = (currentFilterTag===t? null : t); updateTagFilters(); render(); };
+      tagFiltersContainer.appendChild(b);
+    });
+  }
+
   // Timer presets
   document.querySelectorAll('.preset-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -396,6 +438,87 @@
     qs('timerMinutes').value = 25;
     updateTimerDisplay();
     startTimer();
+  });
+
+  // CSV export
+  function sessionsToCsv(arr){
+    const headers = ['id','subject','date','time','duration','notes','level','tags'];
+    const esc = v => '"'+String(v||'').replace(/"/g,'""')+'"';
+    const rows = arr.map(s=>[
+      s.id, s.subject, s.date, s.time || '', s.duration || '', s.notes || '', s.level || 0, (s.tags||[]).join(';')
+    ].map(esc).join(','));
+    return headers.join(',') + '\n' + rows.join('\n');
+  }
+
+  exportCsvBtn?.addEventListener('click', ()=>{
+    try{
+      const csv = sessionsToCsv(sessions);
+      const blob = new Blob([csv], {type:'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = `studyplanner-sessions-${new Date().toISOString().slice(0,10)}.csv`; a.click(); URL.revokeObjectURL(url);
+      StudyPlannerUtils.showNotification('CSV exported', 'success');
+    }catch(e){
+      console.error(e); StudyPlannerUtils.showNotification('Failed to export CSV', 'error');
+    }
+  });
+
+  // CSV import (simple parser)
+  importFile?.addEventListener('change', (e)=>{
+    const file = e.target.files && e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev)=>{
+      const text = ev.target.result;
+      try{
+        const lines = text.split(/\r?\n/).filter(Boolean);
+        const header = lines.shift().split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(h=>h.replace(/"/g,'').trim());
+        const parsed = lines.map(line=>{
+          const cols = line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(c=>c.replace(/^"|"$/g,'').replace(/""/g,'"'));
+          const obj = {};
+          header.forEach((h,i)=> obj[h]=cols[i]||'');
+          return obj;
+        });
+        const toSessions = parsed.map(p=>({
+          id: p.id || uid(),
+          subject: p.subject || 'Untitled',
+          date: p.date || new Date().toISOString().slice(0,10),
+          time: p.time || '',
+          duration: parseInt(p.duration,10) || 30,
+          notes: p.notes || '',
+          level: parseInt(p.level,10) || 0,
+          tags: (p.tags||'').split(';').map(t=>t.trim()).filter(Boolean),
+          createdAt: new Date().toISOString()
+        }));
+        // merge, avoid duplicates by id
+        const existingIds = new Set(sessions.map(s=>s.id));
+        toSessions.forEach(s=>{ if(!existingIds.has(s.id)) sessions.push(s); });
+        save(); updateStats(); render(); StudyPlannerUtils.showNotification('CSV imported', 'success');
+      }catch(err){ console.error(err); StudyPlannerUtils.showNotification('Failed to parse CSV', 'error'); }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (ev)=>{
+    const active = document.activeElement;
+    const ignore = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
+    if(ignore) return;
+    if(ev.key === 'n' || ev.key === 'N'){
+      ev.preventDefault(); subject.focus(); StudyPlannerUtils.showNotification('Focus: New Session', 'info');
+    }
+    if(ev.key === 't' || ev.key === 'T'){
+      ev.preventDefault(); if(timerInterval) pauseTimer(); else startTimer(); StudyPlannerUtils.showNotification('Timer toggled', 'info');
+    }
+    if(ev.key === 'e' || ev.key === 'E'){
+      ev.preventDefault(); qs('exportData')?.click();
+    }
+    if(ev.key === 'c' || ev.key === 'C'){
+      ev.preventDefault(); exportCsvBtn?.click();
+    }
+    if(ev.key === 'i' || ev.key === 'I'){
+      ev.preventDefault(); importFile?.click();
+    }
   });
 
   // Timer events

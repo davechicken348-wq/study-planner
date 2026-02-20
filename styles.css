@@ -71,6 +71,12 @@ body.dark-mode .preloader-img{box-shadow:0 8px 24px rgba(var(--primary-rgb),0.35
 .btn.ghost:hover{background:rgba(var(--primary-rgb),0.1)}
 .actions{display:flex;gap:12px;margin-top:16px}
 
+/* Tag chip used in session list */
+.tag-chip{background:rgba(var(--primary-rgb),0.08);border:1px solid rgba(var(--primary-rgb),0.12);padding:6px 10px;border-radius:999px;font-size:0.85rem;margin-right:6px;cursor:pointer}
+.tag-chip:hover{background:rgba(var(--primary-rgb),0.12);transform:translateY(-1px)}
+
+/* Tutorials styles have been moved to tutorials.css */
+
 /* Sessions Filters */
 .sessions-filters{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
 .filter-btn{background:transparent;color:var(--primary);border:2px solid rgba(var(--primary-rgb),0.2);padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:600;transition:all 200ms}
@@ -1078,6 +1084,32 @@ body.dark-mode .theme-toggle-wrapper{background:rgba(var(--primary-rgb),0.1)}
 .cta-guarantee{display:flex;align-items:center;justify-content:center;gap:8px;color:rgba(255,255,255,0.9);font-size:1rem;margin-top:16px}
 .cta-guarantee i{font-size:1.2rem}
 
+/* Tutorials Resources Section */
+.tutorials-resources-modern{padding:80px 0;background:#fff;position:relative}
+.tutorials-highlight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;margin:50px 0}
+.tutorials-highlight-card{padding:40px;background:linear-gradient(135deg, #f0fdf4 0%, #dbeafe 100%);border:2px solid #bbf7d0;border-radius:16px;transition:all 300ms;cursor:pointer;position:relative;overflow:hidden;opacity:0;transform:translateY(20px)}
+.tutorials-highlight-card.visible{opacity:1;transform:translateY(0)}
+.tutorials-highlight-card::before{content:'';position:absolute;top:0;right:0;width:200px;height:200px;background:radial-gradient(circle, rgba(22, 163, 74, 0.08), transparent);border-radius:50%;pointer-events:none}
+.tutorials-highlight-card:hover{border-color:var(--primary);box-shadow:0 12px 32px rgba(var(--primary-rgb),0.2);transform:translateY(-8px)}
+.highlight-icon{width:60px;height:60px;margin-bottom:20px;background:linear-gradient(135deg, var(--primary), #34d399);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#fff;transition:all 300ms}
+.tutorials-highlight-card:hover .highlight-icon{transform:scale(1.1) rotate(5deg)}
+.tutorials-highlight-card h3{margin:0 0 16px;font-size:1.4rem;color:#0f172a;position:relative;z-index:1}
+.tutorials-highlight-card p{color:#4b5563;font-size:1rem;line-height:1.6;margin:0 0 24px;position:relative;z-index:1}
+.highlight-features{list-style:none;margin:0;padding:0;position:relative;z-index:1}
+.highlight-features li{display:flex;align-items:center;gap:12px;margin-bottom:12px;color:#374151;font-size:0.95rem;last-child:margin-bottom:0}
+.highlight-features i{color:var(--primary);font-weight:700;font-size:1rem}
+.tutorials-cta-section{text-align:center;margin-top:60px;padding:40px}
+.tutorials-cta-section .btn-primary{padding:16px 48px;font-size:1.1rem}
+.tutorials-cta-note{color:var(--muted);margin-top:16px;font-size:0.95rem}
+
+/* Dark Mode - Tutorials Section */
+body.dark-mode .tutorials-resources-modern{background:#0f172a}
+body.dark-mode .tutorials-highlight-card{background:linear-gradient(135deg, #1a2540 0%, #1e3a5f 100%);border-color:#334155;color:#e5e7eb}
+body.dark-mode .tutorials-highlight-card:hover{border-color:var(--primary);box-shadow:0 12px 32px rgba(var(--primary-rgb),0.3)}
+body.dark-mode .tutorials-highlight-card h3{color:#f3f4f6}
+body.dark-mode .tutorials-highlight-card p{color:#d1d5db}
+body.dark-mode .highlight-features li{color:#d1d5db}
+
 /* Dedication Modern */
 .dedication-modern{padding:80px 0;background:linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);border-top:1px solid #bbf7d0;position:relative;overflow:hidden}
 .dedication-modern::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg, var(--primary), #34d399, var(--primary));z-index:1}
@@ -1093,6 +1125,35 @@ body.dark-mode .theme-toggle-wrapper{background:rgba(var(--primary-rgb),0.1)}
 .dedication-link:hover{background:var(--accent-dark);transform:translateY(-2px);box-shadow:0 6px 16px rgba(var(--primary-rgb),0.4)}
 .dedication-link i{transition:transform 300ms}
 .dedication-link:hover i{transform:translateX(4px)}
+
+/* Reworked dedication styles (clean, responsive) */
+.dedication-grid-clean{display:grid;grid-template-columns:minmax(80px,18vw) 1fr;gap:clamp(12px,2.5vw,24px);align-items:center}
+.dedication-left{display:flex;align-items:center;justify-content:center}
+.dedication-decor-icon{width:clamp(64px,10vw,96px);height:clamp(64px,10vw,96px);border-radius:16px;background:linear-gradient(135deg,var(--primary),#34d399);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(var(--primary-rgb),0.12);flex-shrink:0}
+.dedication-decor-icon i{font-size:clamp(1.1rem,2.4vw,2.2rem);color:#fff}
+.dedication-right{padding:6px 0}
+.dedication-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(var(--primary-rgb),0.06);padding:8px 14px;border-radius:999px;font-weight:700;color:var(--primary-dark);margin-bottom:8px}
+.dedication-text{color:var(--muted);margin:8px 0 16px}
+.dedication-actions{display:flex;gap:12px}
+
+@media (max-width:768px){
+  .dedication-grid-clean{grid-template-columns:1fr;gap:12px}
+  .dedication-left{order:2}
+  .dedication-right{order:1}
+  .dedication-decor-icon{width:80px;height:80px}
+}
+
+/* Image styles for dedication */
+.dedication-figure{width:100%;max-width:clamp(120px,30vw,320px);margin:0;transition:all 220ms ease}
+.dedication-image{width:100%;height:auto;border-radius:12px;object-fit:cover;box-shadow:0 12px 30px rgba(var(--primary-rgb),0.12);display:block;transition:transform 220ms ease,box-shadow 220ms ease}
+
+.dedication-content-modern h3{font-size:clamp(1.4rem,2.6vw,2rem)}
+.dedication-content-modern p{color:var(--muted);margin:8px 0 16px;line-height:1.6;max-width:clamp(220px,45vw,600px)}
+
+
+@media (max-width:480px){
+  .dedication-figure{max-width:220px}
+}
 
 /* FAQ Section */
 .faq-modern{padding:80px 0;background:#fff}
@@ -1477,19 +1538,41 @@ body.dark-mode .preloader-logo i{color:#fff}
 
 /* Dashboard Header */
 .dashboard-header{background:linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);padding:16px 0;box-shadow:0 4px 12px rgba(var(--primary-rgb),0.2);position:sticky;top:0;z-index:100}
-.header-container{max-width:1400px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center}
+.header-container{max-width:1400px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;position:relative}
 .logo-section{display:flex;align-items:center;gap:10px;font-size:1.3rem;font-weight:700;color:#fff;position:absolute;left:50%;transform:translateX(-50%)}
 .logo-section i{font-size:1.5rem}
 .header-actions{display:flex;align-items:center;gap:12px}
+.logo-section{padding:4px 6px}
+.logo-section i{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;background:rgba(255,255,255,0.06)}
+.logo-section span{line-height:1}
 .btn-back{color:#fff;text-decoration:none;padding:8px;background:rgba(255,255,255,0.15);border-radius:8px;font-weight:600;transition:all 200ms;display:flex;align-items:center;font-size:1.2rem}
 .btn-back:hover{background:rgba(255,255,255,0.25)}
 @media(max-width:768px){
-.logo-section{font-size:1.1rem;position:static;transform:none}
-.logo-section i{font-size:1.3rem}
-.header-container{justify-content:center;gap:16px}
-.header-actions{position:absolute}
-.header-actions:first-child{left:16px}
-.header-actions:last-child{right:16px}
+  .logo-section{font-size:1.1rem;position:absolute;left:50%;transform:translateX(-50%);z-index:50}
+  .logo-section i{font-size:1.3rem}
+  .header-container{justify-content:center;gap:16px}
+  .header-actions{position:absolute}
+  .header-actions:first-child{left:12px}
+  .header-actions:last-child{right:12px}
+}
+
+/* Compact header for small phones */
+@media (max-width:480px){
+  .dashboard-header{padding:10px 0}
+  .header-container{padding:0 12px}
+  .logo-section{font-size:1rem;position:absolute;left:50%;transform:translateX(-50%);gap:8px}
+  .logo-section i{font-size:1.1rem}
+  .header-actions{gap:8px}
+  .header-actions a.btn-back, .header-actions button{padding:6px;background:rgba(255,255,255,0.12);border-radius:8px;font-size:1rem}
+  .quick-btn{padding:8px 10px;font-size:0.9rem}
+}
+
+/* Very small devices: show icon-only logo to save space */
+@media (max-width:360px){
+  .logo-section span{display:none}
+  .header-container{padding:0 8px}
+  .header-actions:first-child{left:8px}
+  .header-actions:last-child{right:8px}
 }
 
 /* Dashboard Main */
@@ -1601,6 +1684,44 @@ body.dark-mode .session-list-modern li:hover{background:#334155}
   .dashboard-right{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
 }
 
+/* Target tablet / small laptop screens (fit 1024px exactly) */
+@media (min-width:769px) and (max-width:1024px){
+  :root{font-size:14px}
+  .dashboard-container{max-width:1100px;padding:0 18px}
+  .welcome-section{padding:18px;align-items:flex-start}
+  .welcome-content h1{font-size:1.6rem}
+  .welcome-content p{font-size:0.98rem}
+  .quick-actions{gap:10px}
+  .quick-btn{padding:8px 12px;font-size:0.95rem}
+
+  /* Stats grid tighter */
+  .stats-grid{grid-template-columns:repeat(3,minmax(140px,1fr));gap:14px}
+  .stat-value{font-size:1.6rem}
+
+  /* Layout: keep two-column dashboard but reduce right width */
+  .dashboard-grid{grid-template-columns:1fr 320px;gap:18px}
+  .dashboard-right{grid-template-columns:1fr}
+  .card-modern{border-radius:12px}
+
+  /* Forms and lists compact */
+  .form-group-modern{margin:12px 16px}
+  .form-row-modern{grid-template-columns:1fr 1fr;gap:12px}
+  .form-actions{padding:16px 18px}
+  .session-list-modern li{padding:12px 16px}
+
+  /* Timer smaller */
+  .timer-display-modern{font-size:3rem;padding:20px}
+  .timer-btn-modern{width:48px;height:48px}
+
+  /* Badges grid */
+  .badges-grid-modern{grid-template-columns:repeat(3,1fr);gap:10px}
+
+  /* Reduce heavy shadows and spacing to fit */
+  .card-header{padding:14px}
+  .stat-card-modern{padding:18px}
+  .dedication-card{padding:14px}
+}
+
 @media (max-width:768px){
   .header-container{padding:0 16px}
   .welcome-section{flex-direction:column;gap:16px;text-align:center}
@@ -1619,6 +1740,63 @@ body.dark-mode .session-list-modern li:hover{background:#334155}
   .timer-display-modern{font-size:2.5rem}
   .badges-grid-modern{grid-template-columns:repeat(2,1fr)}
 }
+
+/* Global responsiveness improvements for all screens */
+@media (max-width:1200px){
+  :root{font-size:15px}
+  .container, .dashboard-container, .container-narrow{padding-left:18px;padding-right:18px}
+}
+
+@media (max-width:992px){
+  :root{font-size:14px}
+  nav.nav-bar .nav-actions, .nav-actions{flex-wrap:wrap}
+  .hero-content-wrapper{flex-direction:column;gap:20px}
+  .hero-main, .hero-visual{width:100%}
+  .hero-image-grid{display:none}
+  .hero-mobile{display:block}
+  .features-grid-modern{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+  .footer-content-modern{display:grid;grid-template-columns:1fr;gap:16px}
+}
+
+@media (max-width:768px){
+  :root{font-size:13px}
+  .nav-bar .nav-container{padding:0 12px}
+  .hero-title{font-size:clamp(1.4rem,4vw,1.8rem)}
+  .hero-subtitle, .mobile-subtitle{font-size:0.95rem}
+  .container, .dashboard-container{padding-left:12px;padding-right:12px}
+  .card-header{padding:16px}
+  .form-group-modern{margin:14px 16px}
+  .form-actions{flex-direction:column}
+  .quick-actions{flex-direction:row;flex-wrap:wrap;justify-content:center}
+  .quick-btn{flex:1 1 auto}
+}
+
+@media (max-width:480px){
+  :root{font-size:12px}
+  .hero-title{font-size:1.2rem}
+  .hero-subtitle{font-size:0.9rem}
+  .welcome-content h1{font-size:1.3rem}
+  .dashboard-grid{grid-template-columns:1fr}
+  .dashboard-right{grid-template-columns:1fr}
+  .timer-display-modern{font-size:2rem}
+  .badge{padding:12px}
+  .quick-actions{gap:8px}
+  .quick-btn{padding:8px 12px;font-size:0.9rem}
+  .session-list-modern li{padding:12px}
+  .tag-chip{padding:6px 8px;font-size:0.8rem}
+}
+
+/* Make all images scale responsively */
+img, .hero-bg-image, .hero-img, .dedication-image{max-width:100%;height:auto;display:block}
+
+/* Ensure modals and panels fit small screens */
+.settings-content, .welcome-content{width:95%;max-width:640px}
+
+/* Improve touch target sizes */
+button, .quick-btn, .tab-btn, .preset-btn, .timer-btn-modern{min-height:44px}
+
+/* Ensure long tables/grid wrap */
+.features-grid-modern, .testimonials-grid, .badges-grid-modern{grid-auto-rows:auto}
 
 /* Welcome Modal */
 .welcome-modal {
@@ -4388,6 +4566,25 @@ body.dark-mode .mobile-cta-btn:hover{box-shadow:0 8px 24px rgba(52,211,153,0.6)!
 .fab-item:hover{background:var(--primary);color:#fff;transform:scale(1.1);box-shadow:0 6px 16px rgba(var(--primary-rgb),0.4)}
 body.dark-mode .fab-item{background:#1f2937;color:#6ee7b7}
 body.dark-mode .fab-item:hover{background:#34d399;color:#000}
+
+/* Responsive - Tutorials Section */
+@media(max-width:768px){
+  .tutorials-resources-modern{padding:60px 0}
+  .tutorials-highlight-grid{grid-template-columns:1fr;gap:24px;margin:40px 0}
+  .tutorials-highlight-card{padding:30px}
+  .tutorials-highlight-card h3{font-size:1.2rem}
+  .tutorials-cta-section{padding:30px;margin-top:40px}
+}
+@media(max-width:480px){
+  .tutorials-resources-modern{padding:40px 0}
+  .tutorials-highlight-card{padding:24px}
+  .highlight-icon{width:50px;height:50px;font-size:1.5rem}
+  .tutorials-highlight-card h3{font-size:1.1rem}
+  .tutorials-highlight-card p{font-size:0.95rem}
+  .highlight-features li{font-size:0.9rem}
+  .tutorials-cta-section .btn-primary{padding:14px 32px;font-size:1rem}
+}
+
 @media(max-width:768px){
 .fab-container{bottom:80px;right:20px}
 .fab-main{width:50px;height:50px}
@@ -4415,6 +4612,16 @@ body.dark-mode .fab-item:hover{background:#34d399;color:#000}
 
 @media(max-width:768px){
 .dashboard-header .logo-section{position:static!important;transform:none!important;margin-left:auto}
+}
+
+/* Force center the header logo across breakpoints (overrides earlier static rules) */
+.dashboard-header .logo-section{
+  position:absolute !important;
+  left:50% !important;
+  transform:translateX(-50%) !important;
+  top:50%;
+  transform:translate(-50%, -50%) !important;
+  z-index:999;
 }
 
 .nav-link i{margin-right:6px}

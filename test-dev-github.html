@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Test — Dev.to & GitHub Layout</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="tutorials.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body{padding:18px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    .controls button{padding:8px 12px;border-radius:6px}
+    section{margin-bottom:20px}
+    h2{margin:8px 0}
+    .info{color:var(--muted);font-size:0.95rem;margin-bottom:8px}
+    .tutorial-card{min-height:90px}
+  </style>
+</head>
+<body>
+  <h1>Test: Dev.to & GitHub Layout</h1>
+  <div class="info">Use the buttons to simulate grid vs horizontal rendering and inspect the computed styles in devtools.</div>
+  <div class="controls">
+    <button id="populateGrid">Populate Grid</button>
+    <button id="populateHorizontal">Populate Horizontal</button>
+    <button id="applyInline">Apply Inline Flex</button>
+    <button id="toggleClass">Toggle horizontal-scroll Class</button>
+    <button id="clear">Clear</button>
+    <button id="dump">Dump #devtoList State (console)</button>
+  </div>
+
+  <section id="devto">
+    <h2>Dev.to</h2>
+    <div id="devtoList" class="tutorials-grid"></div>
+  </section>
+
+  <section id="github">
+    <h2>GitHub</h2>
+    <div id="githubList" class="tutorials-grid"></div>
+  </section>
+
+  <script>
+    function makeCard(i){
+      const card = document.createElement('div');
+      card.className = 'tutorial-card card-modern';
+      card.innerHTML = `
+        <div class="tutorial-card-icon"><i class="fas fa-book"></i></div>
+        <div class="tutorial-card-title">Item ${i}</div>
+        <div class="tutorial-card-source">Source</div>`;
+      return card;
+    }
+
+    function clearAll(){
+      document.getElementById('devtoList').innerHTML = '';
+      document.getElementById('githubList').innerHTML = '';
+      // also clear inline styles/classes we will toggle
+      ['devtoList','githubList'].forEach(id=>{
+        const el = document.getElementById(id);
+        el.classList.remove('horizontal-scroll');
+        el.classList.add('tutorials-grid');
+        el.style.display = '';
+        el.style.flexWrap = '';
+        el.style.overflowX = '';
+        el.style.overflowY = '';
+      });
+    }
+
+    function populateGrid(){
+      clearAll();
+      const d = document.getElementById('devtoList');
+      const g = document.getElementById('githubList');
+      for(let i=1;i<=8;i++){ d.appendChild(makeCard(i)); g.appendChild(makeCard(i+100)); }
+      // ensure grid class present
+      d.classList.remove('horizontal-scroll'); d.classList.add('tutorials-grid');
+      g.classList.remove('horizontal-scroll'); g.classList.add('tutorials-grid');
+      console.log('Populated grid: items appended');
+    }
+
+    function populateHorizontal(){
+      clearAll();
+      const d = document.getElementById('devtoList');
+      const g = document.getElementById('githubList');
+      // Apply horizontal class and inline flex to simulate earlier behavior
+      [d,g].forEach(el=>{
+        el.classList.add('horizontal-scroll');
+        el.classList.remove('tutorials-grid');
+        el.style.display = 'flex';
+        el.style.flexWrap = 'nowrap';
+        el.style.gap = '12px';
+        el.style.overflowX = 'auto';
+        el.style.overflowY = 'hidden';
+        el.style.WebkitOverflowScrolling = 'touch';
+        el.style.scrollSnapType = 'x mandatory';
+      });
+      for(let i=1;i<=8;i++){
+        const c1 = makeCard(i); const c2 = makeCard(i+100);
+        // mimic fixed card width used previously
+        [c1,c2].forEach(c=>{ c.style.flex='0 0 140px'; c.style.minWidth='140px'; c.style.maxWidth='140px'; });
+        d.appendChild(c1); g.appendChild(c2);
+      }
+      console.log('Populated horizontal (inline flex)');
+    }
+
+    function applyInline(){
+      ['devtoList','githubList'].forEach(id=>{
+        const el = document.getElementById(id);
+        el.style.display = 'flex';
+        el.style.flexWrap = 'nowrap';
+        el.style.overflowX = 'auto';
+        el.style.overflowY = 'hidden';
+        el.style.gap = '12px';
+        console.log('Applied inline flex to', id);
+      });
+    }
+
+    document.getElementById('populateGrid').addEventListener('click', populateGrid);
+    document.getElementById('populateHorizontal').addEventListener('click', populateHorizontal);
+    document.getElementById('applyInline').addEventListener('click', applyInline);
+    document.getElementById('clear').addEventListener('click', clearAll);
+    document.getElementById('toggleClass').addEventListener('click', ()=>{
+      ['devtoList','githubList'].forEach(id=> document.getElementById(id).classList.toggle('horizontal-scroll'));
+      console.log('Toggled horizontal-scroll class');
+    });
+    document.getElementById('dump').addEventListener('click', ()=>{
+      const el = document.getElementById('devtoList');
+      console.log('devtoList.className=', el.className);
+      console.log('computed display=', getComputedStyle(el).display);
+      console.log('inline cssText=', el.style.cssText);
+      console.log('innerHTML snippet=', el.innerHTML.slice(0,200));
+    });
+
+    // start with grid sample
+    populateGrid();
+  </script>
+</body>
+</html>

@@ -1,0 +1,812 @@
+/* Two-column layout for tutorials page */
+.tutorials-layout{display:grid;grid-template-columns:1fr 340px;gap:18px;margin-bottom:18px}
+.tutorials-main{display:flex;flex-direction:column;gap:18px;width:100%;min-width:0;overflow:visible}
+.tutorials-sidebar{display:flex;flex-direction:column;gap:18px}
+
+/* Dark background for tutorials page (overrides main site styles) */
+.dashboard-main{background:#000;color:#fff}
+.dashboard-container{color:#fff}
+
+/* Dark card styles for tutorials page */
+.dashboard-main .card-modern{
+  background:#0b0b0b;
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.04);
+  box-shadow:0 6px 22px rgba(0,0,0,0.6);
+  overflow:visible;
+  width:100%;
+}
+
+@media (max-width:768px){
+  .dashboard-main .card-modern{
+    overflow:visible !important;
+    width:100% !important;
+  }
+}
+.dashboard-main .card-header{border-color:rgba(255,255,255,0.03)}
+.dashboard-main .card-header h2, .dashboard-main .card-header h3{color:#fff}
+
+/* Tutorial / channel cards */
+.dashboard-main .tutorial-card,
+.dashboard-main .video-card,
+.dashboard-main .channel-card{background:#0f0f0f;color:#fff;border:1px solid rgba(255,255,255,0.03);box-shadow:0 4px 18px rgba(0,0,0,0.55)}
+.dashboard-main .tutorial-card-title{color:#fff}
+.dashboard-main .tutorial-card-source{color:rgba(255,255,255,0.7)}
+
+/* Muted text on dark background */
+.dashboard-main .muted, .dashboard-main p, .dashboard-main .card-header p{color:rgba(255,255,255,0.72)}
+
+/* Section hero overlay darker for contrast */
+.dashboard-main .section-hero::before{background:rgba(0,0,0,0.65)}
+
+/* Make links and primary buttons stand out on dark */
+.dashboard-main a{color:var(--primary)}
+.dashboard-main .quick-btn{background:var(--primary);color:#fff}
+
+/* Ensure inputs are legible */
+.dashboard-main input, .dashboard-main textarea, .dashboard-main select{background:#0b0b0b;color:#fff;border:1px solid rgba(255,255,255,0.06)}
+
+/* Tutorials channel & video responsive styles */
+.channel-card{display:flex;flex-direction:column;gap:8px;align-items:flex-start;contain:layout}
+.channel-card .channel-meta{display:flex;align-items:center;gap:10px}
+.channel-card .channel-avatar{width:56px;height:56px;border-radius:8px;object-fit:cover}
+.channel-card .channel-title{font-weight:700;font-size:1rem}
+.channel-card .channel-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+
+/* Mobile: compact channel card design */
+@media (max-width:768px){
+  .channel-card{
+    gap:6px;
+    padding:10px !important;
+  }
+  
+  .channel-card .channel-meta{
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    width:100%;
+  }
+  
+  .channel-card .channel-avatar{
+    width:40px;
+    height:40px;
+    border-radius:6px;
+  }
+  
+  .channel-card .channel-info{
+    width:100%;
+    text-align:center;
+  }
+  
+  .channel-card .channel-title{
+    font-size:0.85rem;
+    line-height:1.2;
+    word-break:break-word;
+  }
+  
+  .channel-card .channel-description{
+    display:none;
+  }
+  
+  .channel-card .channel-tags{
+    display:none;
+  }
+  
+  .channel-card .channel-actions{
+    width:100%;
+    margin-top:6px !important;
+    flex-direction:column !important;
+    gap:6px !important;
+  }
+  
+  .channel-card .channel-actions a,
+  .channel-card .channel-actions button{
+    width:100%;
+    padding:6px 8px !important;
+    font-size:0.75rem !important;
+    white-space:nowrap;
+  }
+}
+
+/* Section hero styles */
+.section-hero{padding:32px 18px;margin-bottom:18px;border-radius:12px;position:relative;overflow:visible;background-size:cover;background-position:center;background-attachment:fixed}
+.section-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:1}
+
+/* Hero slideshow removed per user request */
+
+@media (max-width:768px){
+  /* Channels: enable horizontal scroll on mobile only, matching compact grid item width */
+  #channels .channels-grid{
+    display:flex !important;
+    flex-wrap:nowrap;
+    gap:12px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:12px 6px;
+    scroll-snap-type:x mandatory;
+  }
+  #channels .channels-grid > *{
+    flex:0 0 140px;
+    min-width:140px;
+    max-width:140px;
+    box-sizing:border-box;
+    scroll-snap-align:start;
+  }
+
+  /* Videos: horizontal scroll matching compact grid item width */
+  #videos .video-grid{
+    display:flex !important;
+    flex-wrap:nowrap;
+    gap:12px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:12px 6px;
+    scroll-snap-type:x mandatory;
+  }
+  #videos .video-grid > *{
+    flex:0 0 140px;
+    min-width:140px;
+    max-width:140px;
+    box-sizing:border-box;
+    scroll-snap-align:start;
+  }
+
+  /* Tutorials / Resources list: horizontal scroll on mobile */
+  #resources #tutorialList,
+  #tutorialList.tutorials-grid{
+    display:flex !important;
+    flex-wrap:nowrap;
+    gap:12px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:12px 6px;
+    scroll-snap-type:x mandatory;
+  }
+
+  /* Dev.to & GitHub: enable horizontal scroll when .horizontal-scroll is applied */
+  #devtoList.horizontal-scroll,
+  #githubList.horizontal-scroll{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    gap:12px !important;
+    overflow-x:auto !important;
+    -webkit-overflow-scrolling:touch;
+    padding:12px 6px !important;
+    scroll-snap-type:x mandatory;
+  }
+  #devtoList.horizontal-scroll > *,
+  #githubList.horizontal-scroll > *{
+    flex:0 0 140px !important;
+    min-width:140px !important;
+    max-width:140px !important;
+    box-sizing:border-box !important;
+    scroll-snap-align:start !important;
+  }
+  #resources #tutorialList > *,
+  #tutorialList.tutorials-grid > *{
+    flex:0 0 140px;
+    min-width:140px;
+    max-width:140px;
+    box-sizing:border-box;
+    scroll-snap-align:start;
+  }
+
+  /* Sidebar lists (Dev.to, GitHub) horizontal scroll matching compact width */
+  /* (Already handled in base rules above with !important) */
+
+  .hero-slides{height:260px}
+  .hero-slide h2{font-size:1.3rem}
+  .hero-slide p{font-size:0.95rem}
+  .hero-slide .slide-content{padding:18px}
+}
+.section-hero-content{position:relative;z-index:2;max-width:800px}
+.section-hero h2{margin:0 0 12px;font-size:2rem;color:#fff;font-weight:700}
+.section-hero p{margin:0;font-size:1.05rem;color:rgba(255,255,255,0.95);line-height:1.5}
+
+/* Main landing hero for tutorials page */
+.tutorials-hero{background-image:url('./images/Tutorials_images/code_tutorial.webp');background-size:cover;background-position:center}
+.hero-landing{padding:56px 24px}
+.hero-landing h1{margin:0 0 12px;font-size:2.4rem;line-height:1.05;color:#fff}
+.hero-landing p{margin:0 0 18px;color:rgba(255,255,255,0.95);max-width:720px}
+.hero-landing .hero-ctas{display:flex;gap:12px;align-items:center}
+.hero-landing .hero-cta{background:linear-gradient(90deg,var(--primary),var(--primary-dark));color:#fff;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700}
+.hero-landing .quick-btn{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.12);padding:10px 14px;border-radius:8px}
+
+@media (max-width:1024px){
+  .hero-landing{padding:48px 20px}
+  .hero-landing h1{font-size:2rem}
+}
+@media (max-width:680px){
+  .tutorials-hero{background-position:top}
+  .hero-landing{padding:28px 14px}
+  .hero-landing h1{font-size:1.6rem}
+  .hero-landing p{font-size:0.95rem}
+  .hero-landing .hero-ctas{flex-direction:column;align-items:flex-start}
+  .hero-landing .hero-cta,.hero-landing .quick-btn{width:100%}
+}
+
+/* Carousel hero styles (centered overlay) */
+.hero-slideshow{position:relative;padding:0;border-radius:12px;overflow:hidden}
+.hero-slides{position:relative;width:100%;height:720px;display:block;background:#000}
+.hero-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(1.02);transition:opacity 450ms ease,transform 450ms ease;background-size:cover;background-position:center}
+.hero-slide.active{opacity:1;transform:scale(1);z-index:2}
+.hero-slide::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.4);z-index:1}
+.hero-slide .slide-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero-slide .slide-content{position:relative;z-index:3;color:#fff;text-align:center;max-width:680px;padding:32px;flex:1}
+.hero-slide h2{margin:0 0 16px;font-size:3rem;line-height:1.1;color:#fff}
+.hero-slide p{margin:0 0 24px;font-size:1.2rem;color:rgba(255,255,255,0.95);line-height:1.5}
+.hero-slide .slide-cta{display:inline-block;margin:0 8px;background:var(--primary);color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;transition:all 200ms}
+.hero-slide .slide-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(var(--primary-rgb),0.24)}
+.hero-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);border:0;color:#fff;padding:12px 14px;border-radius:999px;cursor:pointer;z-index:10;transition:all 180ms}
+.hero-nav:hover{background:rgba(0,0,0,0.7);transform:translateY(-50%) scale(1.1)}
+.hero-prev{left:16px}
+.hero-next{right:16px}
+
+/* play/pause control */
+.hero-play{position:absolute;right:60px;top:16px;z-index:12;background:rgba(0,0,0,0.5);color:#fff;border:0;padding:10px 12px;border-radius:8px;cursor:pointer;transition:all 180ms;font-size:0.95rem}
+.hero-play:hover{background:rgba(0,0,0,0.7)}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce){
+  .hero-slide{transition:none !important}
+}
+
+@media (max-width:880px){
+  .hero-slides{height:580px}
+  .hero-slide h2{font-size:2.2rem}
+  .hero-slide p{font-size:1rem}
+  .hero-slide .slide-content{padding:28px}
+}
+@media (max-width:680px){
+  .hero-slides{height:460px}
+  .hero-slide h2{font-size:1.7rem}
+  .hero-slide p{font-size:0.95rem}
+  .hero-slide .slide-content{padding:16px}
+  .hero-slide .slide-cta{padding:10px 14px;font-size:0.9rem;margin:0 6px}
+  .hero-nav{padding:10px}
+  .hero-prev{left:8px}
+  .hero-next{right:8px}
+  .hero-play{padding:8px 10px;font-size:0.85rem;right:50px}
+}
+
+/* Enhanced videos hero layout */
+.hero-content-grid{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:center}
+.hero-text{display:flex;flex-direction:column;gap:12px}
+.hero-ctas{display:flex;gap:10px;align-items:center;margin-top:6px}
+.hero-cta{padding:10px 14px;border-radius:8px;text-decoration:none}
+.hero-preview{display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.preview-thumb{width:100%;aspect-ratio:16/9;border-radius:10px;background:linear-gradient(135deg,rgba(0,0,0,0.55),rgba(20,20,20,0.85));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.04)}
+.preview-thumb img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+.play-overlay{position:absolute;display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.4));font-size:1.4rem;color:#fff;border:2px solid rgba(255,255,255,0.06)}
+.preview-meta{color:rgba(255,255,255,0.9);font-size:0.95rem;display:flex;gap:6px;align-items:center}
+
+@media (max-width:880px){
+  .hero-content-grid{grid-template-columns:1fr 260px}
+}
+@media (max-width:680px){
+  .hero-content-grid{grid-template-columns:1fr;gap:12px}
+  .hero-preview{order:2}
+  .preview-thumb{aspect-ratio:16/9;width:100%}
+  .play-overlay{width:56px;height:56px}
+  .section-hero{padding:18px}
+}
+
+/* Resources hero specific styles */
+.resources-grid{grid-template-columns:1fr 300px}
+.hero-bullets{display:flex;gap:10px;margin:12px 0;padding:0;list-style:none;flex-wrap:wrap}
+.hero-bullets li{background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:999px;font-weight:700;color:inherit}
+.resource-stats{display:flex;gap:16px;align-items:center;margin-top:12px}
+.resource-stats strong{font-size:1.2rem}
+.resource-filters{display:flex;gap:8px;align-items:center}
+.resource-filters label{font-size:0.85rem;color:var(--muted);margin-right:6px}
+.resource-filters select{padding:6px 8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:inherit}
+.resource-preview.resource-preview .resource-thumb{border-radius:10px;overflow:hidden}
+.resource-meta{margin-top:8px;color:rgba(255,255,255,0.9)}
+
+@media (max-width:880px){
+  .resources-grid{grid-template-columns:1fr 220px}
+}
+@media (max-width:680px){
+  .resources-grid{grid-template-columns:1fr}
+  .resource-preview{order:2}
+}
+
+/* Hero button color fixes: ensure strong contrast and consistent hover states */
+.hero-ctas .hero-cta{background:linear-gradient(90deg,var(--primary),var(--primary-dark));color:#fff;border:0;border-radius:8px;padding:10px 14px;font-weight:700;box-shadow:0 8px 22px rgba(var(--primary-rgb),0.16);text-decoration:none}
+.hero-ctas .hero-cta:focus,.hero-ctas .hero-cta:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(var(--primary-rgb),0.22)}
+
+/* Make the secondary 'Watch Featured' button a clear, high-contrast outline to work on dark/light heroes */
+#videos .hero-ctas .quick-btn,#videos .hero-ctas button.quick-btn{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.14);padding:9px 13px;border-radius:8px}
+#videos .hero-ctas .quick-btn:focus,#videos .hero-ctas .quick-btn:hover{background:rgba(255,255,255,0.06);transform:translateY(-2px)}
+
+/* If site uses light theme variables, fall back to primary color for outline */
+#videos .hero-ctas .quick-btn{box-shadow:none}
+
+/* Section-specific hero backgrounds */
+.hero-videos{background-image:url('./images/news.webp')}
+.hero-articles{background-image:url('./images/newspapers.webp')}
+.hero-github{background-image:url('./images/organized.webp')}
+.hero-resources{background-image:url('./images/library.webp')}
+
+.channels-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.video-card{background:var(--card);padding:10px;border-radius:10px;box-shadow:0 2px 8px rgba(var(--primary-rgb),0.04);contain:layout}
+.video-card iframe{border-radius:8px;width:100%;aspect-ratio:16/9;height:auto}
+
+/* Mobile: optimized video card design */
+@media (max-width:768px){
+  .video-card{
+    padding:8px;
+    border-radius:8px;
+    background:linear-gradient(135deg,#1a1a1a,#0f0f0f);
+    border:1px solid rgba(255,255,255,0.05);
+    box-shadow:0 2px 6px rgba(0,0,0,0.4);
+  }
+
+  .video-card > div:nth-child(1){
+    font-size:0.75rem;
+    font-weight:700;
+    line-height:1.2;
+    word-break:break-word;
+    color:#fff;
+    margin-bottom:4px !important;
+    overflow:hidden;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+  }
+
+  .video-card > div:nth-child(2){
+    display:none !important;
+  }
+
+  .lazy-video-container{
+    border-radius:6px !important;
+    margin-bottom:4px;
+  }
+
+  .video-card .fa-play-circle{
+    font-size:2rem !important;
+    color:#ff0000;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  }
+
+  .video-card iframe{
+    border-radius:6px;
+    aspect-ratio:16/9;
+  }
+}
+
+/* Tutorial cards grid */
+.tutorials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;padding:12px!important}
+.tutorial-card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 2px 8px rgba(var(--primary-rgb),0.06);transition:all 200ms;display:flex;flex-direction:column;gap:12px;contain:layout;cursor:pointer}
+.tutorial-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(var(--primary-rgb),0.12)}
+.tutorial-card-icon{font-size:2.5rem;color:var(--primary);margin-bottom:8px}
+.tutorial-card-title{font-weight:700;font-size:1.05rem;color:var(--primary-dark);line-height:1.4}
+.tutorial-card-source{color:var(--muted);font-size:0.85rem;font-weight:600}
+.tutorial-card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.tutorial-card-tag{background:rgba(var(--primary-rgb),0.08);color:var(--primary);padding:4px 8px;border-radius:4px;font-size:0.8rem;font-weight:500}
+.tutorial-card-actions{display:flex;gap:8px;margin-top:10px}
+.tutorial-card-actions a{flex:1;padding:8px 12px;font-size:0.85rem;text-align:center;background:var(--primary);color:#fff;border:none;border-radius:6px;text-decoration:none;transition:all 160ms}
+.tutorial-card-actions a:hover{background:var(--primary-dark);transform:translateY(-2px)}
+
+@media (max-width:1024px){
+  .tutorials-layout{grid-template-columns:1fr 300px;gap:14px}
+  .channels-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .video-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .tutorials-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .hero-landing h1, .tutorials-hero h1{font-size:2.6rem}
+  .section-hero h2{font-size:1.8rem}
+}
+
+@media (max-width:768px){
+  /* Keep two-column layout for tablets and larger phones */
+  .tutorials-layout{grid-template-columns:1fr 260px;gap:12px}
+  .tutorial-card-icon{font-size:2rem}
+  .tutorial-card-title{font-size:1rem}
+  .tutorials-hero{padding:24px 14px}
+  .tutorials-hero h1{font-size:1.8rem}
+  .tutorials-hero p{font-size:0.95rem}
+  .section-hero{padding:20px 12px;background-attachment:scroll}
+  .section-hero h2{font-size:1.5rem}
+  .section-hero p{font-size:0.95rem}
+}
+
+@media (max-width:480px){
+  .channels-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+  .video-card{padding:8px}
+  .tutorials-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+  .tutorial-card{padding:14px}
+  .tutorial-card-icon{font-size:1.8rem}
+  .tutorial-card-title{font-size:0.95rem}
+  .tutorials-hero{padding:20px 12px}
+  .tutorials-hero h1{font-size:1.4rem}
+  .section-hero{padding:18px 12px}
+  .section-hero h2{font-size:1.2rem}
+  .section-hero p{font-size:0.9rem}
+}
+
+@media (max-width:360px){
+  .tutorials-layout{grid-template-columns:1fr;gap:10px}
+  .tutorials-sidebar{max-height:none;overflow:visible}
+}
+
+/* Very small screens: force 2 columns for Dev.to and GitHub lists for better fit */
+@media (max-width:375px){
+  /* Force compact 2-column grid and smaller cards on very small screens */
+  .tutorials-sidebar #devtoList, .tutorials-sidebar #githubList, #devtoList, #githubList{
+    grid-template-columns:repeat(2,minmax(120px,1fr)) !important;
+    gap:6px !important;
+    padding:6px 6px !important;
+  }
+  /* Reduce card padding/spacing to make two fit comfortably */
+  .tutorials-sidebar #devtoList .tutorial-card,
+  .tutorials-sidebar #githubList .tutorial-card,
+  #devtoList .tutorial-card,
+  #githubList .tutorial-card{
+    padding:10px !important;
+  }
+  /* Ensure children stretch to fill grid columns */
+  .tutorials-sidebar #devtoList > *, .tutorials-sidebar #githubList > *, #devtoList > *, #githubList > *{
+    width:100% !important; min-width:0 !important; box-sizing:border-box !important;
+  }
+}
+
+/* Sidebar tweaks */
+.tutorials-sidebar{align-self:start}
+.tutorials-sidebar .tutorials-grid{grid-template-columns:1fr;gap:10px}
+.tutorials-sidebar .tutorial-card{padding:12px;font-size:0.95rem}
+.tutorials-sidebar .section-hero{padding:18px 12px;border-radius:10px}
+.tutorials-sidebar .card-header{padding:8px 10px}
+
+/* Watchlist compact styles */
+#watchlistList{display:flex;flex-direction:column;gap:8px}
+#watchlistList .tutorial-card{padding:10px;display:flex;gap:8px;align-items:center}
+#watchlistList .tutorial-card .tutorial-card-icon{font-size:1.4rem;margin:0}
+#watchlistList .tutorial-card .tutorial-card-title{font-size:0.95rem}
+#watchlistList .tutorial-card .tutorial-card-actions{margin-left:auto}
+/* thumbnail in watchlist */
+.watch-thumb{width:90px;height:56px;object-fit:cover;border-radius:8px;flex:0 0 90px}
+
+/* Responsive watchlist adjustments */
+@media (max-width:600px){
+  .watch-thumb{width:80px;height:50px;flex:0 0 80px}
+  #watchlistList .tutorial-card{padding:8px}
+  #watchlistList .tutorial-card .tutorial-card-title{font-size:0.94rem}
+}
+
+@media (max-width:480px){
+  .watch-thumb{width:72px;height:45px;flex:0 0 72px}
+  #watchlistList .tutorial-card{padding:6px;gap:6px}
+  /* allow title to wrap on narrow screens and move actions below */
+  #watchlistList .tutorial-card > div{display:flex;flex-wrap:wrap;align-items:center}
+  #watchlistList .tutorial-card .tutorial-card-actions{order:3;margin-left:0;margin-top:6px;width:100%;display:flex;gap:6px}
+  #watchlistList .tutorial-card .tutorial-card-title{order:2;flex:1 1 100%;min-width:0;font-size:0.92rem}
+}
+
+@media (max-width:375px){
+  .watch-thumb{width:64px;height:40px;flex:0 0 64px}
+  #watchlistList .tutorial-card{padding:6px}
+  #watchlistList .tutorial-card .tutorial-card-actions{gap:4px}
+  #watchlistList .tutorial-card .btn-compact{padding:6px 8px;font-size:0.85rem}
+}
+
+/* Tablet adjustments (portrait and landscape tablets) */
+@media (min-width:601px) and (max-width:1024px){
+  .watch-thumb{width:110px;height:68px;flex:0 0 110px}
+  #watchlistList .tutorial-card{padding:10px}
+  #watchlistList .tutorial-card .tutorial-card-title{font-size:1rem}
+  /* allow two-column layout for larger tablets if sidebar narrower */
+  #watchlistList{display:flex;flex-direction:column;gap:10px}
+  #watchlistList .tutorial-card{align-items:center}
+}
+
+/* Sidebar lists: horizontal layout on larger screens, but allow mobile grid */
+@media (min-width:769px){
+  .tutorials-sidebar #devtoList,
+  .tutorials-sidebar #githubList{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    gap:12px !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    padding:12px 6px !important;
+    scroll-snap-type:x mandatory !important;
+    grid-template-columns:auto !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:100% !important;
+    height:auto !important;
+  }
+
+  .tutorials-sidebar #devtoList > *,
+  .tutorials-sidebar #githubList > *{
+    flex:0 0 140px !important;
+    width:140px !important;
+    min-width:140px !important;
+    max-width:140px !important;
+    box-sizing:border-box !important;
+    scroll-snap-align:start !important;
+    height:auto !important;
+    overflow:hidden !important;
+  }
+}
+
+/* Ensure Dev.to/GitHub sections allow horizontal scroll */
+#devto, #github{overflow:visible !important}
+#devto .card-header, #github .card-header{overflow:visible !important}
+
+/* Utility: compact card style used for horizontal lists */
+.compact-card{overflow:hidden}
+.compact-card .tutorial-card-title{font-size:0.95rem}
+
+/* Restrict horizontal-scroll utility to desktop only (>=769px) */
+@media (min-width:769px){
+  .horizontal-scroll{
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    gap:12px !important;
+    overflow-x:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+    padding:12px 6px !important;
+    scroll-snap-type:x mandatory !important;
+  }
+  .horizontal-scroll > *{flex:0 0 140px !important;min-width:140px !important;max-width:140px !important;box-sizing:border-box !important;scroll-snap-align:start !important}
+}
+
+/* Make sidebar sticky on larger screens */
+@media (min-width:769px){
+  .tutorials-sidebar{position:relative}
+  .tutorials-sidebar > section{position:sticky;top:84px}
+}
+
+/* Adjust sidebar behavior on smaller screens but keep two-column layout until very small widths */
+@media (max-width:768px){
+  .tutorials-layout{grid-template-columns:1fr 240px;gap:12px}
+  .tutorials-sidebar > section{position:sticky;top:72px}
+  .tutorials-sidebar{max-height:calc(100vh - 100px);overflow:auto}
+}
+
+/* Limit visible height for featured channel only (devto/github use horizontal scroll) */
+.tutorials-sidebar #featuredChannel{
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 6px;
+}
+
+/* Slightly tighter grid inside sidebar lists */
+.tutorials-sidebar #devtoList .tutorial-card,
+.tutorials-sidebar #githubList .tutorial-card{
+  display:flex;align-items:flex-start;gap:8px;padding:10px;border-radius:8px
+}
+
+/* Mobile compact styling for Dev.to/GitHub cards */
+@media (max-width:768px){
+  .tutorials-sidebar #devtoList .tutorial-card,
+  .tutorials-sidebar #githubList .tutorial-card{
+    flex-direction:column;
+    align-items:stretch;
+    padding:8px;
+    gap:6px;
+    font-size:0.85rem;
+  }
+  
+  .tutorials-sidebar #devtoList .tutorial-card-title,
+  .tutorials-sidebar #githubList .tutorial-card-title{
+    font-size:0.8rem;
+    font-weight:600;
+    line-height:1.2;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+  }
+  
+  .tutorials-sidebar #devtoList .tutorial-card-source,
+  .tutorials-sidebar #githubList .tutorial-card-source{
+    display:none;
+  }
+  
+  .tutorials-sidebar #devtoList .tutorial-card-tags,
+  .tutorials-sidebar #githubList .tutorial-card-tags{
+    display:none;
+  }
+  
+  .tutorials-sidebar #devtoList .tutorial-card-actions a,
+  .tutorials-sidebar #githubList .tutorial-card-actions a{
+    padding:4px 6px;
+    font-size:0.75rem;
+  }
+}
+
+/* Scrollbar styling (modern browsers) */
+.tutorials-sidebar #devtoList::-webkit-scrollbar,
+.tutorials-sidebar #githubList::-webkit-scrollbar,
+.tutorials-sidebar #featuredChannel::-webkit-scrollbar{width:10px}
+.tutorials-sidebar #devtoList::-webkit-scrollbar-thumb,
+.tutorials-sidebar #githubList::-webkit-scrollbar-thumb,
+.tutorials-sidebar #featuredChannel::-webkit-scrollbar-thumb{background:rgba(var(--primary-rgb),0.14);border-radius:8px}
+
+/* Channel filter bar (moved out of grid) */
+.channel-filter-bar{display:flex;align-items:center;gap:8px;padding:12px 8px;border-bottom:1px solid rgba(0,0,0,0.04);flex-wrap:wrap}
+.tab-btn{background:transparent;color:var(--primary);border:1px solid rgba(var(--primary-rgb),0.12);padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:700;transition:all 160ms}
+.tab-btn:hover{background:rgba(var(--primary-rgb),0.06)}
+.tab-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* Mobile: compact scrollable filter */
+@media (max-width:768px){
+  .channel-filter-bar{
+    gap:6px;
+    padding:8px 6px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    flex-wrap:nowrap;
+    scroll-snap-type:x mandatory;
+  }
+  
+  .tab-btn{
+    padding:6px 10px;
+    font-size:0.75rem;
+    font-weight:600;
+    border-radius:6px;
+    flex-shrink:0;
+    scroll-snap-align:start;
+  }
+}
+
+/* Featured channel hero */
+.featured-channel{display:flex;gap:18px;align-items:center;padding:18px;border-radius:12px;background:linear-gradient(135deg,#ffffff,#f7fff9);box-shadow:0 6px 24px rgba(var(--primary-rgb),0.06);margin-bottom:12px}
+.featured-avatar{width:120px;height:120px;border-radius:12px;object-fit:cover;flex:0 0 120px}
+.featured-info{flex:1}
+.featured-info h3{margin:0;font-size:1.25rem}
+.featured-info p{color:var(--muted);margin-top:8px}
+.featured-actions{display:flex;gap:10px;margin-top:12px}
+
+@media (max-width:768px){
+  .featured-channel{flex-direction:column;align-items:flex-start}
+  .featured-avatar{width:100%;height:auto;max-height:220px}
+}
+
+/* Welcome section adjustments */
+.welcome-section{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:20px 18px;margin-bottom:18px;border-radius:12px;background:linear-gradient(180deg,#0f1724 0%,#0b0b0b 100%);border:1px solid rgba(255,255,255,0.04)}
+.welcome-content{flex:1;min-width:220px}
+.welcome-content h1{color:#fff}
+.welcome-content p{color:rgba(255,255,255,0.9)}
+.welcome-actions{display:flex;gap:12px;align-items:center}
+.search-wrap{min-width:220px;max-width:420px}
+.search-wrap input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:inherit}
+.welcome-meta{margin-top:8px}
+
+@media(max-width:768px){
+  .welcome-section{flex-direction:column;align-items:stretch;padding:14px}
+  .welcome-actions{flex-direction:column;align-items:stretch}
+  .search-wrap{width:100%;max-width:none}
+  .quick-actions{display:flex;gap:8px;flex-wrap:wrap}
+}
+
+/* Welcome bullets and CTAs */
+.welcome-bullets{display:flex;gap:10px;margin:12px 0;padding:0;list-style:none;flex-wrap:wrap}
+.welcome-bullets li{background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:999px;font-weight:700;color:inherit}
+.welcome-ctas{display:flex;gap:10px;margin-top:10px}
+.quick-btn.primary-cta{background:var(--primary);color:#fff;border:1px solid rgba(0,0,0,0.08);padding:8px 14px}
+.quick-btn.secondary-cta{background:transparent;color:inherit;border:1px solid rgba(255,255,255,0.06);padding:8px 12px}
+
+@media(max-width:480px){
+  .welcome-bullets{justify-content:flex-start}
+  .quick-btn.primary-cta, .quick-btn.secondary-cta{width:100%;text-align:center}
+}
+
+/* Page navigation (sticky) */
+.page-nav{position:sticky;top:84px;z-index:80;background:transparent;margin:12px 0;padding:6px 12px;border-radius:8px}
+.page-nav ul{display:flex;gap:8px;align-items:center;list-style:none;padding:0;margin:0;overflow:auto}
+.page-nav li{flex:0 0 auto}
+.page-nav a{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.03);color:inherit;text-decoration:none;font-weight:600;border:1px solid rgba(255,255,255,0.02)}
+.page-nav a:hover{background:rgba(255,255,255,0.06)}
+.page-nav a.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+@media (max-width:768px){
+  .page-nav{top:72px;padding:6px 8px}
+  .page-nav ul{gap:6px}
+  .page-nav a{padding:8px 10px;font-size:0.95rem}
+}
+
+/* Back to top floating button */
+.back-to-top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,0.35);cursor:pointer;z-index:999;opacity:0;visibility:hidden;transition:opacity 200ms}
+.back-to-top.show{opacity:1;visibility:visible}
+
+/* Mobile override: horizontal scroll for all section lists on small screens */
+@media (max-width:768px){
+  .tutorials-layout{grid-template-columns:1fr;gap:12px}
+  .tutorials-sidebar{max-height:none;overflow:visible}
+  .tutorials-sidebar > section{position:static;top:auto}
+
+  /* Ensure video aspect and lazy containers behave on small screens */
+  .video-card iframe, .video-card .lazy-video-container{width:100%;height:auto;aspect-ratio:16/9}
+
+  .tutorial-card{padding:12px}
+  .tutorials-main .card-header{padding:10px}
+  .tutorials-sidebar .card-header{padding:8px}
+
+  /* Reduce oversized paddings for compact view */
+  .section-hero{padding:14px}
+  .section-hero h2{font-size:1.25rem}
+  .section-hero p{font-size:0.95rem}
+}
+
+/* MOBILE HORIZONTAL SCROLL: All section lists at ≤768px must scroll horizontally */
+@media (max-width:768px){
+  /* Override base grid display for all list containers */
+  .channels-grid, .video-grid, .tutorials-grid {
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    gap:12px !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    padding:12px 6px !important;
+    scroll-snap-type:x mandatory;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+  
+  .channels-grid > *, .video-grid > *, .tutorials-grid > * {
+    flex:0 0 140px !important;
+    width:140px !important;
+    min-width:140px !important;
+    max-width:140px !important;
+    box-sizing:border-box !important;
+    scroll-snap-align:start;
+  }
+
+  /* ID-based selectors for extra specificity */
+  #channelList, #videoList, #tutorialList {
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    gap:12px !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    padding:12px 6px !important;
+    scroll-snap-type:x mandatory;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+  
+  #channelList > *, #videoList > *, #tutorialList > * {
+    flex:0 0 140px !important;
+    width:140px !important;
+    min-width:140px !important;
+    max-width:140px !important;
+    box-sizing:border-box !important;
+    scroll-snap-align:start;
+  }
+
+  /* Dev.to & GitHub: keep a responsive grid on mobile instead of horizontal scroll */
+  #devtoList, #githubList {
+    display:grid !important;
+    grid-template-columns:repeat(auto-fill,minmax(160px,1fr)) !important;
+    gap:10px !important;
+    padding:10px 6px !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    overflow:visible !important;
+  }
+  #devtoList > *, #githubList > * {
+    width:100% !important;
+    min-width:0 !important;
+    box-sizing:border-box !important;
+  }
+
+  /* Ensure parent sections don't clip overflow */
+  #channels, #videos, #resources, #devto, #github {
+    width:100% !important;
+    max-width:100% !important;
+    overflow:visible !important;
+  }
+}

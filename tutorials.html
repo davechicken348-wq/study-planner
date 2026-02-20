@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Tutorials - StudyPlanner</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="tutorials.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header class="dashboard-header">
+    <div class="header-container">
+      <div class="header-actions">
+        <a href="index.html" class="btn-back"><i class="fas fa-home"></i></a>
+      </div>
+      <div class="logo-section"><i class="fas fa-graduation-cap"></i><span>StudyPlanner Tutorials</span></div>
+      <div class="header-actions">
+        <a href="dashboard.html" class="btn-back" title="Dashboard"><i class="fas fa-tachometer-alt"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="dashboard-main">
+    <div class="dashboard-container">
+      <section class="welcome-section">
+        <div class="welcome-actions">
+          <div class="search-wrap">
+            <input id="tutorialSearch" type="search" placeholder="Search tutorials, tags, authors..." aria-label="Search tutorials">
+          </div>
+          <div class="quick-actions">
+            <a class="quick-btn primary-cta" href="#resources">Browse Tutorials</a>
+            <a class="quick-btn secondary-cta" href="mailto:resources@studyplanner.example?subject=Submit%20Resource" title="Suggest a resource">Submit a Resource</a>
+            <button class="quick-btn" id="fetchAll">Fetch All Previews</button>
+            <a class="quick-btn" href="https://stu.edu.gh" target="_blank">About STU</a>
+            <a class="quick-btn" href="#channels">Channels</a>
+            <a class="quick-btn" href="#videos">YouTube</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Page navigation for quick jumps -->
+      <nav id="pageNav" class="page-nav" aria-label="Page navigation">
+        <ul>
+          <li><a href="#channels">Channels</a></li>
+          <li><a href="#videos">YouTube</a></li>
+          <li><a href="#resources">Learning Resources</a></li>
+          <li><a href="#devto">Dev.to</a></li>
+          <li><a href="#github">GitHub</a></li>
+        </ul>
+      </nav>
+
+      <!-- Main Hero (carousel) -->
+      <section class="tutorials-hero section-hero hero-slideshow" aria-label="Main hero">
+        <div class="hero-slides" id="heroSlides" role="list"></div>
+        <button id="heroPrev" class="hero-nav hero-prev" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+        <button id="heroNext" class="hero-nav hero-next" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+      </section>
+
+      <!-- Two-Column Layout -->
+      <div class="tutorials-layout">
+        <!-- Main Content (Left/Vertical) -->
+        <div class="tutorials-main">
+      <!-- Channels -->
+      <section id="channels" class="card-modern" style="margin-bottom:18px">
+        <div class="card-header"><h2><i class="fas fa-tv"></i> Channels</h2></div>
+        <div id="channelFilterBar" class="channel-filter-bar" aria-label="Channel filters"></div>
+        <div id="channelList" class="channels-grid" style="padding:8px"></div>
+      </section>
+
+      <!-- Videos -->
+      <section id="videos" class="card-modern" style="margin-bottom:18px">
+        <div class="section-hero hero-videos">
+          <div class="section-hero-content hero-content-grid">
+            <div class="hero-text">
+              <h2><i class="fas fa-video"></i> YouTube Tutorials</h2>
+              <p>Learn from top creators with curated video tutorials. Optionally use YouTube API to fetch fresh content or browse our pre-selected collection.</p>
+              <div class="hero-ctas">
+                <a class="btn-primary-modern hero-cta" href="#videoList">Browse Curated</a>
+                <button id="playFeatured" class="quick-btn" title="Play featured tutorial">Watch Featured</button>
+              </div>
+            </div>
+            <div class="hero-preview" aria-hidden="false">
+              <div class="preview-thumb" role="img" aria-label="Featured tutorial thumbnail">
+                <div class="play-overlay"><i class="fas fa-play"></i></div>
+              </div>
+              <div class="preview-meta"><strong id="featuredTitle">Featured tutorial</strong><span id="featuredAuthor"> • by StudyPlanner</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-header" style="display:flex;flex-direction:column;gap:12px;border-top:1px solid rgba(0,0,0,0.06);padding-top:12px">
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <input id="apiKeyInput" type="password" placeholder="Paste YouTube API key (optional)" style="flex:1;min-width:200px;padding:8px 12px;border:1px solid rgba(0,0,0,0.1);border-radius:6px;font-size:0.95rem">
+            <button id="fetchVideosBtn" class="btn-primary-modern" style="white-space:nowrap;padding:8px 18px;font-size:0.95rem">Fetch 40 Videos</button>
+          </div>
+        </div>
+        <div id="videoList" class="video-grid" style="padding:8px"></div>
+      </section>
+
+      <!-- Learning Resources -->
+      <section id="resources" class="card-modern">
+        <div class="section-hero hero-resources">
+          <div class="section-hero-content hero-content-grid resources-grid">
+            <div class="hero-text">
+              <h2><i class="fas fa-book"></i> Learning Resources</h2>
+              <p>Handpicked tutorials and reference materials from trusted educational platforms and publishers worldwide.</p>
+              <ul class="hero-bullets">
+                <li>Concise guides & walkthroughs</li>
+                <li>Free & paid curated collections</li>
+                <li>Reference docs and cheat sheets</li>
+              </ul>
+              <div class="hero-ctas">
+                <a class="btn-primary-modern hero-cta" href="#tutorialList">Browse Resources</a>
+                <a class="quick-btn secondary-cta" href="mailto:resources@studyplanner.example?subject=Submit%20Resource">Suggest a Resource</a>
+              </div>
+              <div class="resource-stats">
+                <div><strong id="resourceCount">—</strong> resources</div>
+                <div class="resource-filters">
+                  <label for="resourceTag">Topic</label>
+                  <select id="resourceTag" aria-label="Filter resources by topic">
+                    <option value="all">All</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="hero-preview resource-preview" aria-hidden="false">
+              <div class="preview-thumb resource-thumb" role="img" aria-label="Featured resource thumbnail">
+                <img src="./company.png" alt="Featured resource" loading="lazy">
+              </div>
+              <div class="preview-meta resource-meta"><strong id="featuredResourceTitle">Featured resource</strong><span id="featuredResourceSource"> • StudyPlanner</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-header" style="border-top:1px solid rgba(0,0,0,0.06);padding-top:12px"></div>
+        <div id="tutorialList" class="tutorials-grid" style="padding:8px"></div>
+      </section>
+        </div>
+
+        <!-- Sidebar Content (Right/Grid) -->
+        <div class="tutorials-sidebar">
+      <!-- Featured Channel -->
+      <section class="card-modern" style="margin-bottom:18px">
+        <div class="card-header"><h2><i class="fas fa-star"></i> Featured</h2></div>
+        <div id="featuredChannel"></div>
+      </section>
+
+      <!-- Watchlist -->
+      <section id="watchlist" class="card-modern" style="margin-bottom:18px">
+        <div class="card-header"><h2><i class="fas fa-bookmark"></i> Watchlist</h2></div>
+        <div id="watchlistList" class="tutorials-grid" style="padding:8px"></div>
+      </section>
+
+      <!-- Dev.to Articles -->
+      <section id="devto" class="card-modern" style="margin-bottom:18px">
+        <div class="section-hero hero-articles">
+          <div class="section-hero-content">
+            <h2><i class="fas fa-newspaper"></i> Dev.to</h2>
+            <p>Community articles</p>
+          </div>
+        </div>
+        <div class="card-header" style="display:flex;flex-direction:column;gap:8px;border-top:1px solid rgba(0,0,0,0.06);padding-top:8px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input id="devtoQuery" type="text" placeholder="Topic" value="javascript" style="flex:1;min-width:120px;padding:6px 10px;border:1px solid rgba(0,0,0,0.1);border-radius:6px;font-size:0.9rem">
+            <button id="fetchDevtoBtn" class="btn-primary-modern" style="white-space:nowrap;padding:6px 12px;font-size:0.85rem">Fetch</button>
+          </div>
+        </div>
+        <div id="devtoList" class="tutorials-grid"></div>
+      </section>
+
+      <!-- GitHub Repositories -->
+      <section id="github" class="card-modern">
+        <div class="section-hero hero-github">
+          <div class="section-hero-content">
+            <h2><i class="fas fa-code-branch"></i> GitHub</h2>
+            <p>Awesome repos</p>
+          </div>
+        </div>
+        <div class="card-header" style="display:flex;flex-direction:column;gap:8px;border-top:1px solid rgba(0,0,0,0.06);padding-top:8px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input id="githubQuery" type="text" placeholder="Topic" value="awesome" style="flex:1;min-width:120px;padding:6px 10px;border:1px solid rgba(0,0,0,0.1);border-radius:6px;font-size:0.9rem">
+            <button id="fetchGithubBtn" class="btn-primary-modern" style="white-space:nowrap;padding:6px 12px;font-size:0.85rem">Fetch</button>
+          </div>
+        </div>
+        <div id="githubList" class="tutorials-grid"></div>
+      </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="utils.js"></script>
+  <script src="tutorials.js" defer></script>
+</body>
+</html>

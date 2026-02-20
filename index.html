@@ -109,6 +109,7 @@
           <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
           <a href="faq.html" class="nav-link"><i class="fas fa-question-circle"></i> FAQ</a>
           <a href="study-tips.html" class="nav-link"><i class="fas fa-lightbulb"></i> Study Tips</a>
+          <a href="tutorials.html" class="nav-link"><i class="fas fa-graduation-cap"></i> Tutorials</a>
           <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
           <div class="theme-toggle-wrapper">
             <button class="theme-toggle-switch" id="themeToggle" aria-label="Toggle dark mode">
@@ -509,20 +510,86 @@
       </div>
     </section>
 
-    <!-- Dedication -->
-    <section class="dedication-modern">
-      <div class="container-narrow">
-        <div class="dedication-content-modern">
-          <div class="dedication-icon">
-            <i class="fas fa-graduation-cap"></i>
+    <!-- Tutorials Resources Section -->
+    <section class="tutorials-resources-modern">
+      <div class="container">
+        <div class="section-header">
+          <h2>Explore Learning Resources</h2>
+          <p>Curated channels, tutorials, and guides to accelerate your learning</p>
+        </div>
+
+        <div class="tutorials-highlight-grid">
+          <div class="tutorials-highlight-card">
+            <div class="highlight-icon">
+              <i class="fas fa-video"></i>
+            </div>
+            <h3>Video Tutorials</h3>
+            <p>Step-by-step video guides from YouTube channels covering various subjects and study techniques.</p>
+            <ul class="highlight-features">
+              <li><i class="fas fa-check"></i> Curated YouTube channels</li>
+              <li><i class="fas fa-check"></i> Subject-specific learning paths</li>
+              <li><i class="fas fa-check"></i> Expert educator recommendations</li>
+            </ul>
           </div>
-          <div class="dedication-badge">Made with <i class="fas fa-heart"></i> in Ghana</div>
-          <h3>Dedicated to STU University Ghana</h3>
-          <p>Empowering the next generation of African scholars. This tool is built to help every student achieve academic excellence through smarter, science-backed learning methods.</p>
-          <a href="mission.html" class="dedication-link">
-            <span>Learn Our Mission</span>
+
+          <div class="tutorials-highlight-card">
+            <div class="highlight-icon">
+              <i class="fas fa-bookmark"></i>
+            </div>
+            <h3>Articles & Guides</h3>
+            <p>In-depth articles from Dev.to covering study methods, productivity hacks, and learning strategies.</p>
+            <ul class="highlight-features">
+              <li><i class="fas fa-check"></i> Dev.to community posts</li>
+              <li><i class="fas fa-check"></i> Science-backed study methods</li>
+              <li><i class="fas fa-check"></i> Productivity optimization tips</li>
+            </ul>
+          </div>
+
+          <div class="tutorials-highlight-card">
+            <div class="highlight-icon">
+              <i class="fas fa-code-branch"></i>
+            </div>
+            <h3>Code & Projects</h3>
+            <p>Open-source repositories and sample projects from GitHub to enhance your technical skills.</p>
+            <ul class="highlight-features">
+              <li><i class="fas fa-check"></i> GitHub project collections</li>
+              <li><i class="fas fa-check"></i> Hands-on coding examples</li>
+              <li><i class="fas fa-check"></i> Learning frameworks & libraries</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tutorials-cta-section">
+          <a href="tutorials.html" class="btn-primary btn-large" aria-label="Explore all tutorials">
+            <span>Explore All Tutorials</span>
             <i class="fas fa-arrow-right"></i>
           </a>
+          <p class="tutorials-cta-note">Browse our complete collection of learning resources</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dedication (reworked) -->
+    <section class="dedication-modern" aria-labelledby="dedication-heading" role="region">
+      <div class="container-narrow dedication-grid-clean">
+        <div class="dedication-left" aria-hidden="true">
+          <figure class="dedication-figure" aria-hidden="true">
+            <img src="./images/library.webp" alt="Students studying in a library" class="dedication-image" width="280" height="180" loading="lazy">
+            <figcaption class="sr-only">Students studying in a library</figcaption>
+          </figure>
+        </div>
+
+        <div class="dedication-right">
+          <div class="dedication-meta">
+            <span class="dedication-badge">Made with <i class="fas fa-heart" aria-hidden="true"></i> in Ghana</span>
+          </div>
+          <h3 id="dedication-heading">Dedicated to STU University Ghana</h3>
+          <p class="dedication-text">StudyPlanner was created to support STU University students and educators with a free, privacy-first study tool. Our goal is to make effective learning accessible across Ghana.</p>
+
+          <div class="dedication-actions">
+            <a href="mission.html" class="btn-primary" aria-label="Learn our mission">Our Mission <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            <a href="contact.html" class="btn ghost" aria-label="Contact us about partnerships">Partner</a>
+          </div>
         </div>
       </div>
     </section>
@@ -693,7 +760,7 @@
         });
       }, { threshold: 0.1 });
 
-      document.querySelectorAll('.feature-modern, .step-modern, .testimonial-modern').forEach(el => {
+      document.querySelectorAll('.feature-modern, .step-modern, .testimonial-modern, .tutorials-highlight-card').forEach(el => {
         observer.observe(el);
       });
 
