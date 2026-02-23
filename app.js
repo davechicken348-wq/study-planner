@@ -3,6 +3,7 @@
   const THEME_KEY = StudyPlannerUtils.THEME_KEY;
   const TIMER_KEY = 'study_planner_timer';
   const BADGES_KEY = StudyPlannerUtils.BADGES_KEY;
+  const NOTES_KEY = 'study_planner_notes';
 
   function qs(id){return document.getElementById(id)}
 
@@ -11,7 +12,7 @@
   const dateInput = qs('date');
   const timeInput = qs('time');
   const duration = qs('duration');
-  const notes = qs('notes');
+  const sessionNotes = qs('notes');
   const tagsInput = qs('tags');
   const importFile = qs('importFile');
   const exportCsvBtn = qs('exportCsv');
@@ -34,6 +35,164 @@
     {id: 'hundred_hours', name: 'Century', iconClass: 'fa-trophy', description: '100+ hours studied', check: () => {const total = sessions.filter(s => s.level > 0).reduce((sum, s) => sum + (s.duration || 30), 0); return total >= 6000}},
     {id: 'speed_runner', name: 'Speed Runner', iconClass: 'fa-bolt', description: 'Use timer for 5+ sessions', check: () => parseInt(StudyPlannerUtils.getItem('timer_uses') || '0', 10) >= 5}
   ];
+
+  // Notes Management
+  let notes = [];
+  let currentEditingNoteId = null;
+
+  const NOTE_TEMPLATES = {
+    concepts: `# Key Concepts\n\n## Main Ideas\n- \n- \n\n## Important Points\n- \n- `,
+    questions: `# Questions & Answers\n\n## Question 1\nQ: \nA: \n\n## Question 2\nQ: \nA: `,
+    review: `# Review Notes\n\n## What I Learned\n- \n- \n\n## What I Need to Review\n- \n- \n\n## Questions for Next Session\n- `
+  };
+
+  function saveNotes(){
+    if(!StudyPlannerUtils.setItem(NOTES_KEY, JSON.stringify(notes))){
+      StudyPlannerUtils.showNotification('Failed to save note. Storage may be full.', 'error');
+    }
+  }
+
+  function loadNotes(){
+    const raw = StudyPlannerUtils.getItem(NOTES_KEY);
+    try{
+      notes = raw ? JSON.parse(raw) : [];
+    } catch(e){
+      console.error('Failed to parse notes:', e);
+      notes = [];
+    }
+  }
+
+  function createNote(subject, content, tags = ''){
+    const note = {
+      id: uid(),
+      subject: subject.trim(),
+      content: content.trim(),
+      tags: tags.split(',').map(t => t.trim()).filter(t => t),
+      createdDate: new Date().toISOString().slice(0, 10),
+      lastModified: new Date().toISOString()
+    };
+    notes.push(note);
+    saveNotes();
+    return note;
+  }
+
+  function updateNote(noteId, subject, content, tags = ''){
+    const note = notes.find(n => n.id === noteId);
+    if(note){
+      note.subject = subject.trim();
+      note.content = content.trim();
+      note.tags = tags.split(',').map(t => t.trim()).filter(t => t);
+      note.lastModified = new Date().toISOString();
+      saveNotes();
+    }
+  }
+
+  function deleteNote(noteId){
+    notes = notes.filter(n => n.id !== noteId);
+    saveNotes();
+  }
+
+  function renderNotesList(filterSubject = '', searchTerm = ''){
+    const notesList = qs('notesList');
+    let filtered = notes;
+    
+    if(filterSubject){
+      filtered = filtered.filter(n => n.subject === filterSubject);
+    }
+    if(searchTerm){
+      filtered = filtered.filter(n => 
+        n.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        n.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        n.tags.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()))
+      );
+    }
+
+    if(filtered.length === 0){
+      notesList.innerHTML = '<p class="notes-empty">No notes found.</p>';
+      return;
+    }
+
+    notesList.innerHTML = filtered.map(note => `
+      <div class="note-item" data-id="${note.id}">
+        <div class="note-header">
+          <div class="note-subject">${note.subject}</div>
+          <div class="note-date">${note.createdDate}</div>
+        </div>
+        <div class="note-preview">${note.content.substring(0, 100)}${note.content.length > 100 ? '...' : ''}</div>
+        ${note.tags.length > 0 ? `<div class="note-tags">${note.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
+        <div class="note-actions">
+          <button class="note-edit-btn" data-id="${note.id}"><i class="fas fa-edit"></i></button>
+          <button class="note-delete-btn" data-id="${note.id}"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join('');
+
+    // Attach event listeners
+    notesList.querySelectorAll('.note-edit-btn').forEach(btn => {
+      btn.addEventListener('click', () => openNoteEditor(btn.dataset.id));
+    });
+    notesList.querySelectorAll('.note-delete-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if(confirm('Delete this note?')){
+          deleteNote(btn.dataset.id);
+          renderNotesList(filterSubject, searchTerm);
+          StudyPlannerUtils.showNotification('Note deleted', 'info');
+        }
+      });
+    });
+  }
+
+  function openNoteEditor(noteId = null){
+    const modal = qs('notesModal');
+    const form = qs('noteForm');
+    const deleteBtn = qs('deleteNoteBtn');
+
+    currentEditingNoteId = noteId;
+
+    if(noteId){
+      const note = notes.find(n => n.id === noteId);
+      if(note){
+        qs('notesModalTitle').textContent = 'Edit Note';
+        qs('noteSubject').value = note.subject;
+        qs('noteContent').value = note.content;
+        qs('noteTags').value = note.tags.join(', ');
+        qs('noteTemplate').value = '';
+        deleteBtn.style.display = 'block';
+        form.dataset.noteId = noteId;
+      }
+    } else {
+      qs('notesModalTitle').textContent = 'New Note';
+      form.reset();
+      deleteBtn.style.display = 'none';
+      form.dataset.noteId = '';
+      currentEditingNoteId = null;
+    }
+
+    modal.classList.add('active');
+    qs('noteSubject').focus();
+  }
+
+  function closeNoteEditor(){
+    const modal = qs('notesModal');
+    modal.classList.remove('active');
+    currentEditingNoteId = null;
+  }
+
+  function updateSubjectFilter(){
+    const select = qs('notesSubjectFilter');
+    const subjects = [...new Set(notes.map(n => n.subject))].sort();
+    
+    // Preserve current selection if possible
+    const currentValue = select.value;
+    
+    const options = ['<option value="">All Subjects</option>'];
+    subjects.forEach(subject => {
+      options.push(`<option value="${subject}">${subject}</option>`);
+    });
+    
+    select.innerHTML = options.join('');
+    select.value = currentValue;
+  }
 
   function save(){ 
     if(!StudyPlannerUtils.setItem(STORAGE_KEY, JSON.stringify(sessions))){
@@ -98,15 +257,31 @@
     const dates = [...new Set(completedSessions.map(s => s.completedDate))].sort().reverse();
     const today = new Date().toISOString().slice(0,10);
     
-    if(dates[0] !== today && dates[0] !== new Date(Date.now() - 86400000).toISOString().slice(0,10)) return 0;
+    // Grace period: allow up to 1 day missed. Streak stays alive if last session within last 1-2 days
+    const lastSessionDate = new Date(dates[0]);
+    const daysSinceLastSession = Math.floor((new Date(today) - lastSessionDate) / 86400000);
+    if(daysSinceLastSession > 1) return 0; // Streak breaks after 2+ day gap
     
+    // Count consecutive study days (allows one missed day with grace period)
     let streak = 1;
+    let graceUsed = false; // Track if we've already used our 1-day grace period
+    
     for(let i = 1; i < dates.length; i++){
       const prev = new Date(dates[i-1]);
       const curr = new Date(dates[i]);
-      const diff = Math.floor((prev - curr) / 86400000);
-      if(diff === 1) streak++;
-      else break;
+      const daysDiff = Math.floor((prev - curr) / 86400000);
+      
+      if(daysDiff === 1){
+        // Consecutive day - add to streak
+        streak++;
+      } else if(daysDiff === 2 && !graceUsed){
+        // One missed day - use grace period (can skip this once)
+        graceUsed = true;
+        streak++;
+      } else {
+        // Gap too large or already used grace period
+        break;
+      }
     }
     return streak;
   }
@@ -305,7 +480,7 @@
     const subjectVal = subject.value.trim();
     const durationVal = parseInt(duration.value, 10);
     const dateVal = dateInput.value;
-    const notesVal = notes.value.trim();
+    const notesVal = sessionNotes.value.trim();
     
     // Subject validation
     if(!subjectVal || subjectVal.length < 2){
@@ -356,7 +531,7 @@
     // Notes validation
     if(notesVal.length > 500){
       StudyPlannerUtils.showNotification('Notes must be less than 500 characters', 'warning');
-      notes.focus();
+      sessionNotes.focus();
       return;
     }
     
@@ -526,12 +701,89 @@
   qs('pauseTimer').addEventListener('click', pauseTimer);
   qs('resetTimer').addEventListener('click', resetTimer);
 
+  // Notes Events
+  qs('newNoteBtn')?.addEventListener('click', () => openNoteEditor());
+
+  const notesModal = qs('notesModal');
+  qs('notesModalClose')?.addEventListener('click', closeNoteEditor);
+  qs('cancelNoteBtn')?.addEventListener('click', closeNoteEditor);
+
+  notesModal?.addEventListener('click', (e) => {
+    if(e.target.id === 'notesModal') closeNoteEditor();
+  });
+
+  qs('noteTemplate')?.addEventListener('change', (e) => {
+    if(e.target.value && NOTE_TEMPLATES[e.target.value]){
+      const content = qs('noteContent');
+      content.value = NOTE_TEMPLATES[e.target.value];
+      updateCharCount();
+    }
+  });
+
+  qs('noteContent')?.addEventListener('input', updateCharCount);
+
+  function updateCharCount(){
+    const content = qs('noteContent')?.value || '';
+    qs('charCount').textContent = content.length;
+  }
+
+  qs('noteForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const subject = qs('noteSubject')?.value.trim();
+    const content = qs('noteContent')?.value.trim();
+    const tags = qs('noteTags')?.value.trim();
+
+    if(!subject || !content){
+      StudyPlannerUtils.showNotification('Subject and content are required', 'warning');
+      return;
+    }
+
+    if(currentEditingNoteId){
+      updateNote(currentEditingNoteId, subject, content, tags);
+      StudyPlannerUtils.showNotification('Note updated', 'success');
+    } else {
+      createNote(subject, content, tags);
+      StudyPlannerUtils.showNotification('Note created', 'success');
+    }
+
+    const filterVal = qs('notesSubjectFilter')?.value || '';
+    const searchVal = qs('notesSearch')?.value || '';
+    updateSubjectFilter();
+    renderNotesList(filterVal, searchVal);
+    closeNoteEditor();
+  });
+
+  qs('deleteNoteBtn')?.addEventListener('click', () => {
+    if(currentEditingNoteId && confirm('Delete this note?')){
+      deleteNote(currentEditingNoteId);
+      const filterVal = qs('notesSubjectFilter')?.value || '';
+      const searchVal = qs('notesSearch')?.value || '';
+      updateSubjectFilter();
+      renderNotesList(filterVal, searchVal);
+      closeNoteEditor();
+      StudyPlannerUtils.showNotification('Note deleted', 'info');
+    }
+  });
+
+  qs('notesSearch')?.addEventListener('input', (e) => {
+    const filterVal = qs('notesSubjectFilter')?.value || '';
+    renderNotesList(filterVal, e.target.value);
+  });
+
+  qs('notesSubjectFilter')?.addEventListener('change', (e) => {
+    const searchVal = qs('notesSearch')?.value || '';
+    renderNotesList(e.target.value, searchVal);
+  });
+
   // Init
   initTheme();
   load();
+  loadNotes();
   updateStats();
   render();
   updateTimerDisplay();
+  updateSubjectFilter();
+  renderNotesList();
   qs('pauseTimer').disabled = true;
   StudyPlannerUtils.lazyLoadImages();
 
@@ -599,14 +851,16 @@
   // Export Data Functionality
   qs('exportData')?.addEventListener('click', () => {
     const exportData = {
-      version: '1.2',
+      version: '1.3',
       exportDate: new Date().toISOString(),
       sessions: sessions,
+      notes: notes,
       stats: {
         totalSessions: sessions.length,
         completedSessions: sessions.filter(s => s.level > 0).length,
         totalMinutes: sessions.filter(s => s.level > 0).reduce((sum, s) => sum + (s.duration || 30), 0),
-        currentStreak: calculateStreak()
+        currentStreak: calculateStreak(),
+        totalNotes: notes.length
       },
       badges: BADGE_DEFINITIONS.filter(b => b.check()).map(b => ({id: b.id, name: b.name, description: b.description}))
     };
@@ -618,7 +872,46 @@
     a.download = `studyplanner-export-${new Date().toISOString().slice(0,10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    StudyPlannerUtils.showNotification('Data exported successfully!', 'success');
+    StudyPlannerUtils.showNotification('Data exported successfully! (Sessions + Notes)', 'success');
+    // Update last backup date
+    localStorage.setItem('studyplanner_lastBackup', new Date().toISOString().slice(0,10));
+    checkBackupReminder();
+  });
+
+  // Backup reminder
+  function checkBackupReminder(){
+    const backupReminder = qs('backupReminder');
+    const lastBackup = localStorage.getItem('studyplanner_lastBackup');
+    if(!lastBackup){
+      const daysSinceBackup = qs('daysSinceBackup');
+      if(daysSinceBackup) daysSinceBackup.textContent = '—';
+      if(backupReminder) backupReminder.style.display = 'block';
+      return;
+    }
+    const lastBackupDate = new Date(lastBackup);
+    const today = new Date();
+    const daysPassed = Math.floor((today - lastBackupDate) / (1000 * 60 * 60 * 24));
+    if(daysPassed >= 7){
+      const daysSinceBackup = qs('daysSinceBackup');
+      if(daysSinceBackup) daysSinceBackup.textContent = daysPassed;
+      if(backupReminder) backupReminder.style.display = 'block';
+    } else {
+      if(backupReminder) backupReminder.style.display = 'none';
+    }
+  }
+
+  // Wire up backup now button
+  qs('backupNowBtn')?.addEventListener('click', () => {
+    qs('exportData').click();
+  });
+
+  // Check backup reminder on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    checkBackupReminder();
+  });
+  // Also check on visibility change (when user returns to tab)
+  document.addEventListener('visibilitychange', () => {
+    if(!document.hidden) checkBackupReminder();
   });
 
 })();

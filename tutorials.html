@@ -19,6 +19,9 @@
       </div>
       <div class="logo-section"><i class="fas fa-graduation-cap"></i><span>StudyPlanner Tutorials</span></div>
       <div class="header-actions">
+        <button id="dataSaverBtn" title="Toggle data-saver mode" aria-label="Toggle data-saver mode" style="background:none;border:none;color:inherit;font-size:1.3rem;cursor:pointer;padding:8px;border-radius:6px;transition:all 200ms" data-enabled="false">
+          <i class="fas fa-leaf"></i>
+        </button>
         <a href="dashboard.html" class="btn-back" title="Dashboard"><i class="fas fa-tachometer-alt"></i></a>
       </div>
     </div>
@@ -45,6 +48,7 @@
       <!-- Page navigation for quick jumps -->
       <nav id="pageNav" class="page-nav" aria-label="Page navigation">
         <ul>
+          <li><a href="#stu-resources">STU Resources</a></li>
           <li><a href="#channels">Channels</a></li>
           <li><a href="#videos">YouTube</a></li>
           <li><a href="#resources">Learning Resources</a></li>
@@ -52,6 +56,87 @@
           <li><a href="#github">GitHub</a></li>
         </ul>
       </nav>
+
+      <!-- STU-Specific Resources Section -->
+      <section id="stu-resources" class="card-modern" style="margin-bottom:18px;background:linear-gradient(135deg, rgba(22,163,74,0.08) 0%, rgba(22,163,74,0.04) 100%);border-left:4px solid #16a34a">
+        <div class="card-header" style="border-bottom:1px solid rgba(22,163,74,0.2)">
+          <h2 style="display:flex;gap:12px;align-items:center">
+            <i class="fas fa-university" style="color:#16a34a;font-size:1.3em"></i>
+            <span>Sunyani Technical University (STU) Resources</span>
+          </h2>
+        </div>
+        <div style="padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+          <div class="stu-resource-card" style="background:#fff;padding:16px;border-radius:8px;border:1px solid rgba(22,163,74,0.15);transition:all 200ms">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <i class="fas fa-globe" style="font-size:1.5em;color:#16a34a"></i>
+              <h3 style="margin:0;font-size:1.1rem;color:#1f2937">STU Official Website</h3>
+            </div>
+            <p style="margin:0 0 12px;color:#4b5563;font-size:0.95rem">Access official university information, programs, and announcements.</p>
+            <a href="https://stu.edu.gh" target="_blank" rel="noopener noreferrer" class="btn-primary-modern" style="display:inline-block;padding:8px 16px;font-size:0.9rem;text-decoration:none;color:#fff">
+              Visit STU.edu.gh <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+          
+          <div class="stu-resource-card" style="background:#fff;padding:16px;border-radius:8px;border:1px solid rgba(22,163,74,0.15);transition:all 200ms">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <i class="fas fa-book" style="font-size:1.5em;color:#16a34a"></i>
+              <h3 style="margin:0;font-size:1.1rem;color:#1f2937">STU Library Portal</h3>
+            </div>
+            <p style="margin:0 0 12px;color:#4b5563;font-size:0.95rem">Access digital resources, e-books, journals, and research materials.</p>
+            <a href="https://library.stu.edu.gh" target="_blank" rel="noopener noreferrer" class="btn-primary-modern" style="display:inline-block;padding:8px 16px;font-size:0.9rem;text-decoration:none;color:#fff">
+              STU Library <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+
+          <div class="stu-resource-card" style="background:#fff;padding:16px;border-radius:8px;border:1px solid rgba(22,163,74,0.15);transition:all 200ms">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <i class="fas fa-graduation-cap" style="font-size:1.5em;color:#16a34a"></i>
+              <h3 style="margin:0;font-size:1.1rem;color:#1f2937">Coursework & Syllabus</h3>
+            </div>
+            <p style="margin:0 0 12px;color:#4b5563;font-size:0.95rem">Find course materials, syllabi, and official coursework guidelines.</p>
+            <a href="https://stu.edu.gh/academic" target="_blank" rel="noopener noreferrer" class="btn-primary-modern" style="display:inline-block;padding:8px 16px;font-size:0.9rem;text-decoration:none;color:#fff">
+              Academic Programs <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+
+          <div class="stu-resource-card" style="background:#fff;padding:16px;border-radius:8px;border:1px solid rgba(22,163,74,0.15);transition:all 200ms">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <i class="fas fa-comments" style="font-size:1.5em;color:#16a34a"></i>
+              <h3 style="margin:0;font-size:1.1rem;color:#1f2937">STU Community & Support</h3>
+            </div>
+            <p style="margin:0 0 12px;color:#4b5563;font-size:0.95rem">Join STU student communities and get peer support for your studies.</p>
+            <a href="#" onclick="StudyPlannerUtils.showNotification('Join our STU community on Discord or WhatsApp for study support!', 'info')" class="btn-primary-modern" style="display:inline-block;padding:8px 16px;font-size:0.9rem;text-decoration:none;cursor:pointer;color:#fff">
+              Join Community <i class="fas fa-users"></i>
+            </a>
+          </div>
+
+          <div class="stu-resource-card" style="background:#fff;padding:16px;border-radius:8px;border:1px solid rgba(22,163,74,0.15);transition:all 200ms">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <i class="fas fa-calendar-alt" style="font-size:1.5em;color:#16a34a"></i>
+              <h3 style="margin:0;font-size:1.1rem;color:#1f2937">Academic Calendar</h3>
+            </div>
+            <p style="margin:0 0 12px;color:#4b5563;font-size:0.95rem">Check important dates, exam schedules, and academic deadlines.</p>
+            <a href="https://stu.edu.gh/calendar" target="_blank" rel="noopener noreferrer" class="btn-primary-modern" style="display:inline-block;padding:8px 16px;font-size:0.9rem;text-decoration:none;color:#fff">
+              View Calendar <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+
+          <div class="stu-resource-card" style="background:#fff;padding:16px;border-radius:8px;border:1px solid rgba(22,163,74,0.15);transition:all 200ms">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <i class="fas fa-headset" style="font-size:1.5em;color:#16a34a"></i>
+              <h3 style="margin:0;font-size:1.1rem;color:#1f2937">Student Support Services</h3>
+            </div>
+            <p style="margin:0 0 12px;color:#4b5563;font-size:0.95rem">Contact tutoring, counseling, and student services for help.</p>
+            <a href="https://stu.edu.gh/student-services" target="_blank" rel="noopener noreferrer" class="btn-primary-modern" style="display:inline-block;padding:8px 16px;font-size:0.9rem;text-decoration:none;color:#fff">
+              Student Services <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+        <div style="padding:12px 18px;background:rgba(22,163,74,0.05);border-top:1px solid rgba(22,163,74,0.1);border-radius:0 0 8px 8px;text-align:center;font-size:0.9rem;color:var(--muted)">
+          <i class="fas fa-info-circle" style="color:#16a34a;margin-right:6px"></i>
+          StudyPlanner is built by and for STU students. All data stays secure on your device.
+        </div>
+      </section>
 
       <!-- Main Hero (carousel) -->
       <section class="tutorials-hero section-hero hero-slideshow" aria-label="Main hero">
@@ -93,8 +178,21 @@
         </div>
         <div class="card-header" style="display:flex;flex-direction:column;gap:12px;border-top:1px solid rgba(0,0,0,0.06);padding-top:12px">
           <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-            <input id="apiKeyInput" type="password" placeholder="Paste YouTube API key (optional)" style="flex:1;min-width:200px;padding:8px 12px;border:1px solid rgba(0,0,0,0.1);border-radius:6px;font-size:0.95rem">
+            <input id="apiKeyInput" type="password" placeholder="Paste YouTube API key (optional)" style="flex:1;min-width:200px;padding:8px 12px;border:1px solid rgba(0,0,0,0.1);border-radius:6px;font-size:0.95rem" aria-describedby="apiKeyHelp">
             <button id="fetchVideosBtn" class="btn-primary-modern" style="white-space:nowrap;padding:8px 18px;font-size:0.95rem">Fetch 40 Videos</button>
+            <button id="apiKeyHelpBtn" class="quick-btn" title="How to get YouTube API key" aria-label="Show YouTube API key instructions" style="padding:8px 12px;font-size:0.95rem"><i class="fas fa-question-circle"></i></button>
+          </div>
+          <div id="apiKeyHelp" style="display:none;background:rgba(59,130,246,0.08);border-left:4px solid #3b82f6;padding:12px;border-radius:6px;font-size:0.9rem;color:var(--muted)">
+            <strong style="color:#2563eb;display:block;margin-bottom:8px"><i class="fas fa-lightbulb"></i> Need a YouTube API Key?</strong>
+            <ol style="margin:0;padding-left:18px;line-height:1.6">
+              <li>Go to <strong><a href="https://console.cloud.google.com" target="_blank" rel="noopener noreferrer">Google Cloud Console</a></strong></li>
+              <li>Create a new project (or use existing)</li>
+              <li>Enable <strong>YouTube Data API v3</strong> in the APIs library</li>
+              <li>Go to <strong>Credentials</strong> → Create <strong>API Key</strong></li>
+              <li>Copy the key and paste it above</li>
+              <li><u>Free tier:</u> 10,000 requests/day (plenty for students)</li>
+            </ol>
+            <p style="margin:8px 0 0;font-size:0.85rem;color:#7c3aed">💡 Don't have a key? Just use our pre-curated videos below—they work great!</p>
           </div>
         </div>
         <div id="videoList" class="video-grid" style="padding:8px"></div>

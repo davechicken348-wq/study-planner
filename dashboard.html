@@ -69,6 +69,18 @@
           <h1>Welcome back! 👋</h1>
           <p>Track your progress and stay on top of your learning goals</p>
         </div>
+        <div id="backupReminder" class="backup-reminder" style="display:none;margin:12px 0;background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:6px;font-size:0.95rem">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <i class="fas fa-exclamation-triangle" style="color:#d97706;margin-top:2px"></i>
+            <div>
+              <strong style="color:#d97706">💾 Time to backup your data!</strong>
+              <p style="margin:6px 0 0;color:var(--muted)">It's been <span id="daysSinceBackup">7</span> days since your last backup. Export your study sessions to keep them safe.</p>
+              <button id="backupNowBtn" class="quick-btn" style="margin-top:8px;padding:6px 12px;font-size:0.9rem;background:#f59e0b;color:#fff;border:none;border-radius:4px;cursor:pointer">
+                <i class="fas fa-download"></i> Backup Now
+              </button>
+            </div>
+          </div>
+        </div>
         <div class="quick-actions">
           <button class="quick-btn" onclick="document.getElementById('subject').focus()" title="Create a new study session">
             <i class="fas fa-plus"></i> New Session
@@ -220,6 +232,25 @@
             </div>
           </div>
 
+          <!-- Notes Card -->
+          <div class="card-modern notes-card">
+            <div class="card-header">
+              <h2><i class="fas fa-sticky-note"></i> Study Notes</h2>
+              <button class="new-note-btn" id="newNoteBtn" title="Create a new note">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div class="notes-filters">
+              <input type="text" id="notesSearch" placeholder="Search notes..." class="notes-search">
+              <select id="notesSubjectFilter" class="notes-filter">
+                <option value="">All Subjects</option>
+              </select>
+            </div>
+            <div class="notes-list" id="notesList">
+              <p class="notes-empty">No notes yet. Create your first note!</p>
+            </div>
+          </div>
+
           <!-- Achievements Card -->
           <div class="card-modern">
             <div class="card-header">
@@ -324,6 +355,57 @@
   <button class="help-btn" id="helpBtn" title="Help & Guide">
     <i class="fas fa-question"></i>
   </button>
+
+  <!-- Notes Modal -->
+  <div class="notes-modal" id="notesModal">
+    <div class="notes-modal-content">
+      <div class="notes-modal-header">
+        <h2><i class="fas fa-sticky-note"></i> <span id="notesModalTitle">New Note</span></h2>
+        <button class="notes-modal-close" id="notesModalClose">&times;</button>
+      </div>
+      
+      <form id="noteForm" class="notes-form">
+        <div class="form-group-modern">
+          <label for="noteSubject">Subject *</label>
+          <input id="noteSubject" required placeholder="e.g., Mathematics, Spanish" list="subjectList">
+          <datalist id="subjectList"></datalist>
+        </div>
+        
+        <div class="form-group-modern">
+          <label for="noteTemplate">Template</label>
+          <select id="noteTemplate" class="note-template-select">
+            <option value="">Blank</option>
+            <option value="concepts">Key Concepts</option>
+            <option value="questions">Questions & Answers</option>
+            <option value="review">Review Notes</option>
+          </select>
+        </div>
+        
+        <div class="form-group-modern">
+          <label for="noteContent">Notes *</label>
+          <textarea id="noteContent" required placeholder="Write your study notes here..." rows="8" maxlength="5000"></textarea>
+          <div class="char-count"><span id="charCount">0</span>/5000</div>
+        </div>
+        
+        <div class="form-group-modern">
+          <label for="noteTags">Tags (optional)</label>
+          <input id="noteTags" placeholder="e.g., vocab, important, review (comma-separated)")
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="btn-primary-modern">
+            <i class="fas fa-save"></i> Save Note
+          </button>
+          <button type="button" class="btn-secondary-modern" id="deleteNoteBtn" style="display:none">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+          <button type="button" class="btn-secondary-modern" id="cancelNoteBtn">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Settings Modal -->
   <div class="settings-modal" id="settingsModal">
@@ -471,6 +553,98 @@
             <button class="setting-btn" data-goal="3">3 sessions</button>
             <button class="setting-btn active" data-goal="5">5 sessions</button>
             <button class="setting-btn" data-goal="10">10 sessions</button>
+          </div>
+        </div>
+
+        <!-- Session View Mode -->
+        <div class="setting-group">
+          <label class="setting-label">
+            <i class="fas fa-th"></i> Session View
+            <span class="setting-description">How to display your sessions</span>
+          </label>
+          <div class="setting-options">
+            <button class="setting-btn active" data-view="list">List View</button>
+            <button class="setting-btn" data-view="grid">Grid View</button>
+          </div>
+        </div>
+
+        <!-- Notification Frequency -->
+        <div class="setting-group">
+          <label class="setting-label">
+            <i class="fas fa-bell"></i> Notifications
+            <span class="setting-description">How often to be reminded</span>
+          </label>
+          <div class="setting-options">
+            <button class="setting-btn active" data-notify="instant">Instant</button>
+            <button class="setting-btn" data-notify="hourly">Hourly</button>
+            <button class="setting-btn" data-notify="daily">Daily</button>
+          </div>
+        </div>
+
+        <!-- Pomodoro Timer -->
+        <div class="setting-group">
+          <label class="setting-label">
+            <i class="fas fa-hourglass-half"></i> Pomodoro Preset
+            <span class="setting-description">Default timer duration</span>
+          </label>
+          <div class="setting-options">
+            <button class="setting-btn" data-timer="25">25 min</button>
+            <button class="setting-btn active" data-timer="45">45 min</button>
+            <button class="setting-btn" data-timer="60">60 min</button>
+          </div>
+        </div>
+
+        <!-- Focus Mode -->
+        <div class="setting-group">
+          <label class="setting-label">
+            <i class="fas fa-eye-slash"></i> Focus Mode
+            <span class="setting-description">Hide non-essential UI elements</span>
+          </label>
+          <div class="setting-toggle">
+            <label class="toggle-switch">
+              <input type="checkbox" id="focusToggle">
+              <span class="toggle-slider-setting"></span>
+            </label>
+            <span class="toggle-label">Enable focus mode</span>
+          </div>
+        </div>
+
+        <!-- Auto-save Frequency -->
+        <div class="setting-group">
+          <label class="setting-label">
+            <i class="fas fa-history"></i> Auto-save Frequency
+            <span class="setting-description">How often to save automatically</span>
+          </label>
+          <div class="setting-options">
+            <button class="setting-btn" data-autosave="5">5 min</button>
+            <button class="setting-btn" data-autosave="15">15 min</button>
+            <button class="setting-btn active" data-autosave="30">30 min</button>
+            <button class="setting-btn" data-autosave="60">60 min</button>
+          </div>
+        </div>
+
+        <!-- Statistics Theme -->
+        <div class="setting-group">
+          <label class="setting-label">
+            <i class="fas fa-chart-bar"></i> Chart Theme
+            <span class="setting-description">How charts appear on dashboard</span>
+          </label>
+          <div class="setting-options">
+            <button class="setting-btn active" data-chart="light">Light</button>
+            <button class="setting-btn" data-chart="dark">Dark</button>
+            <button class="setting-btn" data-chart="auto">Auto</button>
+          </div>
+        </div>
+
+        <!-- Language -->
+        <div class="setting-group">
+          <label class="setting-label">
+            <i class="fas fa-globe"></i> Language
+            <span class="setting-description">Choose your preferred language</span>
+          </label>
+          <div class="setting-options">
+            <button class="setting-btn active" data-lang="en">English</button>
+            <button class="setting-btn" data-lang="tw">Twi</button>
           </div>
         </div>
       </div>
@@ -782,6 +956,85 @@
       });
     });
 
+    // Session View Mode
+    const sessionView = StudyPlannerUtils.getItem('session_view') || 'list';
+    document.querySelectorAll('.setting-btn[data-view]').forEach(btn => {
+      if(btn.dataset.view === sessionView) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.setting-btn[data-view]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        StudyPlannerUtils.setItem('session_view', btn.dataset.view);
+        location.reload();
+      });
+    });
+
+    // Notification Frequency
+    const notifyFreq = StudyPlannerUtils.getItem('notify_frequency') || 'instant';
+    document.querySelectorAll('.setting-btn[data-notify]').forEach(btn => {
+      if(btn.dataset.notify === notifyFreq) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.setting-btn[data-notify]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        StudyPlannerUtils.setItem('notify_frequency', btn.dataset.notify);
+      });
+    });
+
+    // Pomodoro Timer Presets
+    const timerPreset = StudyPlannerUtils.getItem('timer_preset') || '45';
+    document.querySelectorAll('.setting-btn[data-timer]').forEach(btn => {
+      if(btn.dataset.timer === timerPreset) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.setting-btn[data-timer]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        StudyPlannerUtils.setItem('timer_preset', btn.dataset.timer);
+      });
+    });
+
+    // Focus Mode
+    const focusToggle = document.getElementById('focusToggle');
+    const focusMode = StudyPlannerUtils.getItem('focus_mode') === 'true';
+    if(focusToggle) focusToggle.checked = focusMode;
+    if(focusMode) document.body.classList.add('focus-mode');
+    focusToggle?.addEventListener('change', () => {
+      document.body.classList.toggle('focus-mode', focusToggle.checked);
+      StudyPlannerUtils.setItem('focus_mode', focusToggle.checked ? 'true' : 'false');
+    });
+
+    // Auto-save Frequency
+    const autosaveFreq = StudyPlannerUtils.getItem('autosave_frequency') || '30';
+    document.querySelectorAll('.setting-btn[data-autosave]').forEach(btn => {
+      if(btn.dataset.autosave === autosaveFreq) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.setting-btn[data-autosave]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        StudyPlannerUtils.setItem('autosave_frequency', btn.dataset.autosave);
+      });
+    });
+
+    // Chart Theme
+    const chartTheme = StudyPlannerUtils.getItem('chart_theme') || 'light';
+    document.querySelectorAll('.setting-btn[data-chart]').forEach(btn => {
+      if(btn.dataset.chart === chartTheme) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.setting-btn[data-chart]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        StudyPlannerUtils.setItem('chart_theme', btn.dataset.chart);
+      });
+    });
+
+    // Language Selection
+    const language = StudyPlannerUtils.getItem('language') || 'en';
+    document.querySelectorAll('.setting-btn[data-lang]').forEach(btn => {
+      if(btn.dataset.lang === language) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.setting-btn[data-lang]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        StudyPlannerUtils.setItem('language', btn.dataset.lang);
+        // You can add language translation logic here
+        StudyPlannerUtils.showNotification(btn.dataset.lang === 'en' ? 'Language changed to English' : 'Kasa no: Twi', 'success');
+      });
+    });
+
     // Reset Settings
     resetSettings?.addEventListener('click', () => {
       StudyPlannerUtils.setItem('font_size', 'medium');
@@ -791,6 +1044,13 @@
       StudyPlannerUtils.setItem('auto_dark', 'false');
       StudyPlannerUtils.setItem('compact_mode', 'false');
       StudyPlannerUtils.setItem('daily_goal', '5');
+      StudyPlannerUtils.setItem('session_view', 'list');
+      StudyPlannerUtils.setItem('notify_frequency', 'instant');
+      StudyPlannerUtils.setItem('timer_preset', '45');
+      StudyPlannerUtils.setItem('focus_mode', 'false');
+      StudyPlannerUtils.setItem('autosave_frequency', '30');
+      StudyPlannerUtils.setItem('chart_theme', 'light');
+      StudyPlannerUtils.setItem('language', 'en');
       location.reload();
     });
   </script>

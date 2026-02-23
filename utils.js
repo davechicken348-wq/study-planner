@@ -169,4 +169,28 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Register Service Worker for offline functionality
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then((registration) => {
+        console.log('[App] Service Worker registered successfully:', registration);
+        
+        // Check for updates periodically
+        setInterval(() => {
+          registration.update();
+        }, 3600000); // Check every hour
+      })
+      .catch((error) => {
+        console.warn('[App] Service Worker registration failed:', error);
+      });
+
+    // Handle SW updates
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      console.log('[App] Service Worker updated');
+      // You can notify user here if desired
+      StudyPlannerUtils.showNotification('App updated! Reload for latest version.', 'info');
+    });
+  }
 });
+

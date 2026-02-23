@@ -8,6 +8,9 @@
   const searchBtn = document.getElementById('searchBtn');
   const apiKeyInput = document.getElementById('apiKeyInput');
   const fetchVideosBtn = document.getElementById('fetchVideosBtn');
+  const apiKeyHelpBtn = document.getElementById('apiKeyHelpBtn');
+  const apiKeyHelpEl = document.getElementById('apiKeyHelp');
+  const dataSaverBtn = document.getElementById('dataSaverBtn');
   const heroSlidesEl = document.getElementById('heroSlides');
   const heroPrev = document.getElementById('heroPrev');
   const heroNext = document.getElementById('heroNext');
@@ -425,6 +428,28 @@
         `;
         videoListEl.appendChild(vcard);
       });
+    }
+
+    // Fetch videos from YouTube API. Requires an API key. Returns up to `max` videos.
+    async function fetchYouTubeVideos(apiKey, query = 'javascript', max = 20){
+      try{
+        const url = `https://www.googleapis.com/youtube/v3/search?key=${encodeURIComponent(apiKey)}&part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=${Math.min(50, max)}&order=relevance`;
+        const res = await fetch(url);
+        if(!res.ok) throw new Error('YouTube API error: ' + res.status);
+        const payload = await res.json();
+        if(payload.error) throw new Error(payload.error.message || 'YouTube API error');
+        const items = payload.items || [];
+        return items.map(item => ({
+          youtubeId: item.id.videoId,
+          title: item.snippet.title,
+          description: item.snippet.description || '',
+          source: 'YouTube',
+          tags: ['youtube', 'video', 'tutorial']
+        }));
+      }catch(err){
+        console.warn('YouTube fetch failed', err);
+        throw err;
+      }
     }
 
     // Fetch articles from Dev.to (free API, no key required). Returns up to `max` articles.
@@ -995,6 +1020,46 @@
       }finally{
         fetchVideosBtn.disabled = false;
         fetchVideosBtn.textContent = 'Fetch 40 Videos';
+      }
+    });
+
+    // wire up API key help button
+    apiKeyHelpBtn?.addEventListener('click', ()=>{
+      if(apiKeyHelpEl.style.display === 'none' || !apiKeyHelpEl.style.display){
+        apiKeyHelpEl.style.display = 'block';
+        apiKeyHelpBtn.style.backgroundColor = 'rgba(59,130,246,0.15)';
+      } else {
+        apiKeyHelpEl.style.display = 'none';
+        apiKeyHelpBtn.style.backgroundColor = '';
+      }
+    });
+
+    // Data-Saver Mode
+    function initDataSaverMode(){
+      const savedMode = localStorage.getItem('sp_dataSaver') === 'true';
+      if(savedMode){
+        document.documentElement.style.setProperty('--data-saver', '1');
+        dataSaverBtn.style.backgroundColor = 'rgba(34,197,94,0.2)';
+        dataSaverBtn.setAttribute('data-enabled', 'true');
+        StudyPlannerUtils.showNotification('Data-Saver Mode enabled 🌱 (images/videos disabled)', 'info');
+      }
+    }
+    initDataSaverMode();
+
+    dataSaverBtn?.addEventListener('click', ()=>{
+      const isEnabled = dataSaverBtn.getAttribute('data-enabled') === 'true';
+      if(isEnabled){
+        localStorage.setItem('sp_dataSaver', 'false');
+        document.documentElement.style.setProperty('--data-saver', '0');
+        dataSaverBtn.style.backgroundColor = '';
+        dataSaverBtn.setAttribute('data-enabled', 'false');
+        StudyPlannerUtils.showNotification('Data-Saver Mode disabled - images & videos now show', 'info');
+      } else {
+        localStorage.setItem('sp_dataSaver', 'true');
+        document.documentElement.style.setProperty('--data-saver', '1');
+        dataSaverBtn.style.backgroundColor = 'rgba(34,197,94,0.2)';
+        dataSaverBtn.setAttribute('data-enabled', 'true');
+        StudyPlannerUtils.showNotification('Data-Saver Mode enabled 🌱 - images & videos hidden to save data', 'success');
       }
     });
 
