@@ -867,3 +867,349 @@
     overflow:visible !important;
   }
 }
+/* Program Selector Section */
+.program-selector-section {
+  background: linear-gradient(135deg, rgba(22,163,74,0.05) 0%, rgba(22,163,74,0.02) 100%);
+  border: 1px solid rgba(22,163,74,0.1);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.program-selector-header {
+  margin-bottom: 20px;
+}
+
+.program-selector-header h2 {
+  margin: 0 0 8px;
+  color: #1f2937;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.program-selector-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.program-tabs {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.program-tab {
+  background: #fff;
+  border: 2px solid rgba(22,163,74,0.2);
+  border-radius: 8px;
+  padding: 12px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #4b5563;
+  transition: all 200ms;
+}
+
+.program-tab i {
+  font-size: 1.2rem;
+}
+
+.program-tab:hover {
+  border-color: var(--tab-color, #16a34a);
+  background: rgba(22,163,74,0.05);
+  transform: translateY(-2px);
+}
+
+.program-tab.active {
+  background: var(--tab-color, #16a34a);
+  color: #fff;
+  border-color: var(--tab-color, #16a34a);
+  box-shadow: 0 4px 12px rgba(22,163,74,0.25);
+}
+
+/* Program Content Section */
+.program-content-section {
+  margin-bottom: 24px;
+}
+
+.program-header {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.program-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.semesters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.semester-group {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.semester-header {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.semester-header h3 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.course-count {
+  background: rgba(22,163,74,0.1);
+  color: #16a34a;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  padding: 20px 24px;
+}
+
+.course-card {
+  background: #fafafa;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 200ms;
+}
+
+.course-card:hover {
+  border-color: #16a34a;
+  box-shadow: 0 4px 12px rgba(22,163,74,0.15);
+  transform: translateY(-2px);
+}
+
+.course-header {
+  background: #fff;
+  padding: 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.course-code {
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  color: #16a34a;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.course-name {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.course-resources {
+  padding: 16px;
+}
+
+.resources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resource-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: #fff;
+  border-left: 3px solid #16a34a;
+  border-radius: 6px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 200ms;
+}
+
+.resource-item:hover {
+  background: rgba(22,163,74,0.05);
+  transform: translateX(4px);
+}
+
+.resource-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 3px;
+}
+
+.resource-source {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+/* Dark Mode */
+body.dark-mode .program-selector-section {
+  background: rgba(147,197,253,0.05);
+  border-color: rgba(147,197,253,0.1);
+}
+
+body.dark-mode .program-selector-header h2 {
+  color: #e5e7eb;
+}
+
+body.dark-mode .program-selector-header p {
+  color: #9ca3af;
+}
+
+body.dark-mode .program-tab {
+  background: #1f2937;
+  border-color: rgba(147,197,253,0.2);
+  color: #d1d5db;
+}
+
+body.dark-mode .program-tab:hover {
+  background: rgba(147,197,253,0.1);
+}
+
+body.dark-mode .program-tab.active {
+  background: var(--tab-color, #16a34a);
+  color: #fff;
+}
+
+body.dark-mode .program-header,
+body.dark-mode .semester-group {
+  background: #1f2937;
+}
+
+body.dark-mode .semester-header {
+  background: #111827;
+  border-color: rgba(147,197,253,0.1);
+}
+
+body.dark-mode .semester-header h3 {
+  color: #e5e7eb;
+}
+
+body.dark-mode .course-card {
+  background: #111827;
+  border-color: rgba(147,197,253,0.1);
+}
+
+body.dark-mode .course-card:hover {
+  border-color: rgba(147,197,253,0.3);
+}
+
+body.dark-mode .course-header {
+  background: #1f2937;
+  border-color: rgba(147,197,253,0.1);
+}
+
+body.dark-mode .course-name {
+  color: #e5e7eb;
+}
+
+body.dark-mode .resource-item {
+  background: #1f2937;
+}
+
+body.dark-mode .resource-item:hover {
+  background: rgba(147,197,253,0.1);
+}
+
+body.dark-mode .resource-title {
+  color: #e5e7eb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .program-selector-section {
+    padding: 18px;
+  }
+
+  .program-tabs {
+    gap: 8px;
+  }
+
+  .program-tab {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .program-header {
+    padding: 18px;
+  }
+
+  .program-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .courses-grid {
+    grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .semester-header {
+    padding: 14px 16px;
+  }
+
+  .semester-header h3 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .program-selector-section {
+    padding: 16px;
+  }
+
+  .program-selector-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .program-tab span {
+    display: none;
+  }
+
+  .program-tab i {
+    font-size: 1.4rem;
+  }
+
+  .course-header {
+    padding: 12px;
+  }
+
+  .course-name {
+    font-size: 0.9rem;
+  }
+
+  .resource-item {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+}

@@ -29,10 +29,43 @@
 
   <main id="main-content" class="dashboard-main">
     <div class="dashboard-container">
+      
+      <!-- Program Selector Section (NEW) -->
+      <section class="program-selector-section">
+        <div class="program-selector-header">
+          <h2><i class="fas fa-book-open"></i> STU Learning Programs</h2>
+          <p>Choose your program to access curated tutorials and resources</p>
+        </div>
+        <div class="program-tabs">
+          <button class="program-tab active" data-program="cs" style="--tab-color: #16a34a">
+            <i class="fas fa-laptop"></i>
+            <span>IT & CS</span>
+          </button>
+          <button class="program-tab" data-program="engineering" style="--tab-color: #3b82f6">
+            <i class="fas fa-cogs"></i>
+            <span>Engineering</span>
+          </button>
+          <button class="program-tab" data-program="business" style="--tab-color: #f59e0b">
+            <i class="fas fa-briefcase"></i>
+            <span>Business</span>
+          </button>
+          <button class="program-tab" data-program="pharmacy" style="--tab-color: #ec4899">
+            <i class="fas fa-flask"></i>
+            <span>Pharmacy</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Program Content Area (NEW) -->
+      <section id="programContent" class="program-content-section">
+        <!-- This will be dynamically populated by JavaScript -->
+      </section>
+
       <section class="welcome-section">
         <div class="welcome-actions">
           <div class="search-wrap">
             <input id="tutorialSearch" type="search" placeholder="Search tutorials, tags, authors..." aria-label="Search tutorials">
+```
           </div>
           <div class="quick-actions">
             <a class="quick-btn primary-cta" href="#resources">Browse Tutorials</a>
@@ -290,6 +323,7 @@
   </main>
 
   <script src="utils.js"></script>
+  <script src="programs.js" defer></script>
   <script src="tutorials.js" defer></script>
 </body>
 </html>

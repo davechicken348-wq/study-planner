@@ -1,0 +1,263 @@
+{
+  "programs": [
+    {
+      "id": "cs",
+      "name": "IT & Computer Science",
+      "icon": "fa-laptop",
+      "color": "#16a34a",
+      "description": "Software development, algorithms, web technologies",
+      "totalSemesters": 4,
+      "semesters": [
+        {
+          "year": 1,
+          "semester": 1,
+          "courses": [
+            {
+              "code": "CS101",
+              "name": "Introduction to Programming",
+              "resources": [
+                {"type": "video", "title": "Python for Beginners", "url": "https://www.youtube.com/watch?v=_uQrJ0TkSuc", "source": "Tech With Tim"},
+                {"type": "article", "title": "Getting Started with Python", "url": "https://realpython.com/", "source": "Real Python"},
+                {"type": "tool", "title": "PyCharm Community Edition", "url": "https://www.jetbrains.com/pycharm/", "source": "JetBrains"}
+              ]
+            },
+            {
+              "code": "CS102",
+              "name": "Web Development Basics",
+              "resources": [
+                {"type": "video", "title": "HTML & CSS Masterclass", "url": "https://www.youtube.com/results?search_query=html+css+tutorial", "source": "YouTube"},
+                {"type": "article", "title": "MDN Web Docs", "url": "https://developer.mozilla.org/", "source": "Mozilla"},
+                {"type": "tool", "title": "VS Code", "url": "https://code.visualstudio.com/", "source": "Microsoft"}
+              ]
+            }
+          ]
+        },
+        {
+          "year": 1,
+          "semester": 2,
+          "courses": [
+            {
+              "code": "CS201",
+              "name": "Data Structures & Algorithms",
+              "resources": [
+                {"type": "video", "title": "Data Structures Full Course", "url": "https://www.youtube.com/watch?v=pkYVOmU3MgA", "source": "FreeCodeCamp"},
+                {"type": "article", "title": "GeeksforGeeks DSA", "url": "https://www.geeksforgeeks.org/data-structures/", "source": "GeeksforGeeks"},
+                {"type": "tool", "title": "LeetCode", "url": "https://leetcode.com/", "source": "LeetCode"}
+              ]
+            },
+            {
+              "code": "CS202",
+              "name": "Object-Oriented Programming",
+              "resources": [
+                {"type": "video", "title": "OOP Concepts JAVA", "url": "https://www.youtube.com/results?search_query=oop+concepts+tutorial", "source": "YouTube"},
+                {"type": "article", "title": "OOP Design Patterns", "url": "https://refactoring.guru/design-patterns", "source": "Refactoring Guru"},
+                {"type": "book", "title": "Design Patterns Book Reference", "url": "https://en.wikipedia.org/wiki/Design_Patterns", "source": "Gang of Four"}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "name": "Engineering",
+      "icon": "fa-cogs",
+      "color": "#3b82f6",
+      "description": "Civil, Electrical, Mechanical engineering principles",
+      "totalSemesters": 8,
+      "semesters": [
+        {
+          "year": 1,
+          "semester": 1,
+          "courses": [
+            {
+              "code": "ENG101",
+              "name": "Engineering Mathematics I",
+              "resources": [
+                {"type": "video", "title": "Calculus Basics", "url": "https://www.youtube.com/results?search_query=calculus+tutorial", "source": "Khan Academy"},
+                {"type": "article", "title": "Calculus Notes", "url": "https://tutorial.math.lamar.edu/", "source": "Paul's Online Math Notes"},
+                {"type": "tool", "title": "Wolfram Alpha", "url": "https://www.wolframalpha.com/", "source": "Wolfram"}
+              ]
+            },
+            {
+              "code": "ENG102",
+              "name": "Physics I - Mechanics",
+              "resources": [
+                {"type": "video", "title": "Physics Mechanics Course", "url": "https://www.youtube.com/results?search_query=mechanics+physics", "source": "MIT OpenCourseWare"},
+                {"type": "article", "title": "Physics Fundamentals", "url": "https://www.hyperphysics.phy-astr.gsu.edu/", "source": "HyperPhysics"},
+                {"type": "tool", "title": "GeoGebra 3D", "url": "https://www.geogebra.org/", "source": "GeoGebra"}
+              ]
+            },
+            {
+              "code": "ENG103",
+              "name": "Technical Drawing & CAD",
+              "resources": [
+                {"type": "video", "title": "AutoCAD for Beginners", "url": "https://www.youtube.com/results?search_query=autocad+tutorial", "source": "YouTube"},
+                {"type": "article", "title": "CAD Best Practices", "url": "https://www.autodesk.com/", "source": "Autodesk"},
+                {"type": "tool", "title": "Fusion 360 (Free for Students)", "url": "https://www.autodesk.com/products/fusion-360/students-teachers-educators", "source": "Autodesk"}
+              ]
+            }
+          ]
+        },
+        {
+          "year": 1,
+          "semester": 2,
+          "courses": [
+            {
+              "code": "ENG201",
+              "name": "Engineering Mathematics II",
+              "resources": [
+                {"type": "video", "title": "Linear Algebra Full Course", "url": "https://www.youtube.com/watch?v=QVKj3LADCnA", "source": "3Blue1Brown"},
+                {"type": "article", "title": "Linear Algebra Notes", "url": "https://math.libretexts.org/", "source": "LibreTexts Math"},
+                {"type": "tool", "title": "MATLAB Online", "url": "https://www.mathworks.com/products/matlab.html", "source": "MathWorks"}
+              ]
+            },
+            {
+              "code": "ENG202",
+              "name": "Physics II - Thermodynamics",
+              "resources": [
+                {"type": "video", "title": "Thermodynamics Lecture", "url": "https://www.youtube.com/results?search_query=thermodynamics+lecture", "source": "Professor Dave Explains"},
+                {"type": "article", "title": "Thermodynamics Explained", "url": "https://www.britannica.com/technology/thermodynamics", "source": "Britannica"},
+                {"type": "book", "title": "Thermodynamics Textbook", "url": "https://en.wikipedia.org/wiki/Thermodynamics", "source": "Wikipedia"}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "business",
+      "name": "Business Administration",
+      "icon": "fa-briefcase",
+      "color": "#f59e0b",
+      "description": "Accounting, Finance, Management, Marketing",
+      "totalSemesters": 8,
+      "semesters": [
+        {
+          "year": 1,
+          "semester": 1,
+          "courses": [
+            {
+              "code": "BUS101",
+              "name": "Introduction to Business",
+              "resources": [
+                {"type": "video", "title": "Business Fundamentals", "url": "https://www.youtube.com/results?search_query=introduction+to+business", "source": "Crash Course"},
+                {"type": "article", "title": "Business Basics", "url": "https://www.investopedia.com/", "source": "Investopedia"},
+                {"type": "tool", "title": "Business Plan Template", "url": "https://www.sba.gov/business-guide/plan", "source": "US SBA"}
+              ]
+            },
+            {
+              "code": "BUS102",
+              "name": "Financial Accounting I",
+              "resources": [
+                {"type": "video", "title": "Accounting Basics", "url": "https://www.youtube.com/results?search_query=accounting+basics+tutorial", "source": "Edpuzzle"},
+                {"type": "article", "title": "Accounting Principles", "url": "https://www.accountingcoach.com/", "source": "Accounting Coach"},
+                {"type": "tool", "title": "Excel Templates", "url": "https://templates.office.com/", "source": "Microsoft Office"}
+              ]
+            },
+            {
+              "code": "BUS103",
+              "name": "Business Economics",
+              "resources": [
+                {"type": "video", "title": "Economics Explained", "url": "https://www.youtube.com/results?search_query=economics+fundamentals", "source": "Khan Academy"},
+                {"type": "article", "title": "Economics Principles", "url": "https://www.economicshelp.org/", "source": "Economics Help"},
+                {"type": "book", "title": "Economics Textbook", "url": "https://en.wikipedia.org/wiki/Economics", "source": "Wikipedia"}
+              ]
+            }
+          ]
+        },
+        {
+          "year": 1,
+          "semester": 2,
+          "courses": [
+            {
+              "code": "BUS201",
+              "name": "Business Management",
+              "resources": [
+                {"type": "video", "title": "Management Principles", "url": "https://www.youtube.com/results?search_query=business+management+course", "source": "YouTube"},
+                {"type": "article", "title": "Harvard Business Review", "url": "https://hbr.org/", "source": "HBR"},
+                {"type": "tool", "title": "Project Management Tool", "url": "https://asana.com/", "source": "Asana"}
+              ]
+            },
+            {
+              "code": "BUS202",
+              "name": "Marketing Fundamentals",
+              "resources": [
+                {"type": "video", "title": "Digital Marketing Course", "url": "https://www.youtube.com/results?search_query=digital+marketing+tutorial", "source": "Google Digital Garage"},
+                {"type": "article", "title": "Marketing Strategy", "url": "https://www.nngroup.com/articles/", "source": "Nielsen Norman"},
+                {"type": "tool", "title": "Canva Pro", "url": "https://www.canva.com/", "source": "Canva"}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pharmacy",
+      "name": "Pharmacy",
+      "icon": "fa-flask",
+      "color": "#ec4899",
+      "description": "Pharmaceutical sciences, clinical practice, drug therapy",
+      "totalSemesters": 5,
+      "semesters": [
+        {
+          "year": 1,
+          "semester": 1,
+          "courses": [
+            {
+              "code": "PHARM101",
+              "name": "Pharmaceutical Chemistry I",
+              "resources": [
+                {"type": "video", "title": "Organic Chemistry Basics", "url": "https://www.youtube.com/results?search_query=organic+chemistry+tutorial", "source": "The Organic Chemistry Tutor"},
+                {"type": "article", "title": "Chemistry Fundamentals", "url": "https://www.chemistrylearner.com/", "source": "Chemistry Learner"},
+                {"type": "tool", "title": "ChemDraw", "url": "https://www.chemdraw.com/", "source": "PerkinElmer"}
+              ]
+            },
+            {
+              "code": "PHARM102",
+              "name": "Anatomy & Physiology",
+              "resources": [
+                {"type": "video", "title": "Anatomy Lecture Series", "url": "https://www.youtube.com/results?search_query=human+anatomy+lecture", "source": "Osmosis"},
+                {"type": "article", "title": "Medical Textbooks", "url": "https://www.ncbi.nlm.nih.gov/", "source": "PubMed"},
+                {"type": "tool", "title": "Visible Body", "url": "https://www.visiblebody.com/", "source": "Visible Body"}
+              ]
+            },
+            {
+              "code": "PHARM103",
+              "name": "Pharmaceutical Calculations",
+              "resources": [
+                {"type": "video", "title": "Pharmacy Math Tutorial", "url": "https://www.youtube.com/results?search_query=pharmacy+calculations", "source": "YouTube"},
+                {"type": "article", "title": "Dosage Calculations", "url": "https://www.pharmacytimes.com/", "source": "Pharmacy Times"},
+                {"type": "tool", "title": "Pharmacy Calculator", "url": "https://www.ebcalculator.com/", "source": "EB Calculator"}
+              ]
+            }
+          ]
+        },
+        {
+          "year": 1,
+          "semester": 2,
+          "courses": [
+            {
+              "code": "PHARM201",
+              "name": "Pharmacology I",
+              "resources": [
+                {"type": "video", "title": "Pharmacology Course", "url": "https://www.youtube.com/results?search_query=pharmacology+lecture", "source": "Osmosis"},
+                {"type": "article", "title": "Drug Database", "url": "https://pubchem.ncbi.nlm.nih.gov/", "source": "PubChem"},
+                {"type": "book", "title": "Pharmacology Reference", "url": "https://www.bnf.org/", "source": "BNF (UK)"}
+              ]
+            },
+            {
+              "code": "PHARM202",
+              "name": "Pharmaceutical Microbiology",
+              "resources": [
+                {"type": "video", "title": "Microbiology Essentials", "url": "https://www.youtube.com/results?search_query=microbiology+lecture", "source": "Professor Dave"},
+                {"type": "article", "title": "Microbiology Online", "url": "https://www.microbiologyonline.org.uk/", "source": "Microbiology Society"},
+                {"type": "tool", "title": "BioRender", "url": "https://www.biorender.com/", "source": "BioRender"}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
