@@ -1,5 +1,8 @@
 // Page-specific initialization for Engineering Tutorials
 (function(){
+  // Local small helpers (avoid depending on internals of tutorials.js)
+  function escapeHtml(str){ return (str||'').toString().replace(/[&<>'"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]); }
+
   document.addEventListener('DOMContentLoaded', ()=>{
     try{
       // Set program-specific default queries
@@ -138,7 +141,7 @@
         }
         const params = new URLSearchParams({ part: 'snippet', q: query, maxResults: String(opts.maxResults||12), type: 'video', key });
         fetch('https://www.googleapis.com/youtube/v3/search?' + params.toString()).then(r=>{
-          if(!r.ok) throw new Error('YouTube API error ' + r.status);
+          if(!r.ok) throw { status: r.status, statusText: r.statusText };
           return r.json();
         }).then(json=>{
           videoListEl.innerHTML = '';
@@ -151,6 +154,14 @@
           });
         }).catch(err=>{
           console.warn('YouTube fetch failed', err);
+          // specific handling for 401 Unauthorized
+          const status = (err && err.status) ? err.status : (err && err.message ? (''+err.message).match(/\d{3}/) : null);
+          if(status == 401 || (err && (''+err).includes('401'))){
+            videoListEl.innerHTML = '<div style="color:var(--muted);padding:12px">YouTube API key invalid or restricted. Showing curated list.</div>';
+            fallbackVideos.forEach(v=> videoListEl.appendChild(createVideoCard(v)));
+            showApiKeyErrorDetails();
+            return;
+          }
           videoListEl.innerHTML = '<div style="color:var(--muted);padding:12px">Video fetch failed. Showing curated list.</div>';
           fallbackVideos.forEach(v=> videoListEl.appendChild(createVideoCard(v)));
           StudyPlannerUtils.showNotification('YouTube fetch failed — check API key or network', 'warning');
@@ -197,6 +208,48 @@
           let ticks = 0; const iv = setInterval(()=>{ enforceCurated(); ticks++; if(ticks>8) clearInterval(iv); }, 1000);
         });
       }catch(e){ console.warn('Engineering observer failed', e); }
+
+      // --- API key validation helper UI ---
+      function showApiKeyErrorDetails(){
+        StudyPlannerUtils.showNotification('YouTube API key appears invalid or restricted. See details below.', 'error');
+        const help = document.getElementById('apiKeyHelp');
+        if(help){
+          help.style.display = 'block';
+          help.innerHTML = `
+            <strong style="color:#b91c1c">YouTube API Key Issue (401)</strong>
+            <ol style="padding-left:18px;margin:6px 0">
+              <li>Confirm your API key is copied correctly into the <em>API key</em> field.</li>
+              <li>Open the <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Google Cloud Console → Credentials</a> and verify the key.</li>
+              <li>Ensure <strong>YouTube Data API v3</strong> is enabled for the project (APIs & Services → Library).</li>
+              <li>If you restricted the key by HTTP referrers or IPs, allow <code>http://127.0.0.1:5500</code> / your host for local testing or remove restrictions.</li>
+              <li>Check project billing & quota if you see quota errors; 401 specifically means the key is invalid or blocked.</li>
+            </ol>
+            <div style="margin-top:8px"><button id="apiKeyDocs" class="quick-btn">Open Console</button></div>
+          `;
+          const btn = document.getElementById('apiKeyDocs');
+          if(btn) btn.addEventListener('click', ()=> window.open('https://console.cloud.google.com/apis/credentials','_blank'));
+        }
+      }
+
+      // add a small Validate button next to the API key input
+      if(apiKeyInput && !document.getElementById('validateApiKeyBtn')){
+        const vbtn = document.createElement('button');
+        vbtn.id = 'validateApiKeyBtn'; vbtn.className='quick-btn'; vbtn.style.marginLeft='8px'; vbtn.textContent = 'Validate Key';
+        apiKeyInput.parentNode.insertBefore(vbtn, apiKeyInput.nextSibling);
+        vbtn.addEventListener('click', async ()=>{
+          vbtn.disabled = true; vbtn.textContent = 'Checking...';
+          try{
+            const k = apiKeyInput.value && apiKeyInput.value.trim();
+            if(!k){ StudyPlannerUtils.showNotification('Paste your YouTube API key first', 'warning'); return; }
+            const testParams = new URLSearchParams({ part:'snippet', q:'test', maxResults:1, type:'video', key:k });
+            const res = await fetch('https://www.googleapis.com/youtube/v3/search?' + testParams.toString());
+            if(res.ok){ StudyPlannerUtils.showNotification('API key valid — fetch should work', 'success'); }
+            else if(res.status === 401){ showApiKeyErrorDetails(); }
+            else { StudyPlannerUtils.showNotification('API test returned ' + res.status + ' ' + res.statusText, 'warning'); }
+          }catch(err){ console.warn('API validate failed', err); StudyPlannerUtils.showNotification('Validation failed — network or CORS issue', 'error'); }
+          finally{ vbtn.disabled = false; vbtn.textContent = 'Validate Key'; }
+        });
+      }
       // ---------------------------------------------------------------------------
 
     }catch(err){ console.warn('Engineering init failed', err); }
