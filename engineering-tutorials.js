@@ -169,24 +169,33 @@
       setTimeout(()=> fetchYouTubeVideos('embedded systems', {maxResults:8}), 600);
 
       // If the generic `tutorials.js` populated the channel/video lists already,
-      // replace them with the engineering-curated content. Use MutationObserver
-      // as a fallback if content is added later.
+      // replace them with the engineering-curated content. Use stronger MutationObservers
+      // and a short interval fallback to enforce the engineering lists if overwritten.
       try{
-        if(channelListEl){
-          const replaceNow = () => { renderChannels(); fetchYouTubeVideos('embedded systems', {maxResults:8}); };
-          if(channelListEl.children && channelListEl.children.length > 0){
-            // tutorials.js likely populated it already — override immediately
-            replaceNow();
-          } else {
-            const obs = new MutationObserver((mutations, observer)=>{
-              if(channelListEl.children && channelListEl.children.length > 0){
-                replaceNow();
-                observer.disconnect();
-              }
-            });
-            obs.observe(channelListEl, { childList: true });
-          }
-        }
+        const enforceCurated = (()=>{
+          let timer = null;
+          return function(){
+            clearTimeout(timer);
+            // schedule to run after DOM mutations settle
+            timer = setTimeout(()=>{
+              try{ renderChannels(); fetchYouTubeVideos('embedded systems', {maxResults:8}); }catch(e){console.warn('enforceCurated failed', e)}
+            }, 80);
+          };
+        })();
+
+        // Observe both lists and re-apply curated content on any change
+        [channelListEl, videoListEl].forEach(el=>{
+          if(!el) return;
+          // immediate enforcement if already populated
+          enforceCurated();
+          const observer = new MutationObserver((mutations)=>{
+            // re-apply curated content when tutorials.js mutates the lists
+            enforceCurated();
+          });
+          observer.observe(el, { childList: true, subtree: true, characterData: true });
+          // short-lived interval fallback: re-enforce every 1s for first 8 seconds
+          let ticks = 0; const iv = setInterval(()=>{ enforceCurated(); ticks++; if(ticks>8) clearInterval(iv); }, 1000);
+        });
       }catch(e){ console.warn('Engineering observer failed', e); }
       // ---------------------------------------------------------------------------
 
