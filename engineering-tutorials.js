@@ -167,6 +167,27 @@
       renderChannels();
       // try to load a small set on page load using default topic
       setTimeout(()=> fetchYouTubeVideos('embedded systems', {maxResults:8}), 600);
+
+      // If the generic `tutorials.js` populated the channel/video lists already,
+      // replace them with the engineering-curated content. Use MutationObserver
+      // as a fallback if content is added later.
+      try{
+        if(channelListEl){
+          const replaceNow = () => { renderChannels(); fetchYouTubeVideos('embedded systems', {maxResults:8}); };
+          if(channelListEl.children && channelListEl.children.length > 0){
+            // tutorials.js likely populated it already — override immediately
+            replaceNow();
+          } else {
+            const obs = new MutationObserver((mutations, observer)=>{
+              if(channelListEl.children && channelListEl.children.length > 0){
+                replaceNow();
+                observer.disconnect();
+              }
+            });
+            obs.observe(channelListEl, { childList: true });
+          }
+        }
+      }catch(e){ console.warn('Engineering observer failed', e); }
       // ---------------------------------------------------------------------------
 
     }catch(err){ console.warn('Engineering init failed', err); }
