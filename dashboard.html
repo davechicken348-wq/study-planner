@@ -10,13 +10,14 @@
   <meta property="og:description" content="Track your learning journey with spaced repetition." />
   <title>Dashboard - Study Planner</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="styles.css?v=20260245" as="style">
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Open+Sans:wght@400;500;600;700&family=Lato:wght@400;500;700&family=Roboto:wght@400;500;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260245">
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -45,9 +46,7 @@
     <div class="header-container">
       <div class="header-actions">
         <a href="index.html" class="btn-back"><i class="fas fa-home"></i></a>
-        <button class="settings-btn" id="settingsBtn" title="Customize">
-          <i class="fas fa-cog"></i>
-        </button>
+
       </div>
       <div class="logo-section">
         <i class="fas fa-graduation-cap"></i>
@@ -63,49 +62,41 @@
   <main class="dashboard-main" id="main-content">
     <div class="dashboard-container">
       
-      <!-- Welcome Section -->
-      <section class="welcome-section">
+      <!-- Section grid wrapper to declutter layout -->
+      <div class="dashboard-section-grid">
+      <!-- Welcome / Hero Section (improved) -->
+      <section class="welcome-section" aria-labelledby="welcomeTitle">
         <div class="welcome-content">
-          <h1>Welcome back! 👋</h1>
-          <p>Track your progress and stay on top of your learning goals</p>
+          <h1 id="welcomeTitle">Welcome back!</h1>
+          <p id="welcomeSubtitle">Track your progress and stay on top of your learning goals</p>
         </div>
-        <div id="backupReminder" class="backup-reminder" style="display:none;margin:12px 0;background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:6px;font-size:0.95rem">
-          <div style="display:flex;gap:12px;align-items:flex-start">
-            <i class="fas fa-exclamation-triangle" style="color:#d97706;margin-top:2px"></i>
-            <div>
-              <strong style="color:#d97706">💾 Time to backup your data!</strong>
-              <p style="margin:6px 0 0;color:var(--muted)">It's been <span id="daysSinceBackup">7</span> days since your last backup. Export your study sessions to keep them safe.</p>
-              <button id="backupNowBtn" class="quick-btn" style="margin-top:8px;padding:6px 12px;font-size:0.9rem;background:#f59e0b;color:#fff;border:none;border-radius:4px;cursor:pointer">
-                <i class="fas fa-download"></i> Backup Now
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="quick-actions">
+        <div class="welcome-ctas" role="group" aria-label="Quick actions">
           <button class="quick-btn" onclick="document.getElementById('subject').focus()" title="Create a new study session">
             <i class="fas fa-plus"></i> New Session
           </button>
           <button class="quick-btn" id="startQuickTimer" title="Start a 25-minute timer">
             <i class="fas fa-play"></i> Quick Timer
           </button>
-          <button class="quick-btn" id="exportData" title="Export your study data">
-            <i class="fas fa-download"></i> Export JSON
-          </button>
-          <button class="quick-btn" id="exportCsv" title="Export sessions as CSV">
-            <i class="fas fa-file-csv"></i> Export CSV
-          </button>
-          <label class="quick-btn" for="importFile" title="Import sessions from CSV" style="cursor:pointer">
-            <i class="fas fa-file-import"></i> Import CSV
-          </label>
-          <input type="file" id="importFile" accept="text/csv,application/vnd.ms-excel" style="display:none">
           <a href="how-it-works.html" class="quick-btn help-link" title="Learn how to use StudyPlanner">
             <i class="fas fa-question-circle"></i> How It Works
           </a>
-          <a href="tutorials.html" class="quick-btn" title="Tutorials & Guides">
-            <i class="fas fa-book"></i> Tutorials
-          </a>
         </div>
       </section>
+
+      <!-- Dedication -->
+      <div class="dedication-card">
+        <div class="dedication-icon-wrapper">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="dedication-content-text">
+          <strong>Dedicated to STU University Ghana</strong>
+          <p>Empowering African learners worldwide 🌍</p>
+        </div>
+        <div class="dedication-badge">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Education for All</span>
+        </div>
+      </div>
 
       <!-- Stats Grid -->
       <section class="stats-grid" id="stats">
@@ -138,6 +129,99 @@
           </div>
         </div>
       </section>
+
+      <!-- Streak Banner Section -->
+      <section class="streak-banner" id="streakBanner" style="display:none">
+        <div class="streak-content">
+          <div class="streak-fire" id="streakFire">🔥</div>
+          <div class="streak-text">
+            <h3>You're on a roll!</h3>
+            <p id="streakMessage">Keep studying to maintain your streak</p>
+          </div>
+          <div class="streak-counter">
+            <div class="counter-value" id="streakValue">0</div>
+            <div class="counter-label">days</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Motivational Quote Section -->
+      <section class="quote-section card-modern">
+        <div class="quote-icon"><i class="fas fa-lightbulb"></i></div>
+        <blockquote id="dailyQuote">Success is the sum of small efforts repeated day in and day out.</blockquote>
+        <div class="quote-meta">
+          <span id="quoteAuthor">— James Clear</span>
+          <button class="quote-btn" id="newQuoteBtn" title="Get a new quote"><i class="fas fa-sync"></i></button>
+        </div>
+      </section>
+
+      <!-- Last Session Summary -->
+      <section class="last-session-summary card-modern" id="lastSessionSection" style="display:none">
+        <div class="card-header">
+          <h3><i class="fas fa-history"></i> Yesterday's Recap</h3>
+        </div>
+        <div class="summary-content">
+          <div class="summary-stat">
+            <span class="summary-icon">📚</span>
+            <div class="summary-info">
+              <div class="summary-value" id="lastSessCount">0</div>
+              <div class="summary-label">sessions</div>
+            </div>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-icon">⏱️</span>
+            <div class="summary-info">
+              <div class="summary-value" id="lastSessHours">0h</div>
+              <div class="summary-label">studied</div>
+            </div>
+          </div>
+          <div class="summary-stat">
+            <span class="summary-icon">🎯</span>
+            <div class="summary-info">
+              <div class="summary-value" id="lastSessSubjects">-</div>
+              <div class="summary-label">subjects</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Weekly Goal Progress -->
+      <section class="weekly-progress card-modern">
+        <div class="card-header">
+          <h3><i class="fas fa-calendar-week"></i> Weekly Goal Progress</h3>
+          <span class="week-info" id="weekInfo">0 / 20 sessions</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="weeklyProgressBar" style="width:0%"></div>
+        </div>
+        <div class="progress-details">
+          <div class="detail-item">
+            <span class="detail-label">This Week</span>
+            <span class="detail-value" id="weekProgress">0/20</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Avg/Day</span>
+            <span class="detail-value" id="avgPerDay">0</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Pace</span>
+            <span class="detail-value" id="paceTrend">—</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Upcoming Sessions Preview -->
+      <section class="upcoming-sessions card-modern" id="upcomingSessions" style="display:none">
+        <div class="card-header">
+          <h3><i class="fas fa-calendar-check"></i> Upcoming Sessions</h3>
+          <a href="#sessions" class="view-all-link">View all →</a>
+        </div>
+        <div class="upcoming-list" id="upcomingList">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      </div> <!-- .dashboard-section-grid -->
 
       <!-- Two Column Layout -->
       <div class="dashboard-grid">
@@ -188,24 +272,6 @@
             </form>
           </div>
 
-          <!-- Sessions List -->
-          <div class="card-modern" id="sessions">
-            <div class="card-header">
-              <h2><i class="fas fa-list"></i> Your Sessions</h2>
-              <div class="filter-tabs">
-                <button class="tab-btn active" data-filter="all">All</button>
-                <button class="tab-btn" data-filter="upcoming">Upcoming</button>
-                <button class="tab-btn" data-filter="completed">Completed</button>
-              </div>
-              <div id="tagFilters" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"></div>
-            </div>
-            <ul id="sessionList" class="session-list-modern"></ul>
-          </div>
-        </div>
-
-        <!-- Right Column -->
-        <div class="dashboard-right">
-          
           <!-- Timer Card -->
           <div class="card-modern timer-card">
             <div class="card-header">
@@ -235,19 +301,31 @@
           <!-- Notes Card -->
           <div class="card-modern notes-card">
             <div class="card-header">
-              <h2><i class="fas fa-sticky-note"></i> Study Notes</h2>
-              <button class="new-note-btn" id="newNoteBtn" title="Create a new note">
-                <i class="fas fa-plus"></i>
+              <h2><i class="fas fa-book-open"></i> Quick Notes</h2>
+              <button class="new-note-btn" id="newNoteBtn" title="Add a note">
+                <i class="fas fa-plus"></i> Add Note
               </button>
             </div>
-            <div class="notes-filters">
-              <input type="text" id="notesSearch" placeholder="Search notes..." class="notes-search">
-              <select id="notesSubjectFilter" class="notes-filter">
-                <option value="">All Subjects</option>
-              </select>
-            </div>
             <div class="notes-list" id="notesList">
-              <p class="notes-empty">No notes yet. Create your first note!</p>
+              <div class="notes-empty">
+                <i class="fas fa-sticky-note"></i>
+                <p>No notes yet. Start capturing your study insights!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="dashboard-right">
+          
+          <!-- Next Review Card -->
+          <div class="card-modern next-review-card">
+            <div class="card-header">
+              <h3><i class="fas fa-calendar-alt"></i> Next Review</h3>
+            </div>
+            <div class="next-review-content">
+              <div class="next-review-date" id="stat-next">No sessions scheduled</div>
+              <p class="next-review-text">Stay consistent with your reviews!</p>
             </div>
           </div>
 
@@ -259,25 +337,87 @@
             <div class="badges-grid-modern" id="badges-grid"></div>
           </div>
 
-          <!-- Next Review Card -->
-          <div class="card-modern next-review-card">
+          <!-- Sessions List -->
+          <div class="card-modern" id="sessions">
             <div class="card-header">
-              <h3><i class="fas fa-calendar-alt"></i> Next Review</h3>
+              <h2><i class="fas fa-list"></i> Your Sessions</h2>
+              <div class="filter-tabs">
+                <button class="tab-btn active" data-filter="all">All</button>
+                <button class="tab-btn" data-filter="upcoming">Upcoming</button>
+                <button class="tab-btn" data-filter="completed">Completed</button>
+              </div>
+              <div id="tagFilters" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"></div>
             </div>
-            <div class="next-review-content">
-              <div class="next-review-date" id="stat-next">No sessions scheduled</div>
-              <p class="next-review-text">Stay consistent with your reviews!</p>
-            </div>
+            <ul id="sessionList" class="session-list-modern"></ul>
           </div>
-        </div>
-      </div>
 
-      <!-- Dedication -->
-      <div class="dedication-card">
-        <i class="fas fa-heart"></i>
-        <div>
-          <strong>Dedicated to STU University Ghana</strong>
-          <p>Empowering African learners worldwide</p>
+          <!-- Recent Achievements Banner -->
+          <section class="achievements-banner card-modern">
+            <div class="card-header">
+              <h3><i class="fas fa-star"></i> Recent Achievements</h3>
+            </div>
+            <div class="achievements-container" id="achievementsContainer">
+              <div class="no-achievements">No new achievements yet. Keep studying!</div>
+            </div>
+          </section>
+
+          <!-- Study Tips Carousel -->
+          <section class="study-tips-carousel card-modern">
+            <div class="card-header">
+              <h3><i class="fas fa-lightbulb"></i> Study Tips</h3>
+            </div>
+            <div class="carousel-container">
+              <div class="carousel-slide" id="tipsSlide">
+                <div class="tip-content">
+                  <div class="tip-icon">💡</div>
+                  <p id="tipText">Use the Pomodoro Technique: Study for 25 minutes, then take a 5-minute break.</p>
+                </div>
+              </div>
+              <div class="carousel-nav">
+                <button class="carousel-btn" id="prevTip" title="Previous tip"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn" id="nextTip" title="Next tip"><i class="fas fa-chevron-right"></i></button>
+                <span class="carousel-counter" id="tipCounter">1/0</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Import/Export Section -->
+          <section class="import-export-section card-modern">
+            <div class="card-header">
+              <h3><i class="fas fa-exchange-alt"></i> Backup & Restore</h3>
+            </div>
+            <div class="import-export-actions">
+              <div class="action-group">
+                <h4><i class="fas fa-download"></i> Export Data</h4>
+                <p>Download your sessions and preferences as JSON</p>
+                <div class="action-buttons">
+                  <button class="btn-secondary-modern" id="exportSessions" title="Export study sessions">
+                    <i class="fas fa-download"></i> Export Sessions
+                  </button>
+                  <button class="btn-secondary-modern" id="exportPrefs" title="Export customization settings">
+                    <i class="fas fa-sliders-h"></i> Export Settings
+                  </button>
+                  <button class="btn-secondary-modern" id="exportAll" title="Export everything">
+                    <i class="fas fa-archive"></i> Export All
+                  </button>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="action-group">
+                <h4><i class="fas fa-upload"></i> Import Data</h4>
+                <p>Restore sessions or preferences from a previous backup</p>
+                <div class="action-buttons">
+                  <label class="btn-secondary-modern" style="cursor:pointer;display:inline-block">
+                    <i class="fas fa-upload"></i> Import File
+                    <input type="file" id="importFile" accept=".json" style="display:none">
+                  </label>
+                  <button class="btn-secondary-modern" id="clearAllData" title="Delete all data and start fresh" style="background:#ef4444;color:#fff">
+                    <i class="fas fa-trash"></i> Clear All Data
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -290,50 +430,101 @@
     <div class="welcome-content">
       <button class="welcome-close" id="welcomeClose">&times;</button>
       <div class="welcome-header">
-        <i class="fas fa-graduation-cap"></i>
-        <h2>Welcome to StudyPlanner! 🎓</h2>
-        <p>Learn how to use the dashboard in 30 seconds</p>
+        <i class="fas fa-rocket"></i>
+        <h2>Quick Start Guide</h2>
+        <p>Everything you need to know in 5 simple cards</p>
       </div>
       
       <div class="demo-container">
         <div class="demo-screen">
+          <!-- Step 1: Add Sessions -->
           <div class="demo-step active" data-step="1">
-            <div class="demo-visual">
-              <div class="demo-form">
-                <div class="demo-input"></div>
-                <div class="demo-input short"></div>
-                <div class="demo-button">Add Session</div>
-              </div>
-              <div class="demo-arrow">→</div>
-              <div class="demo-list">
-                <div class="demo-item"></div>
+            <div class="step-badge">Step 1</div>
+            <div class="step-icon-large">
+              <i class="fas fa-plus-circle"></i>
+            </div>
+            <h3>Create Study Sessions</h3>
+            <p>Add what you're studying with a subject name and date. The app will automatically schedule your reviews using spaced repetition.</p>
+            <div class="step-example">
+              <div class="example-label">Example:</div>
+              <div class="example-box">
+                <strong>Biology Chapter 5</strong><br>
+                <small>Due: Today • Level 1</small>
               </div>
             </div>
-            <p><strong>1. Add Sessions</strong> - Create study sessions with subject and date</p>
           </div>
           
+          <!-- Step 2: Use Timer -->
           <div class="demo-step" data-step="2">
-            <div class="demo-visual">
-              <div class="demo-timer">25:00</div>
-              <div class="demo-controls">
-                <div class="demo-btn">▶</div>
-                <div class="demo-btn">⏸</div>
-                <div class="demo-btn">↻</div>
+            <div class="step-badge">Step 2</div>
+            <div class="step-icon-large">
+              <i class="fas fa-clock"></i>
+            </div>
+            <h3>Focus with Pomodoro Timer</h3>
+            <p>Use the built-in timer with presets (25, 45, 60 min) to track your study time and stay focused.</p>
+            <div class="step-example">
+              <div class="timer-demo">
+                <div class="timer-display-demo">25:00</div>
+                <div class="timer-controls-demo">
+                  <button class="timer-btn-demo"><i class="fas fa-play"></i></button>
+                  <button class="timer-btn-demo"><i class="fas fa-pause"></i></button>
+                  <button class="timer-btn-demo"><i class="fas fa-redo"></i></button>
+                </div>
               </div>
             </div>
-            <p><strong>2. Use Timer</strong> - Track your study time with presets</p>
           </div>
           
+          <!-- Step 3: Track Progress -->
           <div class="demo-step" data-step="3">
-            <div class="demo-visual">
-              <div class="demo-stats">
-                <div class="demo-stat">✓ 5</div>
-                <div class="demo-stat">🔥 3</div>
-                <div class="demo-stat">⏱ 2.5h</div>
-                <div class="demo-stat">🏆 2</div>
+            <div class="step-badge">Step 3</div>
+            <div class="step-icon-large">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Monitor Your Progress</h3>
+            <p>Track completed sessions, maintain streaks, and earn achievement badges as you study consistently.</p>
+            <div class="step-example">
+              <div class="stats-demo">
+                <div class="stat-demo"><i class="fas fa-check"></i> 12 Completed</div>
+                <div class="stat-demo"><i class="fas fa-fire"></i> 5 Day Streak</div>
+                <div class="stat-demo"><i class="fas fa-trophy"></i> 3 Badges</div>
               </div>
             </div>
-            <p><strong>3. Track Progress</strong> - Monitor stats and earn badges</p>
+          </div>
+          
+          <!-- Step 4: Get Reminders -->
+          <div class="demo-step" data-step="4">
+            <div class="step-badge">Step 4</div>
+            <div class="step-icon-large">
+              <i class="fas fa-bell"></i>
+            </div>
+            <h3>Enable Smart Reminders</h3>
+            <p>Get browser notifications when your study sessions are due. Stay on track without checking the app constantly.</p>
+            <div class="step-example">
+              <div class="notification-demo">
+                <div class="notif-icon"><i class="fas fa-bell"></i></div>
+                <div class="notif-content">
+                  <strong>Study Reminder</strong><br>
+                  <small>3 sessions due today</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Step 5: Access Tutorials -->
+          <div class="demo-step" data-step="5">
+            <div class="step-badge">Step 5</div>
+            <div class="step-icon-large">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>Learn Computer Science</h3>
+            <p>Access free CS tutorials covering programming fundamentals, data structures, algorithms, and more.</p>
+            <div class="step-example">
+              <div class="tutorial-demo">
+                <div class="tutorial-item"><i class="fas fa-code"></i> Python Basics</div>
+                <div class="tutorial-item"><i class="fas fa-database"></i> Data Structures</div>
+                <div class="tutorial-item"><i class="fas fa-project-diagram"></i> Algorithms</div>
+              </div>
+            </div>
           </div>
         </div>
         
@@ -341,12 +532,14 @@
           <span class="dot active" data-step="1"></span>
           <span class="dot" data-step="2"></span>
           <span class="dot" data-step="3"></span>
+          <span class="dot" data-step="4"></span>
+          <span class="dot" data-step="5"></span>
         </div>
       </div>
       
       <div class="welcome-footer">
-        <button class="btn-secondary-modern" id="skipWelcome">Skip</button>
-        <button class="btn-primary-modern" id="startWelcome">Get Started</button>
+        <button class="btn-secondary-modern" id="skipWelcome">Skip Tour</button>
+        <button class="btn-primary-modern" id="startWelcome">Let's Go!</button>
       </div>
     </div>
   </div>
@@ -360,36 +553,82 @@
   <div class="notes-modal" id="notesModal">
     <div class="notes-modal-content">
       <div class="notes-modal-header">
-        <h2><i class="fas fa-sticky-note"></i> <span id="notesModalTitle">New Note</span></h2>
+        <div class="modal-header-content">
+          <i class="fas fa-sticky-note"></i>
+          <h2 id="notesModalTitle">Create Note</h2>
+        </div>
         <button class="notes-modal-close" id="notesModalClose">&times;</button>
       </div>
       
       <form id="noteForm" class="notes-form">
         <div class="form-group-modern">
-          <label for="noteSubject">Subject *</label>
-          <input id="noteSubject" required placeholder="e.g., Mathematics, Spanish" list="subjectList">
-          <datalist id="subjectList"></datalist>
-        </div>
-        
-        <div class="form-group-modern">
-          <label for="noteTemplate">Template</label>
-          <select id="noteTemplate" class="note-template-select">
-            <option value="">Blank</option>
-            <option value="concepts">Key Concepts</option>
-            <option value="questions">Questions & Answers</option>
-            <option value="review">Review Notes</option>
+          <label for="noteTemplate">
+            <i class="fas fa-file-alt"></i> Template
+          </label>
+          <select id="noteTemplate" class="note-select">
+            <option value="">✏️ Blank Note</option>
+            <option value="lecture">📚 Lecture Notes</option>
+            <option value="summary">📝 Chapter Summary</option>
+            <option value="flashcards">🎴 Flashcards</option>
+            <option value="questions">❓ Practice Questions</option>
+            <option value="formula">🔢 Formulas & Equations</option>
           </select>
         </div>
         
         <div class="form-group-modern">
-          <label for="noteContent">Notes *</label>
-          <textarea id="noteContent" required placeholder="Write your study notes here..." rows="8" maxlength="5000"></textarea>
-          <div class="char-count"><span id="charCount">0</span>/5000</div>
+          <label for="noteSubject">
+            <i class="fas fa-book"></i> Subject
+          </label>
+          <input id="noteSubject" required placeholder="e.g., Mathematics, Spanish" autocomplete="off">
+        </div>
+        
+        <div class="form-row-modern">
+          <div class="form-group-modern">
+            <label for="noteCategory">
+              <i class="fas fa-tag"></i> Category
+            </label>
+            <select id="noteCategory" class="note-select">
+              <option value="lecture">📚 Lecture Notes</option>
+              <option value="homework">✏️ Homework</option>
+              <option value="exam">📝 Exam Prep</option>
+              <option value="project">🎯 Project</option>
+              <option value="general">📌 General</option>
+            </select>
+          </div>
+          
+          <div class="form-group-modern">
+            <label for="notePriority">
+              <i class="fas fa-flag"></i> Priority
+            </label>
+            <select id="notePriority" class="note-select">
+              <option value="low">🟢 Low</option>
+              <option value="medium" selected>🟡 Medium</option>
+              <option value="high">🔴 High</option>
+            </select>
+          </div>
         </div>
         
         <div class="form-group-modern">
-          <label for="noteTags">Tags (optional)</label>
-          <input id="noteTags" placeholder="e.g., vocab, important, review (comma-separated)")
+          <label for="noteContent">
+            <i class="fas fa-pen"></i> Your Notes
+          </label>
+          <textarea id="noteContent" required placeholder="Write your notes here..." rows="8" maxlength="2000"></textarea>
+          <div class="char-count"><span id="charCount">0</span>/2000</div>
+        </div>
+        
+        <div class="form-group-modern">
+          <label for="noteTags">
+            <i class="fas fa-tags"></i> Tags (optional)
+          </label>
+          <input id="noteTags" placeholder="Add tags separated by commas" autocomplete="off">
+          <small class="form-hint">e.g., chapter1, important, review</small>
+        </div>
+        
+        <div class="form-group-modern checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="noteReminder">
+            <span><i class="fas fa-bell"></i> Set reminder for review</span>
+          </label>
         </div>
         
         <div class="form-actions">
@@ -400,263 +639,18 @@
             <i class="fas fa-trash"></i> Delete
           </button>
           <button type="button" class="btn-secondary-modern" id="cancelNoteBtn">
-            Cancel
+            <i class="fas fa-times"></i> Cancel
           </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Settings Modal -->
-  <div class="settings-modal" id="settingsModal">
-    <div class="settings-content" id="customization">
-      <div class="settings-header">
-        <h2><i class="fas fa-cog"></i> Customize</h2>
-        <button class="settings-close" id="settingsClose">&times;</button>
-      </div>
-      
-      <div class="settings-body">
-        <!-- Font Size -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-text-height"></i> Font Size
-          </label>
-          <div class="setting-options">
-            <button class="setting-btn" data-font="small">Small</button>
-            <button class="setting-btn active" data-font="medium">Medium</button>
-            <button class="setting-btn" data-font="large">Large</button>
-          </div>
-        </div>
-
-        <!-- Color Theme -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-palette"></i> Color Theme
-            <span class="setting-description">Choose your preferred accent color</span>
-          </label>
-          <div class="color-theme-grid">
-            <button class="color-theme-option active" data-theme="green" title="Green">
-              <div class="color-preview" style="background:#16a34a"></div>
-              <span>Green</span>
-              <i class="fas fa-check"></i>
-            </button>
-            <button class="color-theme-option" data-theme="blue" title="Blue">
-              <div class="color-preview" style="background:#2563eb"></div>
-              <span>Blue</span>
-              <i class="fas fa-check"></i>
-            </button>
-            <button class="color-theme-option" data-theme="purple" title="Purple">
-              <div class="color-preview" style="background:#9333ea"></div>
-              <span>Purple</span>
-              <i class="fas fa-check"></i>
-            </button>
-            <button class="color-theme-option" data-theme="red" title="Red">
-              <div class="color-preview" style="background:#dc2626"></div>
-              <span>Red</span>
-              <i class="fas fa-check"></i>
-            </button>
-            <button class="color-theme-option" data-theme="orange" title="Orange">
-              <div class="color-preview" style="background:#ea580c"></div>
-              <span>Orange</span>
-              <i class="fas fa-check"></i>
-            </button>
-            <button class="color-theme-option" data-theme="pink" title="Pink">
-              <div class="color-preview" style="background:#ec4899"></div>
-              <span>Pink</span>
-              <i class="fas fa-check"></i>
-            </button>
-            <button class="color-theme-option" data-theme="custom" title="Custom Color">
-              <div class="color-preview custom-preview" id="customColorPreview" style="background:#16a34a">
-                <i class="fas fa-palette"></i>
-              </div>
-              <span>Custom</span>
-              <i class="fas fa-check"></i>
-            </button>
-          </div>
-          <div class="custom-color-picker" id="customColorPicker" style="display:none">
-            <label class="setting-label" style="margin-top:16px">
-              <i class="fas fa-eyedropper"></i> Pick Your Color
-            </label>
-            <div class="color-picker-wrapper">
-              <input type="color" id="colorInput" value="#16a34a">
-              <button class="btn-primary-modern" id="applyCustomColor">Apply Color</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Reduced Motion -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-running"></i> Animations
-          </label>
-          <div class="setting-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="motionToggle" checked>
-              <span class="toggle-slider-setting"></span>
-            </label>
-            <span class="toggle-label">Enable animations</span>
-          </div>
-        </div>
-
-        <!-- Sound Effects -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-volume-up"></i> Sound Effects
-            <span class="setting-description">Play sounds on actions</span>
-          </label>
-          <div class="setting-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="soundToggle">
-              <span class="toggle-slider-setting"></span>
-            </label>
-            <span class="toggle-label">Enable sounds</span>
-          </div>
-        </div>
-
-        <!-- Auto Dark Mode -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-adjust"></i> Auto Dark Mode
-            <span class="setting-description">Match system preference</span>
-          </label>
-          <div class="setting-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="autoDarkToggle">
-              <span class="toggle-slider-setting"></span>
-            </label>
-            <span class="toggle-label">Auto switch theme</span>
-          </div>
-        </div>
-
-        <!-- Compact Mode -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-compress"></i> Compact Mode
-            <span class="setting-description">Reduce spacing for more content</span>
-          </label>
-          <div class="setting-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="compactToggle">
-              <span class="toggle-slider-setting"></span>
-            </label>
-            <span class="toggle-label">Enable compact mode</span>
-          </div>
-        </div>
-
-        <!-- Session Goal -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-bullseye"></i> Daily Goal
-            <span class="setting-description">Set your daily session target</span>
-          </label>
-          <div class="setting-options">
-            <button class="setting-btn" data-goal="3">3 sessions</button>
-            <button class="setting-btn active" data-goal="5">5 sessions</button>
-            <button class="setting-btn" data-goal="10">10 sessions</button>
-          </div>
-        </div>
-
-        <!-- Session View Mode -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-th"></i> Session View
-            <span class="setting-description">How to display your sessions</span>
-          </label>
-          <div class="setting-options">
-            <button class="setting-btn active" data-view="list">List View</button>
-            <button class="setting-btn" data-view="grid">Grid View</button>
-          </div>
-        </div>
-
-        <!-- Notification Frequency -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-bell"></i> Notifications
-            <span class="setting-description">How often to be reminded</span>
-          </label>
-          <div class="setting-options">
-            <button class="setting-btn active" data-notify="instant">Instant</button>
-            <button class="setting-btn" data-notify="hourly">Hourly</button>
-            <button class="setting-btn" data-notify="daily">Daily</button>
-          </div>
-        </div>
-
-        <!-- Pomodoro Timer -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-hourglass-half"></i> Pomodoro Preset
-            <span class="setting-description">Default timer duration</span>
-          </label>
-          <div class="setting-options">
-            <button class="setting-btn" data-timer="25">25 min</button>
-            <button class="setting-btn active" data-timer="45">45 min</button>
-            <button class="setting-btn" data-timer="60">60 min</button>
-          </div>
-        </div>
-
-        <!-- Focus Mode -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-eye-slash"></i> Focus Mode
-            <span class="setting-description">Hide non-essential UI elements</span>
-          </label>
-          <div class="setting-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="focusToggle">
-              <span class="toggle-slider-setting"></span>
-            </label>
-            <span class="toggle-label">Enable focus mode</span>
-          </div>
-        </div>
-
-        <!-- Auto-save Frequency -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-history"></i> Auto-save Frequency
-            <span class="setting-description">How often to save automatically</span>
-          </label>
-          <div class="setting-options">
-            <button class="setting-btn" data-autosave="5">5 min</button>
-            <button class="setting-btn" data-autosave="15">15 min</button>
-            <button class="setting-btn active" data-autosave="30">30 min</button>
-            <button class="setting-btn" data-autosave="60">60 min</button>
-          </div>
-        </div>
-
-        <!-- Statistics Theme -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-chart-bar"></i> Chart Theme
-            <span class="setting-description">How charts appear on dashboard</span>
-          </label>
-          <div class="setting-options">
-            <button class="setting-btn active" data-chart="light">Light</button>
-            <button class="setting-btn" data-chart="dark">Dark</button>
-            <button class="setting-btn" data-chart="auto">Auto</button>
-          </div>
-        </div>
-
-        <!-- Language -->
-        <div class="setting-group">
-          <label class="setting-label">
-            <i class="fas fa-globe"></i> Language
-            <span class="setting-description">Choose your preferred language</span>
-          </label>
-          <div class="setting-options">
-            <button class="setting-btn active" data-lang="en">English</button>
-            <button class="setting-btn" data-lang="tw">Twi</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="settings-footer">
-        <button class="btn-secondary-modern" id="resetSettings">Reset to Default</button>
-      </div>
-    </div>
-  </div>
 
   <script src="utils.js"></script>
+  <script src="navigation.js" defer></script>
   <script src="app.js" defer></script>
+  <script src="dashboard.js" defer></script>
   <script>
     // Particle System
     const canvas = document.getElementById('particleCanvas');
@@ -715,32 +709,7 @@
     }
     animateParticles();
 
-    // Theme Toggle
-    const saved = StudyPlannerUtils.getItem(StudyPlannerUtils.THEME_KEY);
-    if(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)){
-      document.body.classList.add('dark-mode');
-    }
 
-    function updateThemeUI() {
-      const isDark = document.body.classList.contains('dark-mode');
-      const toggle = document.querySelector('.theme-toggle-switch');
-      const tooltip = document.getElementById('themeTooltip');
-      if(toggle) toggle.classList.toggle('active', isDark);
-      if(tooltip) tooltip.textContent = isDark ? 'Dark Mode' : 'Light Mode';
-    }
-    updateThemeUI();
-
-    document.getElementById('themeToggle')?.addEventListener('click', (e) => {
-      const rect = e.target.getBoundingClientRect();
-      createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, 30);
-      document.body.classList.add('theme-transitioning');
-      setTimeout(() => {
-        document.body.classList.toggle('dark-mode');
-        StudyPlannerUtils.setItem(StudyPlannerUtils.THEME_KEY, document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-        updateThemeUI();
-        setTimeout(() => document.body.classList.remove('theme-transitioning'), 300);
-      }, 150);
-    });
 
     // Filter tabs
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -761,6 +730,8 @@
         clearInterval(interval);
         setTimeout(() => {
           preloader.classList.add('fade-out');
+          // once fading, allow clicks through immediately
+          preloader.style.pointerEvents = 'none';
           setTimeout(() => preloader.style.display = 'none', 500);
         }, 300);
       }
@@ -773,286 +744,17 @@
       clearInterval(interval);
       setTimeout(() => {
         preloader.classList.add('fade-out');
+        preloader.style.pointerEvents = 'none';
         setTimeout(() => preloader.style.display = 'none', 500);
       }, 300);
     });
 
-    // Settings System
-    const settingsBtn = document.getElementById('settingsBtn');
-    const settingsModal = document.getElementById('settingsModal');
-    const settingsClose = document.getElementById('settingsClose');
-    const resetSettings = document.getElementById('resetSettings');
-    const motionToggle = document.getElementById('motionToggle');
 
-    // Load saved settings
-    const fontSize = StudyPlannerUtils.getItem('font_size') || 'medium';
-    const colorTheme = StudyPlannerUtils.getItem('color_theme') || 'green';
-    const reduceMotion = StudyPlannerUtils.getItem('reduce_motion') === 'true';
 
-    document.body.classList.add(`font-${fontSize}`);
-    if(colorTheme !== 'green') document.body.classList.add(`theme-${colorTheme}`);
-    if(reduceMotion) document.body.classList.add('reduce-motion');
-    motionToggle.checked = !reduceMotion;
-
-    document.querySelectorAll('.setting-btn').forEach(btn => {
-      if(btn.dataset.font === fontSize) btn.classList.add('active');
-    });
-    document.querySelectorAll('.theme-color-btn').forEach(btn => {
-      if(btn.dataset.theme === colorTheme) btn.classList.add('active');
-    });
-
-    // Open/Close Settings
-    settingsBtn?.addEventListener('click', () => {
-      settingsModal.classList.add('active');
-    });
-
-    settingsClose?.addEventListener('click', () => {
-      settingsModal.classList.remove('active');
-    });
-
-    settingsModal?.addEventListener('click', (e) => {
-      if(e.target.id === 'settingsModal') settingsModal.classList.remove('active');
-    });
-
-    // Auto-open settings if hash is #customization
-    if(window.location.hash === '#customization') {
-      setTimeout(() => settingsModal.classList.add('active'), 100);
-    }
-
-    // Font Size
-    document.querySelectorAll('.setting-btn[data-font]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const size = btn.dataset.font;
-        document.querySelectorAll('.setting-btn[data-font]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.body.className = document.body.className.replace(/font-\w+/g, '');
-        document.body.classList.add(`font-${size}`);
-        StudyPlannerUtils.setItem('font_size', size);
-      });
-    });
-
-    // Color Theme
-    const customColorPicker = document.getElementById('customColorPicker');
-    const colorInput = document.getElementById('colorInput');
-    const customColorPreview = document.getElementById('customColorPreview');
-    const applyCustomColor = document.getElementById('applyCustomColor');
-    
-    document.querySelectorAll('.color-theme-option').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const theme = btn.dataset.theme;
-        document.querySelectorAll('.color-theme-option').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        if(theme === 'custom') {
-          customColorPicker.style.display = 'block';
-        } else {
-          customColorPicker.style.display = 'none';
-          document.body.className = document.body.className.replace(/theme-\w+/g, '');
-          if(theme !== 'green') document.body.classList.add(`theme-${theme}`);
-          StudyPlannerUtils.setItem('color_theme', theme);
-          document.documentElement.style.removeProperty('--primary');
-          document.documentElement.style.removeProperty('--primary-dark');
-          document.documentElement.style.removeProperty('--primary-light');
-          document.documentElement.style.removeProperty('--primary-rgb');
-        }
-      });
-    });
-    
-    // Custom Color Picker
-    colorInput?.addEventListener('input', (e) => {
-      customColorPreview.style.background = e.target.value;
-    });
-    
-    applyCustomColor?.addEventListener('click', () => {
-      const color = colorInput.value;
-      const rgb = hexToRgb(color);
-      document.documentElement.style.setProperty('--primary', color);
-      document.documentElement.style.setProperty('--primary-dark', shadeColor(color, -20));
-      document.documentElement.style.setProperty('--primary-light', shadeColor(color, 20));
-      document.documentElement.style.setProperty('--primary-rgb', `${rgb.r}, ${rgb.g}, ${rgb.b}`);
-      document.body.className = document.body.className.replace(/theme-\w+/g, '');
-      StudyPlannerUtils.setItem('color_theme', 'custom');
-      StudyPlannerUtils.setItem('custom_color', color);
-    });
-    
-    // Load custom color if saved
-    const savedCustomColor = StudyPlannerUtils.getItem('custom_color');
-    if(colorTheme === 'custom' && savedCustomColor) {
-      colorInput.value = savedCustomColor;
-      customColorPreview.style.background = savedCustomColor;
-      customColorPicker.style.display = 'block';
-      const rgb = hexToRgb(savedCustomColor);
-      document.documentElement.style.setProperty('--primary', savedCustomColor);
-      document.documentElement.style.setProperty('--primary-dark', shadeColor(savedCustomColor, -20));
-      document.documentElement.style.setProperty('--primary-light', shadeColor(savedCustomColor, 20));
-      document.documentElement.style.setProperty('--primary-rgb', `${rgb.r}, ${rgb.g}, ${rgb.b}`);
-    }
-    
-    // Helper functions
-    function hexToRgb(hex) {
-      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-      } : {r: 22, g: 163, b: 74};
-    }
-    
-    function shadeColor(color, percent) {
-      const rgb = hexToRgb(color);
-      const t = percent < 0 ? 0 : 255;
-      const p = percent < 0 ? percent * -1 : percent;
-      const R = Math.round((t - rgb.r) * p / 100) + rgb.r;
-      const G = Math.round((t - rgb.g) * p / 100) + rgb.g;
-      const B = Math.round((t - rgb.b) * p / 100) + rgb.b;
-      return `#${(0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1)}`;
-    }
-
-    // Reduced Motion
-    motionToggle?.addEventListener('change', () => {
-      if(motionToggle.checked) {
-        document.body.classList.remove('reduce-motion');
-        StudyPlannerUtils.setItem('reduce_motion', 'false');
-      } else {
-        document.body.classList.add('reduce-motion');
-        StudyPlannerUtils.setItem('reduce_motion', 'true');
-      }
-    });
-
-    // Sound Effects
-    const soundToggle = document.getElementById('soundToggle');
-    const soundEnabled = StudyPlannerUtils.getItem('sound_enabled') === 'true';
-    if(soundToggle) soundToggle.checked = soundEnabled;
-    soundToggle?.addEventListener('change', () => {
-      StudyPlannerUtils.setItem('sound_enabled', soundToggle.checked ? 'true' : 'false');
-    });
-
-    // Auto Dark Mode
-    const autoDarkToggle = document.getElementById('autoDarkToggle');
-    const autoDark = StudyPlannerUtils.getItem('auto_dark') === 'true';
-    if(autoDarkToggle) autoDarkToggle.checked = autoDark;
-    autoDarkToggle?.addEventListener('change', () => {
-      StudyPlannerUtils.setItem('auto_dark', autoDarkToggle.checked ? 'true' : 'false');
-    });
-
-    // Compact Mode
-    const compactToggle = document.getElementById('compactToggle');
-    const compactMode = StudyPlannerUtils.getItem('compact_mode') === 'true';
-    if(compactToggle) compactToggle.checked = compactMode;
-    if(compactMode) document.body.classList.add('compact-mode');
-    compactToggle?.addEventListener('change', () => {
-      document.body.classList.toggle('compact-mode', compactToggle.checked);
-      StudyPlannerUtils.setItem('compact_mode', compactToggle.checked ? 'true' : 'false');
-    });
-
-    // Daily Goal
-    const dailyGoal = StudyPlannerUtils.getItem('daily_goal') || '5';
-    document.querySelectorAll('.setting-btn[data-goal]').forEach(btn => {
-      if(btn.dataset.goal === dailyGoal) btn.classList.add('active');
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.setting-btn[data-goal]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        StudyPlannerUtils.setItem('daily_goal', btn.dataset.goal);
-      });
-    });
-
-    // Session View Mode
-    const sessionView = StudyPlannerUtils.getItem('session_view') || 'list';
-    document.querySelectorAll('.setting-btn[data-view]').forEach(btn => {
-      if(btn.dataset.view === sessionView) btn.classList.add('active');
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.setting-btn[data-view]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        StudyPlannerUtils.setItem('session_view', btn.dataset.view);
-        location.reload();
-      });
-    });
-
-    // Notification Frequency
-    const notifyFreq = StudyPlannerUtils.getItem('notify_frequency') || 'instant';
-    document.querySelectorAll('.setting-btn[data-notify]').forEach(btn => {
-      if(btn.dataset.notify === notifyFreq) btn.classList.add('active');
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.setting-btn[data-notify]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        StudyPlannerUtils.setItem('notify_frequency', btn.dataset.notify);
-      });
-    });
-
-    // Pomodoro Timer Presets
-    const timerPreset = StudyPlannerUtils.getItem('timer_preset') || '45';
-    document.querySelectorAll('.setting-btn[data-timer]').forEach(btn => {
-      if(btn.dataset.timer === timerPreset) btn.classList.add('active');
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.setting-btn[data-timer]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        StudyPlannerUtils.setItem('timer_preset', btn.dataset.timer);
-      });
-    });
-
-    // Focus Mode
-    const focusToggle = document.getElementById('focusToggle');
-    const focusMode = StudyPlannerUtils.getItem('focus_mode') === 'true';
-    if(focusToggle) focusToggle.checked = focusMode;
-    if(focusMode) document.body.classList.add('focus-mode');
-    focusToggle?.addEventListener('change', () => {
-      document.body.classList.toggle('focus-mode', focusToggle.checked);
-      StudyPlannerUtils.setItem('focus_mode', focusToggle.checked ? 'true' : 'false');
-    });
-
-    // Auto-save Frequency
-    const autosaveFreq = StudyPlannerUtils.getItem('autosave_frequency') || '30';
-    document.querySelectorAll('.setting-btn[data-autosave]').forEach(btn => {
-      if(btn.dataset.autosave === autosaveFreq) btn.classList.add('active');
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.setting-btn[data-autosave]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        StudyPlannerUtils.setItem('autosave_frequency', btn.dataset.autosave);
-      });
-    });
-
-    // Chart Theme
-    const chartTheme = StudyPlannerUtils.getItem('chart_theme') || 'light';
-    document.querySelectorAll('.setting-btn[data-chart]').forEach(btn => {
-      if(btn.dataset.chart === chartTheme) btn.classList.add('active');
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.setting-btn[data-chart]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        StudyPlannerUtils.setItem('chart_theme', btn.dataset.chart);
-      });
-    });
-
-    // Language Selection
-    const language = StudyPlannerUtils.getItem('language') || 'en';
-    document.querySelectorAll('.setting-btn[data-lang]').forEach(btn => {
-      if(btn.dataset.lang === language) btn.classList.add('active');
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.setting-btn[data-lang]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        StudyPlannerUtils.setItem('language', btn.dataset.lang);
-        // You can add language translation logic here
-        StudyPlannerUtils.showNotification(btn.dataset.lang === 'en' ? 'Language changed to English' : 'Kasa no: Twi', 'success');
-      });
-    });
-
-    // Reset Settings
-    resetSettings?.addEventListener('click', () => {
-      StudyPlannerUtils.setItem('font_size', 'medium');
-      StudyPlannerUtils.setItem('color_theme', 'green');
-      StudyPlannerUtils.setItem('reduce_motion', 'false');
-      StudyPlannerUtils.setItem('sound_enabled', 'false');
-      StudyPlannerUtils.setItem('auto_dark', 'false');
-      StudyPlannerUtils.setItem('compact_mode', 'false');
-      StudyPlannerUtils.setItem('daily_goal', '5');
-      StudyPlannerUtils.setItem('session_view', 'list');
-      StudyPlannerUtils.setItem('notify_frequency', 'instant');
-      StudyPlannerUtils.setItem('timer_preset', '45');
-      StudyPlannerUtils.setItem('focus_mode', 'false');
-      StudyPlannerUtils.setItem('autosave_frequency', '30');
-      StudyPlannerUtils.setItem('chart_theme', 'light');
-      StudyPlannerUtils.setItem('language', 'en');
-      location.reload();
-    });
   </script>
+  
+  <!-- Notification System -->
+  <script src="notifications.js" defer></script>
+  <script src="notification-ui.js" defer></script>
 </body>
 </html>

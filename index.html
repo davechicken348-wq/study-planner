@@ -4,32 +4,65 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#16a34a" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'" />
-  <meta name="description" content="Master any subject in half the time with AI-powered spaced repetition. Join 10,000+ students learning smarter." />
-  <meta property="og:title" content="Study Planner - Learn 3x Faster with Spaced Repetition" />
-  <meta property="og:description" content="Science-backed study system that helps you remember more with less effort. Free forever." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: blob:; connect-src 'self'; manifest-src 'self'" />
+  <meta name="description" content="Master any subject in half the time with science-backed spaced repetition. Join 10,000+ students learning smarter. Free forever, no sign-up required." />
+  <meta name="keywords" content="study planner, spaced repetition, learning app, study app, education, free study tool, memory retention" />
+  <meta name="author" content="StudyPlanner" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://davechicken348-wq.github.io/study-planner/" />
+  
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="./images/focus.webp" />
+  <meta property="og:url" content="https://davechicken348-wq.github.io/study-planner/" />
+  <meta property="og:title" content="StudyPlanner - Learn 3x Faster with Spaced Repetition" />
+  <meta property="og:description" content="Science-backed study system that helps you remember more with less effort. Free forever." />
+  <meta property="og:image" content="https://davechicken348-wq.github.io/study-planner/images/focus.webp" />
+  <meta property="og:site_name" content="StudyPlanner" />
+  
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Study Planner - Learn 3x Faster" />
+  <meta name="twitter:url" content="https://davechicken348-wq.github.io/study-planner/" />
+  <meta name="twitter:title" content="StudyPlanner - Learn 3x Faster" />
   <meta name="twitter:description" content="Science-backed study system. Free forever." />
-  <meta name="twitter:image" content="./images/focus.webp" />
-  <title>Study Planner - Master Any Subject in Half the Time</title>
+  <meta name="twitter:image" content="https://davechicken348-wq.github.io/study-planner/images/focus.webp" />
+  
+  <title>StudyPlanner - Master Any Subject in Half the Time | Free Spaced Repetition App</title>
+  
+  <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="styles.css?v=13.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+  
+  <!-- Preload Critical Resources -->
+  <link rel="preload" href="styles.css?v=13.2" as="style">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preload" href="utils.js" as="script">
+  <link rel="preload" href="navigation.js" as="script">
+  <link rel="preload" href="index-main.js" as="script">
+  
+  <!-- DNS Prefetch -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles.css?v=13.2">
+  <link rel="stylesheet" href="accessibility.css">
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Ubuntu:wght@400;500;700&family=Open+Sans:wght@400;500;600;700&family=Lato:wght@400;500;700&family=Source+Sans+Pro:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&family=Nunito:wght@400;600;700&family=Work+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Study Planner",
-    "description": "Master any subject in half the time with AI-powered spaced repetition",
+    "name": "StudyPlanner",
+    "url": "https://davechicken348-wq.github.io/study-planner/",
+    "description": "Master any subject in half the time with science-backed spaced repetition",
     "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web Browser",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -38,36 +71,69 @@
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "ratingCount": "1250"
-    }
+      "ratingCount": "1250",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "StudyPlanner"
+    },
+    "datePublished": "2024-01-01",
+    "inLanguage": "en"
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "StudyPlanner",
+    "url": "https://davechicken348-wq.github.io/study-planner/",
+    "logo": "https://davechicken348-wq.github.io/study-planner/favicon.svg",
+    "sameAs": [
+      "https://x.com/DaveChicke56147",
+      "https://www.facebook.com/profile.php?id=100073932625596",
+      "https://www.linkedin.com/in/dave-chicken-5176563b1/",
+      "https://www.instagram.com/blamodave/"
+    ]
   }
   </script>
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <!-- Accessibility -->
+  <a href="#main-content" class="skip-link" tabindex="1">Skip to main content</a>
+  <noscript>
+    <div style="padding:20px;background:#fff3cd;color:#856404;text-align:center;">
+      <strong>JavaScript Required:</strong> This application requires JavaScript to function properly. Please enable JavaScript in your browser settings.
+    </div>
+  </noscript>
 
   <!-- Back to Top Button -->
-  <button class="back-to-top" id="backToTop" aria-label="Back to top">
-    <i class="fas fa-arrow-up"></i>
+  <button class="back-to-top" id="backToTop" aria-label="Scroll back to top" title="Back to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
   </button>
 
   <!-- Quick Access FAB -->
-  <div class="fab-container">
-    <button class="fab-main" id="fabMain" aria-label="Quick actions">
-      <i class="fas fa-ellipsis-v"></i>
+  <nav class="fab-container" aria-label="Quick actions menu">
+    <button class="fab-main" id="fabMain" aria-label="Open quick actions menu" aria-expanded="false" aria-haspopup="true">
+      <i class="fas fa-ellipsis-v" aria-hidden="true"></i>
     </button>
-    <div class="fab-menu" id="fabMenu">
-      <a href="dashboard.html#customization" class="fab-item" title="Customize">
-        <i class="fas fa-palette"></i>
+    <div class="fab-menu" id="fabMenu" role="menu">
+      <button class="fab-item" id="fabCustomize" title="Customize appearance" role="menuitem">
+        <i class="fas fa-palette" aria-hidden="true"></i>
+        <span class="sr-only">Customize</span>
+      </button>
+      <a href="dashboard.html" class="fab-item" title="Go to dashboard" role="menuitem">
+        <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+        <span class="sr-only">Dashboard</span>
       </a>
-      <a href="dashboard.html" class="fab-item" title="Dashboard">
-        <i class="fas fa-tachometer-alt"></i>
-      </a>
-      <a href="contact.html" class="fab-item" title="Contact">
-        <i class="fas fa-envelope"></i>
+      <a href="contact.html" class="fab-item" title="Contact us" role="menuitem">
+        <i class="fas fa-envelope" aria-hidden="true"></i>
+        <span class="sr-only">Contact</span>
       </a>
     </div>
-  </div>
+  </nav>
 
   <!-- Modern Preloader -->
   <div class="preloader-modern" id="preloader">
@@ -89,7 +155,7 @@
   </div>
 
   <!-- Hero Section -->
-  <section class="hero-modern" id="hero">
+  <header class="hero-modern" id="hero" role="banner">
     <div class="hero-bg">
       <div class="hero-gradient"></div>
       <div class="hero-pattern"></div>
@@ -97,51 +163,46 @@
       <div class="stars-container" id="starsContainer"></div>
     </div>
     
-    <nav class="nav-bar">
+    <nav class="nav-bar" role="navigation" aria-label="Main navigation">
       <div class="nav-container">
-        <div class="nav-logo">
-          <i class="fas fa-graduation-cap"></i>
+        <a href="index.html" class="nav-logo" aria-label="StudyPlanner home">
+          <i class="fas fa-graduation-cap" aria-hidden="true"></i>
           <span>StudyPlanner</span>
-        </div>
-        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-          <i class="fas fa-bars"></i>
+        </a>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <i class="fas fa-bars" aria-hidden="true"></i>
         </button>
-        <div class="nav-actions" id="navActions">
-          <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
-          <a href="faq.html" class="nav-link"><i class="fas fa-question-circle"></i> FAQ</a>
-          <a href="study-tips.html" class="nav-link"><i class="fas fa-lightbulb"></i> Study Tips</a>
-          <a href="tutorials.html" class="nav-link"><i class="fas fa-graduation-cap"></i> Tutorials</a>
-          <a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
-          <div class="theme-toggle-wrapper">
-            <button class="theme-toggle-switch" id="themeToggle" aria-label="Toggle dark mode">
-              <span class="toggle-track">
-                <span class="toggle-icon sun-icon"><i class="fas fa-sun"></i></span>
-                <span class="toggle-icon moon-icon"><i class="fas fa-moon"></i></span>
-                <span class="toggle-slider"></span>
-              </span>
-            </button>
-            <span class="theme-tooltip" id="themeTooltip">Light Mode</span>
-          </div>
-          <a href="dashboard.html" class="btn-nav" aria-label="Go to dashboard"><i class="fas fa-rocket"></i> Dashboard</a>
+        <div class="nav-actions" id="navActions" role="menubar">
+          <a href="index.html" class="nav-link" role="menuitem" aria-current="page"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+          <a href="faq.html" class="nav-link" role="menuitem"><i class="fas fa-question-circle" aria-hidden="true"></i> FAQ</a>
+          <a href="study-tips.html" class="nav-link" role="menuitem"><i class="fas fa-lightbulb" aria-hidden="true"></i> Study Tips</a>
+          <a href="tutorials.html" class="nav-link" role="menuitem"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Tutorials</a>
+          <a href="contact.html" class="nav-link" role="menuitem"><i class="fas fa-envelope" aria-hidden="true"></i> Contact</a>
+          <a href="dashboard.html" class="btn-nav" role="menuitem" aria-label="Go to dashboard"><i class="fas fa-rocket" aria-hidden="true"></i> Dashboard</a>
         </div>
       </div>
     </nav>
 
     <div class="hero-content-wrapper">
       <div class="hero-main">
-        <div class="hero-badge">
-          <i class="fas fa-star"></i>
+        <div class="hero-badge" role="status" aria-label="Trusted by over 10,000 students">
+          <i class="fas fa-star" aria-hidden="true"></i>
           <span>Trusted by 10,000+ Students</span>
         </div>
         
+        <div class="accent-indicator" id="currentAccent" aria-label="Current theme color"></div>
+        
         <h1 class="hero-title">
-          Master Any Subject<br/>
-          <span class="gradient-text">In Half the Time</span>
+          Master Any Subject In Half the Time
         </h1>
         
         <p class="hero-subtitle">
-          Science-backed spaced repetition system that helps you learn faster and remember longer. 
+          Science-backed spaced repetition system that helps you learn faster and remember longer.          
           <strong>Free forever.</strong>
+        </p>
+
+        <p class="hero-note">
+          No credit card • No sign-up • Start in 30 seconds
         </p>
 
         <div class="hero-stats">
@@ -157,6 +218,10 @@
             <div class="stat-number">100%</div>
             <div class="stat-label">Free Forever</div>
           </div>
+          <div class="stat-item">
+            <div class="stat-number">4.9/5</div>
+            <div class="stat-label">User Rating</div>
+          </div>
         </div>
 
         <div class="cta-panel" aria-hidden="false">
@@ -166,6 +231,7 @@
               <i class="fas fa-arrow-right"></i>
             </a>
             <p class="cta-note">No credit card • No sign-up • Start in 30 seconds</p>
+            <p class="cta-disclaimer">*Results may vary based on individual effort and consistency.</p>
           </div>
         </div>
       </div>
@@ -242,356 +308,446 @@
       </div>
     </div>
 
-    <div class="scroll-indicator">
+    <div class="scroll-indicator" role="presentation" aria-hidden="true">
       <span>Discover More</span>
       <i class="fas fa-chevron-down"></i>
     </div>
-  </section>
+  </header>
+
+  <!-- Customization Modal (homepage) -->
+  <div id="homeCustModal" class="home-cust-modal" style="display:none">
+    <div class="home-cust-content">
+      <!-- Header -->
+      <div class="cust-header">
+        <h2>Personalize Your Experience</h2>
+        <p>Customize your learning environment</p>
+        <button class="cust-close-icon" id="homeCustClose" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Hero Section -->
+      <div class="cust-hero-section">
+        <img id="custHeroImg" src="images/library_books.webp" alt="Program preview" loading="lazy">
+      </div>
+
+      <!-- Scrollable Cards Container -->
+      <div class="cust-cards-container">
+        <!-- Program Section -->
+        <div class="cust-card">
+        <div class="cust-card-header">
+          <i class="fas fa-book"></i>
+          <label for="programSelect" class="cust-card-title">Select Your Program</label>
+        </div>
+        <div class="cust-card-body">
+          <select id="programSelect" class="cust-program-select">
+            <option value="">-- pick one --</option>
+            <option value="engineering">Engineering</option>
+            <option value="business">Business</option>
+            <option value="pharmacy">Pharmacy</option>
+            <option value="tutorials">Tutorials</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Appearance Section -->
+      <div class="cust-card">
+        <div class="cust-card-header">
+          <i class="fas fa-palette"></i>
+          <span class="cust-card-title">Appearance</span>
+        </div>
+        <div class="cust-card-body">
+          <!-- Theme -->
+          <div class="cust-subsection">
+            <label class="cust-sublabel"><strong>Theme</strong></label>
+            <div class="cust-radio-group">
+              <label class="cust-radio-label">
+                <input type="radio" name="homeTheme" value="light">
+                <span>Light</span>
+              </label>
+              <label class="cust-radio-label">
+                <input type="radio" name="homeTheme" value="dark">
+                <span>Dark</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Primary Accent -->
+          <div class="cust-subsection">
+            <label for="accentColorPicker" class="cust-sublabel"><strong>Primary Accent</strong></label>
+            <input type="color" id="accentColorPicker" value="#16a34a" class="cust-color-picker">
+            <div class="color-palette" id="colorPalette"></div>
+          </div>
+
+          <!-- Secondary Accent -->
+          <div class="cust-subsection">
+            <label for="accent2ColorPicker" class="cust-sublabel"><strong>Secondary Accent</strong></label>
+            <input type="color" id="accent2ColorPicker" value="#16a34a" class="cust-color-picker">
+            <label class="cust-checkbox-label">
+              <input type="checkbox" id="useGradient">
+              <span>Use gradient blend</span>
+            </label>
+          </div>
+
+          <!-- Additional Appearance Controls -->
+          <div class="cust-subsection">
+            <label class="cust-sublabel"><strong>High Contrast</strong></label>
+            <label class="cust-checkbox-label">
+              <input type="checkbox" id="contrastToggle">
+              <span>Enable high contrast text</span>
+            </label>
+          </div>
+
+          <div class="cust-subsection">
+            <label for="accentIntensity" class="cust-sublabel"><strong>Accent Intensity</strong></label>
+            <input type="range" id="accentIntensity" min="20" max="140" value="100">
+            <small class="muted">Make the accent lighter or stronger</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typography Section -->
+      <div class="cust-card">
+        <div class="cust-card-header">
+          <i class="fas fa-font"></i>
+          <span class="cust-card-title">Typography</span>
+        </div>
+        <div class="cust-card-body">
+          <label for="fontSelect" class="cust-sublabel"><strong>Font Family</strong></label>
+          <select id="fontSelect" class="cust-font-select">
+            <option value="'Quicksand',sans-serif">Quicksand (Default)</option>
+            <option value="'Roboto',sans-serif" title="Android system font, excellent mobile readability">Roboto (Mobile-Optimized)</option>
+            <option value="'Open Sans',sans-serif" title="Excellent on all screen sizes">Open Sans</option>
+            <option value="'Lato',sans-serif" title="Warm, highly readable on mobile">Lato</option>
+            <option value="'Source Sans Pro',sans-serif" title="Professional, clear on small screens">Source Sans Pro</option>
+            <option value="'IBM Plex Sans',sans-serif" title="Superior mobile hinting">IBM Plex Sans</option>
+            <option value="'Raleway',sans-serif" title="Clean and mobile-friendly">Raleway</option>
+            <option value="'Nunito',sans-serif" title="Rounded, very readable on mobile">Nunito</option>
+            <option value="'Work Sans',sans-serif" title="Modern, mobile optimized">Work Sans</option>
+            <option value="'Inter',sans-serif">Inter</option>
+            <option value="'Poppins',sans-serif">Poppins</option>
+            <option value="'Ubuntu',sans-serif">Ubuntu</option>
+            <option value="-apple-system,system-ui,sans-serif">System UI</option>
+            <option value="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">Apple System</option>
+            <option value="'Playfair Display',serif">Playfair Display</option>
+            <option value="Georgia,serif">Georgia</option>
+            <option value="'JetBrains Mono',monospace">JetBrains Mono</option>
+            <option value="'Courier New',monospace">Courier New</option>
+            <option value="sans-serif">Generic Sans-serif</option>
+            <option value="serif">Generic Serif</option>
+            <option value="monospace">Generic Monospace</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Layout & Behavior Section -->
+      <div class="cust-card">
+        <div class="cust-card-header">
+          <i class="fas fa-sliders-h"></i>
+          <span class="cust-card-title">Layout & Behavior</span>
+        </div>
+        <div class="cust-card-body">
+          <!-- Layout -->
+          <div class="cust-subsection">
+            <label class="cust-sublabel"><strong>Layout</strong></label>
+            <div class="cust-radio-group">
+              <label class="cust-radio-label">
+                <input type="radio" name="homeLayout" value="comfortable">
+                <span>Comfortable</span>
+              </label>
+              <label class="cust-radio-label">
+                <input type="radio" name="homeLayout" value="compact">
+                <span>Compact</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Animations -->
+          <div class="cust-subsection">
+            <label class="cust-checkbox-label">
+              <input type="checkbox" id="motionToggle">
+              <span><strong>Reduce motion</strong> - Minimize animations</span>
+            </label>
+          </div>
+
+          <!-- Data Saver -->
+          <div class="cust-subsection">
+            <label class="cust-checkbox-label">
+              <input type="checkbox" id="dataSaverToggle">
+              <span><strong>Data saver mode</strong> - Lower bandwidth usage</span>
+            </label>
+          </div>
+
+          <!-- Density & Typography Controls -->
+          <div class="cust-subsection">
+            <label for="densitySelect" class="cust-sublabel"><strong>Content density</strong></label>
+            <select id="densitySelect" class="cust-program-select">
+              <option value="comfortable">Comfortable</option>
+              <option value="compact">Compact</option>
+              <option value="dense">Dense (minimal spacing)</option>
+            </select>
+          </div>
+
+          <div class="cust-subsection">
+            <label for="fontSizeRange" class="cust-sublabel"><strong>Base text size</strong></label>
+            <input type="range" id="fontSizeRange" min="13" max="20" value="16">
+            <small class="muted">Adjust the base font size for readability</small>
+          </div>
+
+          <div class="cust-subsection">
+            <label for="lineHeightRange" class="cust-sublabel"><strong>Line height</strong></label>
+            <input type="range" id="lineHeightRange" min="110" max="180" value="140">
+            <small class="muted">Line height percentage (e.g., 140% = 1.4)</small>
+          </div>
+
+          <div class="cust-subsection">
+            <label class="cust-sublabel"><strong>Focus Mode</strong></label>
+            <label class="cust-checkbox-label">
+              <input type="checkbox" id="focusToggle">
+              <span>Enable focus mode (reduce distractions)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Media Section -->
+      <div class="cust-card">
+        <div class="cust-card-header">
+          <i class="fas fa-image"></i>
+          <span class="cust-card-title">Media & Backup</span>
+        </div>
+        <div class="cust-card-body">
+          <!-- Hero Image -->
+          <div class="cust-subsection">
+            <label class="cust-sublabel"><strong>Hero Image</strong></label>
+            <div class="cust-file-upload-wrapper">
+              <input type="file" id="heroUpload" accept="image/*">
+              <button id="removeHero" class="cust-btn-secondary">Use Default</button>
+            </div>
+          </div>
+
+          <!-- Import/Export -->
+          <div class="cust-subsection">
+            <div class="cust-button-pair">
+              <button id="exportPrefs" class="cust-btn-secondary"><i class="fas fa-download"></i> Export</button>
+              <button id="importPrefs" class="cust-btn-secondary"><i class="fas fa-upload"></i> Import</button>
+            </div>
+            <input type="file" id="importFile" style="display:none" accept="application/json">
+          </div>
+        </div>
+      </div>
+
+      <!-- Profiles Section -->
+      <div class="cust-card">
+        <div class="cust-card-header">
+          <i class="fas fa-layer-group"></i>
+          <span class="cust-card-title">Saved Profiles</span>
+        </div>
+        <div class="cust-card-body">
+          <select id="profileSelect" class="cust-profile-select">
+            <option value="">-- choose profile --</option>
+          </select>
+          <div class="cust-button-pair">
+            <button id="saveProfile" class="cust-btn-secondary"><i class="fas fa-save"></i> Save</button>
+            <button id="deleteProfile" class="cust-btn-secondary"><i class="fas fa-trash"></i> Delete</button>
+          </div>
+        </div>
+      </div>
+      </div>
+      <!-- End Scrollable Container -->
+
+      <!-- Action Buttons -->
+      <div class="cust-footer">
+        <button class="cust-btn-randomize" id="randomizeBtn">
+          <i class="fas fa-dice"></i> Randomize Style
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Main Content -->
   <main id="main-content">
     
     <!-- Social Proof -->
-    <section class="social-proof">
-      <div class="container-narrow">
-        <p class="proof-text">
-          <i class="fas fa-check-circle"></i>
-          Join students from <strong>50+ countries</strong> who are learning smarter
-        </p>
+    <section class="social-proof-modern">
+      <div class="container">
+        <div class="proof-stats">
+          <div class="proof-stat">
+            <div class="proof-number">10K+</div>
+            <div class="proof-label">Active Students</div>
+          </div>
+          <div class="proof-stat">
+            <div class="proof-number">50+</div>
+            <div class="proof-label">Countries</div>
+          </div>
+          <div class="proof-stat">
+            <div class="proof-number">80%</div>
+            <div class="proof-label">Better Retention</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Features -->
-    <section class="features-modern">
+    <!-- Features (Top 3 Only) -->
+    <section class="features-redesign">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header-modern">
+          <span class="section-badge">Why Choose Us</span>
           <h2>Everything You Need to Learn Smarter</h2>
-          <p>Powerful features designed to maximize your learning efficiency</p>
+          <p>Science-backed features designed for maximum retention</p>
         </div>
 
-        <div class="features-grid-modern">
-          <div class="feature-modern">
-            <div class="feature-icon">
-              <i class="fas fa-brain"></i>
+        <div class="features-grid-redesign">
+          <div class="feature-card-redesign">
+            <div class="feature-visual">
+              <div class="feature-icon-large">
+                <i class="fas fa-brain"></i>
+              </div>
+              <div class="feature-badge-new">Most Popular</div>
             </div>
-            <h3>Spaced Repetition</h3>
-            <p>Review at scientifically optimal intervals. Remember 80% more with less effort.</p>
+            <div class="feature-content-new">
+              <h3>Spaced Repetition</h3>
+              <p>Our algorithm schedules reviews at scientifically proven intervals. Studies show 80% better retention compared to traditional studying.</p>
+              <ul class="feature-benefits">
+                <li><i class="fas fa-check"></i> Automatic scheduling</li>
+                <li><i class="fas fa-check"></i> Proven by research</li>
+                <li><i class="fas fa-check"></i> Saves study time</li>
+              </ul>
+            </div>
           </div>
 
-          <div class="feature-modern">
-            <div class="feature-icon">
-              <i class="fas fa-calendar-check"></i>
+          <div class="feature-card-redesign">
+            <div class="feature-visual">
+              <div class="feature-icon-large">
+                <i class="fas fa-chart-line"></i>
+              </div>
             </div>
-            <h3>Smart Scheduling</h3>
-            <p>Never miss a review. Our algorithm schedules your next study session automatically.</p>
+            <div class="feature-content-new">
+              <h3>Progress Tracking</h3>
+              <p>Visualize your learning journey with detailed analytics. Track sessions, maintain streaks, and celebrate milestones.</p>
+              <ul class="feature-benefits">
+                <li><i class="fas fa-check"></i> Real-time stats</li>
+                <li><i class="fas fa-check"></i> Streak tracking</li>
+                <li><i class="fas fa-check"></i> Achievement badges</li>
+              </ul>
+            </div>
           </div>
 
-          <div class="feature-modern">
-            <div class="feature-icon">
-              <i class="fas fa-chart-bar"></i>
+          <div class="feature-card-redesign">
+            <div class="feature-visual">
+              <div class="feature-icon-large">
+                <i class="fas fa-shield-alt"></i>
+              </div>
             </div>
-            <h3>Progress Tracking</h3>
-            <p>See your improvement over time. Track sessions, streaks, and total study hours.</p>
-          </div>
-
-          <div class="feature-modern">
-            <div class="feature-icon">
-              <i class="fas fa-trophy"></i>
+            <div class="feature-content-new">
+              <h3>100% Private</h3>
+              <p>Your data never leaves your device. No accounts, no tracking, no ads. Just pure, distraction-free learning.</p>
+              <ul class="feature-benefits">
+                <li><i class="fas fa-check"></i> Local storage only</li>
+                <li><i class="fas fa-check"></i> No registration</li>
+                <li><i class="fas fa-check"></i> Ad-free forever</li>
+              </ul>
             </div>
-            <h3>Achievement System</h3>
-            <p>Stay motivated with badges and milestones. Celebrate every learning victory.</p>
-          </div>
-
-          <div class="feature-modern">
-            <div class="feature-icon">
-              <i class="fas fa-clock"></i>
-            </div>
-            <h3>Study Timer</h3>
-            <p>Built-in Pomodoro timer. Focus better with timed study sessions.</p>
-          </div>
-
-          <div class="feature-modern">
-            <div class="feature-icon">
-              <i class="fas fa-lock"></i>
-            </div>
-            <h3>100% Private</h3>
-            <p>Your data stays on your device. No accounts, no tracking, no ads.</p>
-          </div>
-
-          <div class="feature-modern">
-            <div class="feature-icon">
-              <i class="fas fa-mobile-alt"></i>
-            </div>
-            <h3>Works Everywhere</h3>
-            <p>Fully responsive design. Study on your phone, tablet, or computer seamlessly.</p>
-          </div>
-
-          <div class="feature-modern">
-            <div class="feature-icon">
-              <i class="fas fa-palette"></i>
-            </div>
-            <h3>Customizable Themes</h3>
-            <p>Choose from 6 color themes and toggle dark mode. Make it yours.</p>
-          </div>
-
-          <div class="feature-modern">
-            <div class="feature-icon">
-              <i class="fas fa-infinity"></i>
-            </div>
-            <h3>Unlimited Subjects</h3>
-            <p>Add as many subjects as you want. No limits, no restrictions, ever.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- How It Works -->
-    <section class="how-it-works-modern">
+    <section class="how-works-redesign">
       <div class="container">
-        <div class="section-header">
-          <h2>How It Works</h2>
-          <p>Start learning smarter in 3 simple steps</p>
+        <div class="section-header-modern">
+          <span class="section-badge">Simple Process</span>
+          <h2>Get Started in 3 Easy Steps</h2>
+          <p>No complicated setup. Start learning in under 60 seconds.</p>
         </div>
 
-        <div class="steps-modern">
-          <div class="step-modern">
-            <div class="step-number">1</div>
-            <div class="step-content">
-              <h3>Add Your Subject</h3>
-              <p>Enter what you want to learn - any topic, any subject, any skill.</p>
+        <div class="steps-timeline">
+          <div class="step-card-new">
+            <div class="step-icon-wrapper">
+              <div class="step-number-new">1</div>
+              <div class="step-icon-bg">
+                <i class="fas fa-plus-circle"></i>
+              </div>
             </div>
+            <div class="step-details">
+              <h3>Create Your First Session</h3>
+              <p>Add what you're studying - a subject, topic, or skill. Set your study date and you're ready to go.</p>
+              <div class="step-example">Example: "Biology Chapter 5 - Cell Division"</div>
+            </div>
+            <div class="step-connector"></div>
           </div>
 
-          <div class="step-modern">
-            <div class="step-number">2</div>
-            <div class="step-content">
-              <h3>Study & Review</h3>
-              <p>Focus on your material. Mark sessions complete when done.</p>
+          <div class="step-card-new">
+            <div class="step-icon-wrapper">
+              <div class="step-number-new">2</div>
+              <div class="step-icon-bg">
+                <i class="fas fa-book-open"></i>
+              </div>
             </div>
+            <div class="step-details">
+              <h3>Study & Mark Complete</h3>
+              <p>Focus on your material using our built-in timer. When you're done, mark it complete to level up.</p>
+              <div class="step-example">Use Pomodoro timer: 25 min focus, 5 min break</div>
+            </div>
+            <div class="step-connector"></div>
           </div>
 
-          <div class="step-modern">
-            <div class="step-number">3</div>
-            <div class="step-content">
-              <h3>Let Science Work</h3>
-              <p>We schedule your next review at the perfect time for maximum retention.</p>
+          <div class="step-card-new">
+            <div class="step-icon-wrapper">
+              <div class="step-number-new">3</div>
+              <div class="step-icon-bg">
+                <i class="fas fa-rocket"></i>
+              </div>
+            </div>
+            <div class="step-details">
+              <h3>Watch Your Progress Soar</h3>
+              <p>Our algorithm automatically schedules your next review. Track your streaks, earn badges, and see your retention improve.</p>
+              <div class="step-example">Next review: 1 day → 3 days → 7 days → 14 days</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials-modern">
+    <!-- Final CTA -->
+    <section class="cta-redesign">
       <div class="container">
-        <div class="section-header">
-          <h2>What Students Say</h2>
-          <p>Real results from real students</p>
-        </div>
-
-        <div class="testimonials-grid">
-          <div class="testimonial-modern">
-            <div class="testimonial-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
+        <div class="cta-box">
+          <div class="cta-content-redesign">
+            <div class="cta-icon-large">
+              <i class="fas fa-graduation-cap"></i>
             </div>
-            <p>"Went from failing to straight A's. This actually works!"</p>
-            <div class="testimonial-author">
-              <strong>Sarah M.</strong>
-              <span>Biology Student</span>
+            <h2>Ready to Transform Your Learning?</h2>
+            <p>Join 10,000+ students who are mastering their subjects faster with science-backed spaced repetition.</p>
+            <div class="cta-features-list">
+              <div class="cta-feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Free forever, no credit card</span>
+              </div>
+              <div class="cta-feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Start in under 60 seconds</span>
+              </div>
+              <div class="cta-feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Works on all devices</span>
+              </div>
             </div>
-            <div class="testimonial-note">Sample review for demonstration</div>
-          </div>
-
-          <div class="testimonial-modern">
-            <div class="testimonial-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
+            <div class="cta-actions">
+              <a href="dashboard.html" class="btn-cta-primary">
+                <span>Start Learning Now</span>
+                <i class="fas fa-arrow-right"></i>
+              </a>
+              <a href="how-it-works.html" class="btn-cta-secondary">
+                <i class="fas fa-play-circle"></i>
+                <span>See How It Works</span>
+              </a>
             </div>
-            <p>"Learned 2000+ Spanish words in 3 months. Game changer."</p>
-            <div class="testimonial-author">
-              <strong>David K.</strong>
-              <span>Language Learner</span>
-            </div>
-            <div class="testimonial-note">Sample review for demonstration</div>
-          </div>
-
-          <div class="testimonial-modern">
-            <div class="testimonial-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <p>"Cut my study time in half. Aced my certification exam."</p>
-            <div class="testimonial-author">
-              <strong>Lisa C.</strong>
-              <span>Professional</span>
-            </div>
-            <div class="testimonial-note">Sample review for demonstration</div>
-          </div>
-
-          <div class="testimonial-modern">
-            <div class="testimonial-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <p>"Perfect for medical school. Helps me remember everything!"</p>
-            <div class="testimonial-author">
-              <strong>James O.</strong>
-              <span>Medical Student</span>
-            </div>
-            <div class="testimonial-note">Sample review for demonstration</div>
-          </div>
-
-          <div class="testimonial-modern">
-            <div class="testimonial-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <p>"Simple, effective, and completely free. Exactly what I needed."</p>
-            <div class="testimonial-author">
-              <strong>Amina T.</strong>
-              <span>Engineering Student</span>
-            </div>
-            <div class="testimonial-note">Sample review for demonstration</div>
-          </div>
-
-          <div class="testimonial-modern">
-            <div class="testimonial-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <p>"The spaced repetition really works. My grades improved dramatically."</p>
-            <div class="testimonial-author">
-              <strong>Michael A.</strong>
-              <span>Law Student</span>
-            </div>
-            <div class="testimonial-note">Sample review for demonstration</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-modern">
-      <div class="container-narrow">
-        <div class="cta-content-modern">
-          <h2>Ready to Learn Smarter?</h2>
-          <p>Join thousands of students who are already learning 3x faster</p>
-          <div class="cta-buttons">
-            <a href="dashboard.html" class="btn-primary btn-large" aria-label="Get started for free">
-              <span>Get Started Free</span>
-              <i class="fas fa-arrow-right"></i>
-            </a>
-            <a href="how-it-works.html" class="btn-secondary btn-large" aria-label="Learn how it works">
-              <span>How It Works</span>
-              <i class="fas fa-question-circle"></i>
-            </a>
-          </div>
-          <p class="cta-guarantee">
-            <i class="fas fa-shield-alt"></i>
-            100% Free Forever • No Credit Card Required
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tutorials Resources Section -->
-    <section class="tutorials-resources-modern">
-      <div class="container">
-        <div class="section-header">
-          <h2>Explore Learning Resources</h2>
-          <p>Curated channels, tutorials, and guides to accelerate your learning</p>
-        </div>
-
-        <div class="tutorials-highlight-grid">
-          <div class="tutorials-highlight-card">
-            <div class="highlight-icon">
-              <i class="fas fa-video"></i>
-            </div>
-            <h3>Video Tutorials</h3>
-            <p>Step-by-step video guides from YouTube channels covering various subjects and study techniques.</p>
-            <ul class="highlight-features">
-              <li><i class="fas fa-check"></i> Curated YouTube channels</li>
-              <li><i class="fas fa-check"></i> Subject-specific learning paths</li>
-              <li><i class="fas fa-check"></i> Expert educator recommendations</li>
-            </ul>
-          </div>
-
-          <div class="tutorials-highlight-card">
-            <div class="highlight-icon">
-              <i class="fas fa-bookmark"></i>
-            </div>
-            <h3>Articles & Guides</h3>
-            <p>In-depth articles from Dev.to covering study methods, productivity hacks, and learning strategies.</p>
-            <ul class="highlight-features">
-              <li><i class="fas fa-check"></i> Dev.to community posts</li>
-              <li><i class="fas fa-check"></i> Science-backed study methods</li>
-              <li><i class="fas fa-check"></i> Productivity optimization tips</li>
-            </ul>
-          </div>
-
-          <div class="tutorials-highlight-card">
-            <div class="highlight-icon">
-              <i class="fas fa-code-branch"></i>
-            </div>
-            <h3>Code & Projects</h3>
-            <p>Open-source repositories and sample projects from GitHub to enhance your technical skills.</p>
-            <ul class="highlight-features">
-              <li><i class="fas fa-check"></i> GitHub project collections</li>
-              <li><i class="fas fa-check"></i> Hands-on coding examples</li>
-              <li><i class="fas fa-check"></i> Learning frameworks & libraries</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="tutorials-cta-section">
-          <a href="tutorials.html" class="btn-primary btn-large" aria-label="Explore all tutorials">
-            <span>Explore All Tutorials</span>
-            <i class="fas fa-arrow-right"></i>
-          </a>
-          <p class="tutorials-cta-note">Browse our complete collection of learning resources</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Dedication (reworked) -->
-    <section class="dedication-modern" aria-labelledby="dedication-heading" role="region">
-      <div class="container-narrow dedication-grid-clean">
-        <div class="dedication-left" aria-hidden="true">
-          <figure class="dedication-figure" aria-hidden="true">
-            <img src="./images/library.webp" alt="Students studying in a library" class="dedication-image" width="280" height="180" loading="lazy">
-            <figcaption class="sr-only">Students studying in a library</figcaption>
-          </figure>
-        </div>
-
-        <div class="dedication-right">
-          <div class="dedication-meta">
-            <span class="dedication-badge">Made with <i class="fas fa-heart" aria-hidden="true"></i> in Ghana</span>
-          </div>
-          <h3 id="dedication-heading">Dedicated to STU University Ghana</h3>
-          <p class="dedication-text">StudyPlanner was created to support STU University students and educators with a free, privacy-first study tool. Our goal is to make effective learning accessible across Ghana.</p>
-
-          <div class="dedication-actions">
-            <a href="mission.html" class="btn-primary" aria-label="Learn our mission">Our Mission <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-            <a href="contact.html" class="btn ghost" aria-label="Contact us about partnerships">Partner</a>
+            <p class="cta-trust">
+              <i class="fas fa-lock"></i>
+              Your data stays private. No tracking, no ads, no nonsense.
+            </p>
           </div>
         </div>
       </div>
@@ -635,7 +791,7 @@
             <h4>Resources</h4>
             <a href="study-tips.html"><i class="fas fa-book"></i> Study Tips</a>
             <a href="for-students.html"><i class="fas fa-graduation-cap"></i> For Students</a>
-            <a href="for-educators.html"><i class="fas fa-chalkboard-teacher"></i> For Educators</a>
+            <a href="for-educators.html"><i class="fas fa-chalkboard-user"></i> For Educators</a>
           </div>
         </div>
       </div>
@@ -653,238 +809,11 @@
     </div>
   </footer>
 
-  <canvas id="particleCanvas" class="particle-canvas"></canvas>
+  <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
 
-  <script src="utils.js"></script>
-  <script src="navigation.js"></script>
-  <script>
-    (()=>{
-      // Particle System
-      const canvas = document.getElementById('particleCanvas');
-      const ctx = canvas.getContext('2d');
-      let particles = [];
-
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
-
-      class Particle {
-        constructor(x, y, isDark) {
-          this.x = x;
-          this.y = y;
-          this.size = Math.random() * 3 + 1;
-          this.speedX = (Math.random() - 0.5) * 2;
-          this.speedY = (Math.random() - 0.5) * 2;
-          this.life = 1;
-          this.decay = Math.random() * 0.02 + 0.01;
-          this.color = isDark ? `rgba(147, 197, 253, ${this.life})` : `rgba(251, 191, 36, ${this.life})`;
-        }
-        update() {
-          this.x += this.speedX;
-          this.y += this.speedY;
-          this.life -= this.decay;
-          this.color = document.body.classList.contains('dark-mode') 
-            ? `rgba(147, 197, 253, ${this.life})` 
-            : `rgba(251, 191, 36, ${this.life})`;
-        }
-        draw() {
-          ctx.fillStyle = this.color;
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      function createParticles(x, y, count = 10) {
-        const isDark = document.body.classList.contains('dark-mode');
-        for(let i = 0; i < count; i++) {
-          particles.push(new Particle(x, y, isDark));
-        }
-      }
-
-      function animateParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles = particles.filter(p => p.life > 0);
-        particles.forEach(p => {
-          p.update();
-          p.draw();
-        });
-        requestAnimationFrame(animateParticles);
-      }
-      animateParticles();
-
-      // Theme with transition
-      const saved = StudyPlannerUtils.getItem(StudyPlannerUtils.THEME_KEY);
-      if(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)){
-        document.body.classList.add('dark-mode');
-      }
-      updateThemeUI();
-
-      document.getElementById('themeToggle')?.addEventListener('click', (e) => {
-        const rect = e.target.getBoundingClientRect();
-        const x = rect.left + rect.width / 2;
-        const y = rect.top + rect.height / 2;
-        createParticles(x, y, 30);
-        
-        document.body.classList.add('theme-transitioning');
-        setTimeout(() => {
-          document.body.classList.toggle('dark-mode');
-          const isDark = document.body.classList.contains('dark-mode');
-          StudyPlannerUtils.setItem(StudyPlannerUtils.THEME_KEY, isDark ? 'dark' : 'light');
-          updateThemeUI();
-          setTimeout(() => document.body.classList.remove('theme-transitioning'), 300);
-        }, 150);
-      });
-
-      function updateThemeUI() {
-        const isDark = document.body.classList.contains('dark-mode');
-        const toggle = document.querySelector('.theme-toggle-switch');
-        const tooltip = document.getElementById('themeTooltip');
-        if(toggle) toggle.classList.toggle('active', isDark);
-        if(tooltip) tooltip.textContent = isDark ? 'Dark Mode' : 'Light Mode';
-      }
-
-      // Smooth scroll for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', e => {
-          e.preventDefault();
-          const target = document.querySelector(anchor.getAttribute('href'));
-          target?.scrollIntoView({ behavior: 'smooth' });
-        });
-      });
-
-      // Animate on scroll
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if(entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      }, { threshold: 0.1 });
-
-      document.querySelectorAll('.feature-modern, .step-modern, .testimonial-modern, .tutorials-highlight-card').forEach(el => {
-        observer.observe(el);
-      });
-
-      // Mobile stats animation
-      if(window.innerWidth <= 768) {
-        // Mobile carousel auto-slide
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.mobile-slide');
-        const dots = document.querySelectorAll('.dot-mobile');
-        
-        function showSlide(index) {
-          slides.forEach(s => s.classList.remove('active'));
-          dots.forEach(d => d.classList.remove('active'));
-          slides[index].classList.add('active');
-          dots[index].classList.add('active');
-        }
-        
-        function nextSlide() {
-          currentSlide = (currentSlide + 1) % slides.length;
-          showSlide(currentSlide);
-        }
-        
-        // Auto-slide every 4 seconds
-        setInterval(nextSlide, 5000);
-        
-        // Dot click handlers
-        dots.forEach((dot, index) => {
-          dot.addEventListener('click', () => {
-            currentSlide = index;
-            showSlide(currentSlide);
-          });
-        });
-      }
-
-      // Preloader
-      const preloader = document.getElementById('preloader');
-      const progressBar = document.getElementById('progressBar');
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += Math.random() * 30;
-        if(progress >= 100) {
-          progress = 100;
-          clearInterval(interval);
-          setTimeout(() => {
-            preloader.classList.add('fade-out');
-            setTimeout(() => preloader.style.display = 'none', 500);
-          }, 300);
-        }
-        progressBar.style.width = progress + '%';
-      }, 200);
-
-      window.addEventListener('load', () => {
-        progress = 100;
-        progressBar.style.width = '100%';
-        clearInterval(interval);
-        setTimeout(() => {
-          preloader.classList.add('fade-out');
-          setTimeout(() => preloader.style.display = 'none', 500);
-        }, 300);
-      });
-    })();
-
-    // Stars particle effect - defer to idle time
-    if('requestIdleCallback' in window) {
-      requestIdleCallback(() => {
-        const container = document.getElementById('starsContainer');
-        const starCount = 50;
-        for (let i = 0; i < starCount; i++) {
-          const star = document.createElement('div');
-          star.className = 'star';
-          star.style.left = Math.random() * 100 + '%';
-          star.style.top = Math.random() * 100 + '%';
-          star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
-          star.style.animationDelay = Math.random() * 3 + 's';
-          container.appendChild(star);
-        }
-      });
-    } else {
-      setTimeout(() => {
-        const container = document.getElementById('starsContainer');
-        const starCount = 50;
-        for (let i = 0; i < starCount; i++) {
-          const star = document.createElement('div');
-          star.className = 'star';
-          star.style.left = Math.random() * 100 + '%';
-          star.style.top = Math.random() * 100 + '%';
-          star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
-          star.style.animationDelay = Math.random() * 3 + 's';
-          container.appendChild(star);
-        }
-      }, 1000);
-    }
-
-    // FAQ Accordion
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.parentElement;
-        const isOpen = btn.getAttribute('aria-expanded') === 'true';
-        document.querySelectorAll('.faq-item').forEach(i => {
-          i.classList.remove('active');
-          i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-        });
-        if (!isOpen) {
-          item.classList.add('active');
-          btn.setAttribute('aria-expanded', 'true');
-        }
-      });
-    });
-
-    // Back to Top Button
-    const backToTop = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
-    });
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  </script>
+  <!-- Scripts -->
+  <script src="utils.js" defer></script>
+  <script src="navigation.js" defer></script>
+  <script src="index-main.js" defer></script>
 </body>
 </html>

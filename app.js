@@ -62,29 +62,73 @@
     }
   }
 
-  function createNote(subject, content, tags = ''){
+  function createNote(subject, content, tags = '', importance = 'medium', keyPoints = '', category = 'general', reminder = false){
     const note = {
       id: uid(),
       subject: subject.trim(),
       content: content.trim(),
       tags: tags.split(',').map(t => t.trim()).filter(t => t),
+      importance: importance,
+      category: category,
+      reminder: reminder,
+      keyPoints: keyPoints.split('\n').map(p => p.trim()).filter(p => p),
       createdDate: new Date().toISOString().slice(0, 10),
-      lastModified: new Date().toISOString()
+      lastModified: new Date().toISOString(),
+      reviews: [],
+      nextReviewDate: getNextReviewDate(0, importance),
+      reviewLevel: 0
     };
     notes.push(note);
     saveNotes();
     return note;
   }
 
-  function updateNote(noteId, subject, content, tags = ''){
+  function updateNote(noteId, subject, content, tags = '', importance = 'medium', keyPoints = '', category = 'general', reminder = false){
     const note = notes.find(n => n.id === noteId);
     if(note){
       note.subject = subject.trim();
       note.content = content.trim();
       note.tags = tags.split(',').map(t => t.trim()).filter(t => t);
+      note.importance = importance;
+      note.keyPoints = keyPoints.split('\n').map(p => p.trim()).filter(p => p);
       note.lastModified = new Date().toISOString();
       saveNotes();
     }
+  }
+
+  // Spaced repetition: calculate next review date based on level and importance
+  function getNextReviewDate(reviewLevel, importance = 'medium'){
+    const today = new Date();
+    let dayDelay = 1;
+    if(reviewLevel === 0) dayDelay = 1;
+    else if(reviewLevel === 1) dayDelay = 3;
+    else if(reviewLevel === 2) dayDelay = 7;
+    else if(reviewLevel === 3) dayDelay = 14;
+    else dayDelay = 30;
+    
+    // High importance: reduce delays; Low: increase delays
+    if(importance === 'high') dayDelay = Math.max(1, Math.ceil(dayDelay * 0.7));
+    else if(importance === 'low') dayDelay = Math.ceil(dayDelay * 1.5);
+    
+    const next = new Date(today);
+    next.setDate(next.getDate() + dayDelay);
+    return next.toISOString().slice(0,10);
+  }
+
+  // Record review attempt and update next date
+  function recordReviewAttempt(noteId, difficulty = 'good'){
+    const note = notes.find(n => n.id === noteId);
+    if(!note) return;
+    
+    note.reviews.push({date: new Date().toISOString(), difficulty});
+    
+    if(difficulty === 'easy') note.reviewLevel = Math.min(4, note.reviewLevel + 1);
+    else if(difficulty === 'good') note.reviewLevel = Math.min(4, note.reviewLevel + 1);
+    else if(difficulty === 'hard') note.reviewLevel = Math.max(0, note.reviewLevel - 1);
+    
+    note.nextReviewDate = getNextReviewDate(note.reviewLevel, note.importance);
+    note.lastModified = new Date().toISOString();
+    saveNotes();
   }
 
   function deleteNote(noteId){
@@ -92,8 +136,9 @@
     saveNotes();
   }
 
-  function renderNotesList(filterSubject = '', searchTerm = ''){
+  function renderNotesList(filterSubject = '', searchTerm = '', reviewFilter = ''){
     const notesList = qs('notesList');
+    if(!notesList) return;
     let filtered = notes;
     
     if(filterSubject){
@@ -103,29 +148,57 @@
       filtered = filtered.filter(n => 
         n.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
         n.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        n.tags.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()))
+        (n.tags||[]).some(t => t.toLowerCase().includes(searchTerm.toLowerCase()))
       );
+    }
+    
+    // Filter by review status
+    if(reviewFilter === 'due'){
+      const today = new Date().toISOString().slice(0,10);
+      filtered = filtered.filter(n => (n.nextReviewDate || '2099-12-31') <= today && (n.reviewLevel||0) < 4);
+    }
+    else if(reviewFilter === 'upcoming'){
+      const today = new Date().toISOString().slice(0,10);
+      filtered = filtered.filter(n => (n.nextReviewDate || '2099-12-31') > today);
+    }
+    else if(reviewFilter === 'mastered'){
+      filtered = filtered.filter(n => (n.reviewLevel||0) >= 4);
     }
 
     if(filtered.length === 0){
-      notesList.innerHTML = '<p class="notes-empty">No notes found.</p>';
+      notesList.innerHTML = '<div class="notes-empty"><i class="fas fa-sticky-note"></i><p>No notes yet. Start capturing your study insights!</p></div>';
       return;
     }
 
-    notesList.innerHTML = filtered.map(note => `
-      <div class="note-item" data-id="${note.id}">
-        <div class="note-header">
-          <div class="note-subject">${note.subject}</div>
-          <div class="note-date">${note.createdDate}</div>
+    notesList.innerHTML = filtered.map(note => {
+      const today = new Date().toISOString().slice(0,10);
+      const isDue = (note.nextReviewDate || '') <= today && (note.reviewLevel||0) < 4;
+      const reviewStatus = (note.reviewLevel||0) >= 4 ? 'mastered' : isDue ? 'due' : 'upcoming';
+      
+      return `
+        <div class="note-item" data-id="${note.id}">
+          <div class="note-importance-badge ${note.importance || 'medium'}">${note.importance || 'medium'}</div>
+          <div class="note-header">
+            <div class="note-subject">${note.subject}</div>
+            <div class="note-date">${note.createdDate}</div>
+          </div>
+          <div class="note-review-indicator">
+            <span class="review-status ${reviewStatus}">
+              <i class="fas ${reviewStatus === 'mastered' ? 'fa-star' : reviewStatus === 'due' ? 'fa-exclamation-circle' : 'fa-clock'}"></i>
+              ${reviewStatus === 'mastered' ? 'Mastered' : reviewStatus === 'due' ? 'Due for Review' : 'Upcoming'}
+            </span>
+            <span>Next: ${note.nextReviewDate || 'N/A'} (Lvl ${note.reviewLevel || 0})</span>
+          </div>
+          <div class="note-preview">${note.content.substring(0, 100)}${note.content.length > 100 ? '...' : ''}</div>
+          ${note.tags && note.tags.length > 0 ? `<div class="note-tags">${note.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
+          ${note.keyPoints && note.keyPoints.length > 0 ? `<div class="note-key-points"><strong>Key Points:</strong><ul>${note.keyPoints.map(p => `<li>${p}</li>`).join('')}</ul></div>` : ''}
+          <div class="note-actions">
+            <button class="note-edit-btn" data-id="${note.id}"><i class="fas fa-edit"></i></button>
+            <button class="note-delete-btn" data-id="${note.id}"><i class="fas fa-trash"></i></button>
+          </div>
         </div>
-        <div class="note-preview">${note.content.substring(0, 100)}${note.content.length > 100 ? '...' : ''}</div>
-        ${note.tags.length > 0 ? `<div class="note-tags">${note.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
-        <div class="note-actions">
-          <button class="note-edit-btn" data-id="${note.id}"><i class="fas fa-edit"></i></button>
-          <button class="note-delete-btn" data-id="${note.id}"><i class="fas fa-trash"></i></button>
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
 
     // Attach event listeners
     notesList.querySelectorAll('.note-edit-btn').forEach(btn => {
@@ -133,9 +206,10 @@
     });
     notesList.querySelectorAll('.note-delete-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        if(confirm('Delete this note?')){
+        const confirmed = window.confirm('Delete this note?');
+        if(confirmed){
           deleteNote(btn.dataset.id);
-          renderNotesList(filterSubject, searchTerm);
+          renderNotesList(filterSubject, searchTerm, reviewFilter);
           StudyPlannerUtils.showNotification('Note deleted', 'info');
         }
       });
@@ -156,7 +230,11 @@
         qs('noteSubject').value = note.subject;
         qs('noteContent').value = note.content;
         qs('noteTags').value = note.tags.join(', ');
+        qs('noteCategory').value = note.category || 'general';
+        qs('notePriority').value = note.importance || 'medium';
+        qs('noteReminder').checked = note.reminder || false;
         qs('noteTemplate').value = '';
+        updateCharCount();
         deleteBtn.style.display = 'block';
         form.dataset.noteId = noteId;
       }
@@ -180,6 +258,7 @@
 
   function updateSubjectFilter(){
     const select = qs('notesSubjectFilter');
+    if(!select) return;
     const subjects = [...new Set(notes.map(n => n.subject))].sort();
     
     // Preserve current selection if possible
@@ -310,7 +389,19 @@
       const div = document.createElement('div');
       div.className = 'badge' + (unlockedIds.includes(badge.id) ? ' unlocked' : ' locked');
       div.title = badge.description;
-      div.innerHTML = `<div class="badge-icon"><i class="fas ${badge.iconClass}"></i></div><div class="badge-name">${badge.name}</div>`;
+      
+      const iconDiv = document.createElement('div');
+      iconDiv.className = 'badge-icon';
+      const icon = document.createElement('i');
+      icon.className = 'fas ' + badge.iconClass;
+      iconDiv.appendChild(icon);
+      
+      const nameDiv = document.createElement('div');
+      nameDiv.className = 'badge-name';
+      nameDiv.textContent = badge.name;
+      
+      div.appendChild(iconDiv);
+      div.appendChild(nameDiv);
       grid.appendChild(div);
     });
   }
@@ -341,7 +432,16 @@
       const li = document.createElement('li');
       if(s.level > 0) li.classList.add('completed');
       const left = document.createElement('div');
-      left.innerHTML = `<strong>${escapeHtml(s.subject)}</strong><div class="meta">${s.date}${s.time ? ' '+s.time : ''} • ${s.duration} mins${s.level > 0 ? ' • Level ' + s.level : ''}</div>`;
+      
+      const strong = document.createElement('strong');
+      strong.textContent = s.subject;
+      
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.textContent = `${s.date}${s.time ? ' '+s.time : ''} • ${s.duration} mins${s.level > 0 ? ' • Level ' + s.level : ''}`;
+      
+      left.appendChild(strong);
+      left.appendChild(meta);
       if(s.tags && s.tags.length){
         const tagWrap = document.createElement('div');
         tagWrap.style.marginTop = '8px';
@@ -390,8 +490,8 @@
       delBtn.style.color = '#dc2626';
       delBtn.setAttribute('aria-label', 'Delete session');
       delBtn.onclick = () => {
-        const modal = confirm('Delete this session?');
-        if(modal){
+        const confirmed = window.confirm('Delete this session?');
+        if(confirmed){
           sessions = sessions.filter(x=>x.id!==s.id);
           save();
           updateStats();
@@ -654,14 +754,14 @@
           return obj;
         });
         const toSessions = parsed.map(p=>({
-          id: p.id || uid(),
-          subject: p.subject || 'Untitled',
+          id: (p.id || uid()).replace(/[^a-z0-9]/gi, ''),
+          subject: (p.subject || 'Untitled').substring(0, 100),
           date: p.date || new Date().toISOString().slice(0,10),
-          time: p.time || '',
-          duration: parseInt(p.duration,10) || 30,
-          notes: p.notes || '',
-          level: parseInt(p.level,10) || 0,
-          tags: (p.tags||'').split(';').map(t=>t.trim()).filter(Boolean),
+          time: (p.time || '').substring(0, 5),
+          duration: Math.min(480, Math.max(1, parseInt(p.duration,10) || 30)),
+          notes: (p.notes || '').substring(0, 500),
+          level: Math.max(0, parseInt(p.level,10) || 0),
+          tags: (p.tags||'').split(';').map(t=>t.trim().substring(0, 50)).filter(Boolean).slice(0, 10),
           createdAt: new Date().toISOString()
         }));
         // merge, avoid duplicates by id
@@ -731,7 +831,10 @@
     e.preventDefault();
     const subject = qs('noteSubject')?.value.trim();
     const content = qs('noteContent')?.value.trim();
+    const category = qs('noteCategory')?.value || 'general';
+    const priority = qs('notePriority')?.value || 'medium';
     const tags = qs('noteTags')?.value.trim();
+    const reminder = qs('noteReminder')?.checked || false;
 
     if(!subject || !content){
       StudyPlannerUtils.showNotification('Subject and content are required', 'warning');
@@ -739,22 +842,40 @@
     }
 
     if(currentEditingNoteId){
-      updateNote(currentEditingNoteId, subject, content, tags);
+      updateNote(currentEditingNoteId, subject, content, tags, priority, '', category, reminder);
       StudyPlannerUtils.showNotification('Note updated', 'success');
     } else {
-      createNote(subject, content, tags);
+      createNote(subject, content, tags, priority, '', category, reminder);
       StudyPlannerUtils.showNotification('Note created', 'success');
     }
 
-    const filterVal = qs('notesSubjectFilter')?.value || '';
-    const searchVal = qs('notesSearch')?.value || '';
-    updateSubjectFilter();
-    renderNotesList(filterVal, searchVal);
+    renderNotesList();
     closeNoteEditor();
   });
 
+  // Template handler
+  qs('noteTemplate')?.addEventListener('change', (e) => {
+    const template = e.target.value;
+    const contentArea = qs('noteContent');
+    if(!contentArea || !template) return;
+
+    const templates = {
+      lecture: `Date: ${new Date().toLocaleDateString()}\n\nTopic:\n\nKey Points:\n- \n- \n- \n\nMain Concepts:\n\n\nQuestions:\n- \n\nAction Items:\n- `,
+      summary: `Chapter/Section:\n\nMain Ideas:\n1. \n2. \n3. \n\nKey Terms:\n- \n- \n\nSummary:\n\n\nReview Questions:\n- `,
+      flashcards: `Front: \nBack: \n\n---\n\nFront: \nBack: \n\n---\n\nFront: \nBack: `,
+      questions: `Question 1:\nAnswer:\n\n---\n\nQuestion 2:\nAnswer:\n\n---\n\nQuestion 3:\nAnswer:`,
+      formula: `Formula Name:\nEquation: \n\nWhen to use:\n\nExample:\n\n---\n\nFormula Name:\nEquation: \n\nWhen to use:\n\nExample:`
+    };
+
+    if(templates[template]){
+      contentArea.value = templates[template];
+      const charCount = qs('charCount');
+      if(charCount) charCount.textContent = templates[template].length;
+    }
+  });
+
   qs('deleteNoteBtn')?.addEventListener('click', () => {
-    if(currentEditingNoteId && confirm('Delete this note?')){
+    if(currentEditingNoteId && window.confirm('Delete this note?')){
       deleteNote(currentEditingNoteId);
       const filterVal = qs('notesSubjectFilter')?.value || '';
       const searchVal = qs('notesSearch')?.value || '';
@@ -767,13 +888,104 @@
 
   qs('notesSearch')?.addEventListener('input', (e) => {
     const filterVal = qs('notesSubjectFilter')?.value || '';
-    renderNotesList(filterVal, e.target.value);
+    const reviewFilter = qs('notesReviewFilter')?.value || '';
+    renderNotesList(filterVal, e.target.value, reviewFilter);
   });
 
   qs('notesSubjectFilter')?.addEventListener('change', (e) => {
     const searchVal = qs('notesSearch')?.value || '';
-    renderNotesList(e.target.value, searchVal);
+    const reviewFilter = qs('notesReviewFilter')?.value || '';
+    renderNotesList(e.target.value, searchVal, reviewFilter);
   });
+
+  qs('notesReviewFilter')?.addEventListener('change', (e) => {
+    const filterVal = qs('notesSubjectFilter')?.value || '';
+    const searchVal = qs('notesSearch')?.value || '';
+    renderNotesList(filterVal, searchVal, e.target.value);
+  });
+
+  // Spaced repetition review mode
+  let reviewModeActive = false;
+  let reviewIndex = 0;
+  let reviewQueue = [];
+
+  function startReviewMode(){
+    const today = new Date().toISOString().slice(0,10);
+    reviewQueue = notes.filter(n => (n.nextReviewDate || '') <= today && (n.reviewLevel||0) < 4);
+    if(reviewQueue.length === 0){
+      StudyPlannerUtils.showNotification('No notes due for review!', 'info');
+      return;
+    }
+    reviewModeActive = true;
+    reviewIndex = 0;
+    const notesList = qs('notesList');
+    const reviewMode = qs('reviewMode');
+    if(notesList) notesList.style.display = 'none';
+    if(reviewMode) reviewMode.style.display = 'block';
+    showReviewCard();
+  }
+
+  function showReviewCard(){
+    const reviewContainer = qs('reviewContainer');
+    if(!reviewContainer) return;
+    
+    if(reviewIndex >= reviewQueue.length){
+      reviewContainer.innerHTML = `<p style="color:var(--muted);margin-bottom:16px;font-size:1.05rem">🎉 Great job! You've reviewed all due notes.</p><button class="btn-primary-modern" onclick="location.reload()">Back to Dashboard</button>`;
+      return;
+    }
+    const note = reviewQueue[reviewIndex];
+    const progress = ((reviewIndex + 1) / reviewQueue.length) * 100;
+    const keyPointsHtml = note.keyPoints && note.keyPoints.length > 0 ? `<div style="margin-top:12px;padding:12px;background:rgba(var(--primary-rgb),0.08);border-radius:6px;font-size:0.9rem"><strong>Key Points:</strong><ul style="margin:4px 0 0 16px;padding:0">${note.keyPoints.map(p => `<li>${p}</li>`).join('')}</ul></div>` : '';
+    
+    reviewContainer.innerHTML = `
+      <div class="review-progress">
+        <div class="review-progress-text">Note ${reviewIndex + 1} of ${reviewQueue.length}</div>
+        <div class="review-progress-bar">
+          <div class="review-progress-fill" style="width:${progress}%"></div>
+        </div>
+      </div>
+      <div class="flashcard-container">
+        <div class="flashcard-header">
+          <div class="flashcard-subject">${note.subject}</div>
+          <div class="flashcard-importance" style="background:${note.importance === 'high' ? '#fee2e2' : note.importance === 'medium' ? '#fef3c7' : '#dbeafe'};color:${note.importance === 'high' ? '#991b1b' : note.importance === 'medium' ? '#92400e' : '#1e40af'}">${note.importance}</div>
+        </div>
+        <div class="flashcard-content">
+          ${note.content}
+        </div>
+        ${keyPointsHtml}
+        <div class="flashcard-footer">
+          <button class="flashcard-btn flashcard-hard" onclick="recordAndNext('hard')">Hard</button>
+          <button class="flashcard-btn flashcard-good" onclick="recordAndNext('good')">Good</button>
+          <button class="flashcard-btn flashcard-easy" onclick="recordAndNext('easy')">Easy</button>
+        </div>
+      </div>
+    `;
+  }
+
+  window.recordAndNext = function(difficulty){
+    recordReviewAttempt(reviewQueue[reviewIndex].id, difficulty);
+    reviewIndex++;
+    showReviewCard();
+  };
+
+  qs('notesModeToggle')?.addEventListener('click', ()=>{
+    if(reviewModeActive){
+      reviewModeActive = false;
+      const notesList = qs('notesList');
+      const reviewMode = qs('reviewMode');
+      const notesModeToggle = qs('notesModeToggle');
+      if(notesList) notesList.style.display = 'block';
+      if(reviewMode) reviewMode.style.display = 'none';
+      if(notesModeToggle) notesModeToggle.textContent = '<i class="fas fa-graduation-cap"></i> Review';
+      renderNotesList(qs('notesSubjectFilter')?.value || '', qs('notesSearch')?.value || '', qs('notesReviewFilter')?.value || '');
+    } else {
+      startReviewMode();
+      const notesModeToggle = qs('notesModeToggle');
+      if(notesModeToggle) notesModeToggle.textContent = '<i class="fas fa-list"></i> List';
+    }
+  });
+
+  qs('startAllReview')?.addEventListener('click', startReviewMode);
 
   // Init
   initTheme();

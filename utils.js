@@ -34,15 +34,22 @@ const StudyPlannerUtils = {
 
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-      <span>${message}</span>
-      <button class="notification-close" aria-label="Close notification">&times;</button>
-    `;
+    
+    const messageSpan = document.createElement('span');
+    messageSpan.textContent = message;
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'notification-close';
+    closeBtn.setAttribute('aria-label', 'Close notification');
+    closeBtn.innerHTML = '&times;';
+    
+    notification.appendChild(messageSpan);
+    notification.appendChild(closeBtn);
     document.body.appendChild(notification);
 
     setTimeout(() => notification.classList.add('show'), 10);
 
-    notification.querySelector('.notification-close').onclick = () => {
+    closeBtn.onclick = () => {
       notification.classList.remove('show');
       setTimeout(() => notification.remove(), 300);
     };

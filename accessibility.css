@@ -1,0 +1,241 @@
+/* Accessibility Enhancements */
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary, #16a34a);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 100000;
+  border-radius: 0 0 4px 0;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+/* Focus visible styles */
+*:focus-visible {
+  outline: 2px solid var(--primary, #16a34a);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--primary, #16a34a);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  body {
+    --text-color: #000;
+    --bg-color: #fff;
+  }
+  
+  .dark-mode {
+    --text-color: #fff;
+    --bg-color: #000;
+  }
+  
+  button, a {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Keyboard navigation indicators */
+.nav-link:focus-visible,
+.btn-nav:focus-visible,
+.fab-item:focus-visible {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.3);
+}
+
+/* Improve touch targets for mobile */
+@media (max-width: 768px) {
+  button,
+  a,
+  input,
+  select {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .fab-container,
+  .back-to-top,
+  .preloader-modern,
+  .particle-canvas,
+  .stars-container,
+  nav,
+  footer {
+    display: none !important;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+}
+
+/* Dark mode improvements */
+.dark-mode {
+  color-scheme: dark;
+}
+
+.dark-mode img {
+  opacity: 0.9;
+}
+
+/* Loading states */
+[data-loading="true"] {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: wait;
+}
+
+/* Error states */
+[aria-invalid="true"] {
+  border-color: #dc2626;
+  outline-color: #dc2626;
+}
+
+/* Success states */
+[aria-invalid="false"] {
+  border-color: #16a34a;
+}
+
+/* Disabled states */
+[disabled],
+[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Tooltip accessibility */
+[title]:hover::after,
+[title]:focus::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* Improve color contrast */
+.hero-subtitle,
+.cta-note,
+.stat-label {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.dark-mode .hero-subtitle,
+.dark-mode .cta-note,
+.dark-mode .stat-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Ensure sufficient contrast for links */
+a {
+  text-decoration-skip-ink: auto;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+/* Improve form accessibility */
+label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+input:required,
+select:required,
+textarea:required {
+  border-left: 3px solid var(--primary, #16a34a);
+}
+
+/* Loading spinner accessibility */
+.spinner,
+.preloader-spinner-modern {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Ensure icons don't interfere with screen readers */
+i[class*="fa-"],
+.fas,
+.far,
+.fab {
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
