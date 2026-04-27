@@ -1,0 +1,641 @@
+/* Responsive Styles */
+
+/* ==========================================
+   MOBILE - Bottom Navigation & Stacked Layout
+   ========================================== */
+@media (max-width: 768px) {
+    /* Sidebar becomes bottom navigation */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        left: 0;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0.5rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        background: linear-gradient(180deg, var(--green-800) 0%, var(--green-900) 100%);
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        padding: 0 1rem;
+        gap: 0;
+    }
+
+    .nav-link {
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 0.5rem;
+        font-size: 0.75rem;
+        text-align: center;
+    }
+
+    .nav-link.active {
+        background: linear-gradient(135deg, var(--green-500) 0%, var(--green-400) 100%);
+    }
+
+    .nav-icon {
+        font-size: 1.5rem;
+        width: auto;
+    }
+
+    .main-content {
+        flex-direction: column;
+        margin-left: 0;
+        margin-bottom: 80px; /* Space for bottom nav */
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    footer {
+        margin-left: 0;
+        margin-bottom: 80px; /* Space for bottom nav */
+    }
+
+    /* Hero adjustments */
+    .hero {
+        padding: 2rem 1rem;
+    }
+
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-title {
+        font-size: 2.25rem;
+    }
+
+    .hero-heading {
+        font-size: 1.5rem;
+    }
+
+    .hero-text {
+        font-size: 1rem;
+    }
+
+    .hero-hint {
+        font-size: 0.875rem;
+    }
+
+    .hero-icon i.ph {
+        font-size: 3rem;
+    }
+
+    .btn-primary {
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+    }
+
+    .hero-sub-link {
+        font-size: 0.9rem;
+    }
+
+    .features {
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .feature-item {
+        min-width: 120px;
+        padding: 0.875rem 1rem;
+    }
+
+    .feature-item i.ph {
+        font-size: 1.5rem;
+    }
+
+    .feature-item span {
+        font-size: 0.85rem;
+    }
+
+    /* Planner form adjustments */
+    .task-form {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .task-form input,
+    .task-form select,
+    .task-form button {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .task-form .input-title {
+        flex: none;
+    }
+
+    .task-form .input-course {
+        flex: none;
+    }
+
+    .task-form .input-date {
+        flex: none;
+    }
+
+    .task-form .input-priority {
+        width: 100%;
+    }
+
+    /* Task item adjustments */
+    .task-item {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: left;
+        padding: 1rem;
+    }
+
+    .task-checkbox {
+        order: -1;
+        align-self: flex-start;
+    }
+
+    .task-actions {
+        align-self: stretch;
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 0;
+    }
+
+    .task-meta {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    /* Filter buttons */
+    .filters {
+        gap: 0.5rem;
+    }
+
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    /* Planner container */
+    
+    .planner-container h2 {
+        font-size: 1.35rem;
+        margin-bottom: 1rem;
+    }
+    
+    .task-form {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        gap: 0.6rem;
+    }
+    
+    .task-form input,
+    .task-form select,
+    .task-form button {
+        padding: 0.7rem 0.9rem;
+        font-size: 0.9rem;
+    }
+    
+    .task-form .input-category,
+    .task-form .input-priority {
+        background-position: right 0.6rem center;
+        padding-right: 2rem;
+    }
+    
+    .quick-filters {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.875rem;
+        gap: 0.75rem;
+    }
+    
+    .search-box {
+        min-width: auto;
+    }
+    
+    .category-filters {
+        justify-content: center;
+    }
+    
+    .category-filter {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.75rem;
+    }
+    
+    .bulk-actions {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.875rem;
+    }
+    
+    .bulk-actions .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .selected-count {
+        margin-left: 0;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+    
+    .data-actions {
+        flex-direction: column;
+    }
+    
+    .data-actions .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+    }
+    
+    .task-item::before {
+        width: 3px;
+    }
+    
+    .task-checkbox {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+    
+    .task-info {
+        width: 100%;
+    }
+    
+    .task-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+    
+    .task-actions {
+        align-self: stretch;
+        justify-content: flex-end;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--nature-100);
+        margin-top: 0.5rem;
+    }
+    
+    .task-actions button {
+        flex: 1;
+    }
+    
+ {
+        padding: 1.5rem;
+    }
+
+    /* Pomodoro widget on mobile */
+    .pomodoro-widget {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 2rem;
+        min-height: auto;
+        height: auto;
+        position: static;
+        padding: 0 1rem 2rem;
+    }
+    
+    .pomodoro-card {
+        padding: 1.25rem;
+    }
+    
+    .pomodoro-timer {
+        font-size: 2.75rem;
+    }
+    
+    .pomodoro-controls {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .pomodoro-btn {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .pomodoro-stats {
+        flex-direction: row;
+    }
+    
+    .stat-item {
+        flex: 1;
+    }
+}
+
+/* ==========================================
+   SMALL MOBILE - Icons Only
+   ========================================== */
+@media (max-width: 480px) {
+    .sidebar-nav .nav-link span:not(.nav-icon) {
+        display: none;
+    }
+
+    .nav-link {
+        padding: 0.75rem;
+    }
+
+    .nav-icon {
+        font-size: 1.75rem;
+    }
+
+    .main-content {
+        padding: 0.75rem;
+    }
+
+    footer {
+        font-size: 0.85rem;
+        padding: 0.75rem;
+    }
+
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .planner-container h2 {
+        font-size: 1.5rem;
+    }
+
+    /* Task form on very small screens */
+    .task-form .input-priority {
+        padding-right: 12px;
+        font-size: 0.9rem;
+    }
+
+    .task-form button {
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .task-item {
+        padding: 0.875rem;
+    }
+
+    .task-title {
+        font-size: 1.05rem;
+    }
+
+    .task-course {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.4rem;
+    }
+
+    .filter-btn {
+        padding: 0.5rem 0.875rem;
+        font-size: 0.8rem;
+    }
+
+    footer {
+        font-size: 0.85rem;
+        padding: 0.75rem;
+    }
+
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .hero-title {
+        font-size: 1.875rem;
+    }
+
+    .hero-heading {
+        font-size: 1.25rem;
+    }
+
+    .hero-text {
+        font-size: 0.95rem;
+        padding: 0 0.5rem;
+    }
+
+    .hero-hint {
+        font-size: 0.85rem;
+    }
+
+    .hero-icon i.ph {
+        font-size: 2.5rem;
+    }
+
+    .btn-primary {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+        min-width: 180px;
+    }
+
+    .hero-sub-link {
+        font-size: 0.85rem;
+    }
+
+    .feature-item {
+        min-width: 100px;
+        padding: 0.75rem;
+    }
+
+    .feature-item i.ph {
+        font-size: 1.25rem;
+    }
+
+    .feature-item span {
+        font-size: 0.8rem;
+    }
+
+    .task-meta {
+        font-size: 0.8rem;
+    }
+}
+
+/* ==========================================
+   TABLET - Adjust sidebar width
+   ========================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+    }
+
+    footer {
+        margin-left: 200px;
+    }
+}
+
+/* ==========================================
+   REDUCED MOTION - Accessible animations
+   ========================================== */
+@media (prefers-reduced-motion: no-preference) {
+    .task-item {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .nav-link {
+        transition: all 0.2s ease;
+    }
+    
+    .btn {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+}
+
+/* ==========================================
+   TIMETABLE RESPONSIVE
+   ========================================== */
+
+/* Tablet - moderate screen */
+@media (max-width: 1024px) {
+    .timetable-container {
+        padding: 1.5rem;
+    }
+
+    .timetable-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .btn-add-class {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.9rem;
+    }
+
+    .time-slot {
+        height: 55px;
+    }
+
+    .time-header,
+    .day-header {
+        height: 55px;
+    }
+
+    .time-label {
+        font-size: 0.7rem;
+    }
+}
+
+/* Mobile - small screens */
+@media (max-width: 768px) {
+    .timetable-container {
+        padding: 1rem;
+    }
+
+    .timetable-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .timetable-header h2 {
+        font-size: 1.25rem;
+        text-align: center;
+    }
+
+    .btn-add-class {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Make time column sticky */
+    .time-column {
+        position: sticky;
+        left: 0;
+        z-index: 5;
+    }
+
+    .day-header {
+        font-size: 0.85rem;
+        padding: 0 0.5rem;
+    }
+
+    .time-label {
+        font-size: 0.65rem;
+    }
+
+    .class-card {
+        padding: 0.375rem;
+    }
+
+    .class-subject {
+        font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .class-room,
+    .class-time {
+        font-size: 0.65rem;
+    }
+
+    .class-actions {
+        opacity: 1; /* Always show on mobile */
+        position: absolute;
+        top: 0.25rem;
+        right: 0.25rem;
+    }
+
+    .class-actions button {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .timetable-wrapper {
+        margin: 0 -1rem;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+    }
+
+    .time-slot {
+        height: 50px;
+    }
+
+    .time-header,
+    .day-header {
+        height: 50px;
+        font-size: 0.8rem;
+    }
+
+    .time-label {
+        display: none; /* Hide time labels on very small screens */
+    }
+
+    .modal-content {
+        margin: 1rem;
+        max-height: 85vh;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .btn-cancel,
+    .btn-save {
+        width: 100%;
+    }
+}
+

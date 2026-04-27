@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <defs>
+    <linearGradient id="iconGradApple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <filter id="appleGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#6366f1" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="180" height="180" rx="45" fill="url(#iconGradApple)"/>
+  <g filter="url(#appleGlow)">
+    <!-- Calendar/Planner -->
+    <rect x="45" y="38" width="90" height="65" rx="6" fill="white" opacity="0.95"/>
+    <!-- Calendar header -->
+    <rect x="45" y="38" width="90" height="18" rx="6" fill="#4f46e5" opacity="0.95"/>
+    <!-- Small dots on header -->
+    <circle cx="58" cy="47" r="3" fill="#ef4444" opacity="0.8"/>
+    <circle cx="70" cy="47" r="3" fill="#fbbf24" opacity="0.8"/>
+    <circle cx="82" cy="47" r="3" fill="#22c55e" opacity="0.8"/>
+    <!-- Binding/Spine -->
+    <rect x="38" y="32" width="10" height="80" rx="2" fill="#4f46e5" opacity="0.8"/>
+    <!-- Checkmark for completed tasks -->
+    <path d="M 75 65 L 87 78 L 118 45" stroke="#6366f1" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- Small checkmarks -->
+    <path d="M 65 95 L 75 106 L 105 75" stroke="#10b981" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+</svg>

@@ -1,0 +1,501 @@
+/* Timetable Page Styles */
+
+/* ==========================================
+   TIMETABLE HEADER
+   ========================================== */
+.timetable-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--nature-200);
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative top accent line */
+.timetable-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--green-500) 0%, var(--green-400) 50%, var(--green-500) 100%);
+}
+
+.timetable-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.timetable-header h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--green-800);
+    margin: 0;
+}
+
+/* Add Class Button */
+.btn-add-class {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--green-600) 0%, var(--green-500) 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
+}
+
+.btn-add-class:hover {
+    background: linear-gradient(135deg, var(--green-700) 0%, var(--green-600) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.btn-add-class:active {
+    transform: translateY(0);
+}
+
+.btn-add-class i.ph {
+    font-size: 1.25rem;
+}
+
+/* ==========================================
+   TIMETABLE GRID
+   ========================================== */
+.timetable-wrapper {
+    overflow-x: auto;
+    overflow-y: visible;
+    border-radius: 12px;
+    border: 1px solid var(--nature-200);
+    background: var(--nature-50);
+}
+
+.timetable-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(5, 1fr);
+    min-width: 800px; /* Ensure minimum width for readability */
+}
+
+/* Time Column */
+.time-column {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-right: 2px solid var(--nature-200);
+    position: sticky;
+    left: 0;
+    z-index: 10;
+}
+
+.time-header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--green-800);
+    border-bottom: 2px solid var(--nature-200);
+    background: var(--nature-50);
+}
+
+.time-slot {
+    height: 60px;
+    border-bottom: 1px dashed var(--nature-200);
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+.time-label {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--nature-500);
+    font-weight: 500;
+}
+
+/* Day Columns */
+.day-column {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--nature-200);
+    min-height: calc(60px * 11); /* 8am-6pm = 11 hours */
+}
+
+.day-column:last-child {
+    border-right: none;
+}
+
+.day-header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--green-800);
+    background: linear-gradient(135deg, var(--green-50) 0%, white 100%);
+    border-bottom: 2px solid var(--nature-200);
+    text-transform: capitalize;
+}
+
+.time-slot {
+    height: 60px;
+    border-bottom: 1px dashed var(--nature-200);
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+.time-slot:hover {
+    background-color: rgba(34, 197, 94, 0.04);
+}
+
+/* ==========================================
+   CLASS CARD
+   ========================================== */
+.class-card {
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    top: 1px;
+    border-radius: 8px;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.class-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    z-index: 2;
+}
+
+/* Priority-based colors */
+.class-card.priority-high {
+    background: linear-gradient(135deg, #fee2e2 0%, #fff 100%);
+    border-left: 3px solid var(--priority-high);
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.15);
+}
+
+.class-card.priority-medium {
+    background: linear-gradient(135deg, #fffbeb 0%, #fff 100%);
+    border-left: 3px solid var(--priority-medium);
+    box-shadow: 0 2px 6px rgba(249, 115, 22, 0.15);
+}
+
+.class-card.priority-low {
+    background: linear-gradient(135deg, var(--green-50) 0%, #fff 100%);
+    border-left: 3px solid var(--priority-low);
+    box-shadow: 0 2px 6px rgba(34, 197, 94, 0.15);
+}
+
+.class-content {
+    flex: 1;
+    min-height: 0;
+}
+
+.class-subject {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--nature-800);
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.class-room {
+    font-size: 0.75rem;
+    color: var(--nature-600);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.class-room i.ph {
+    font-size: 0.85rem;
+}
+
+.class-time {
+    font-size: 0.7rem;
+    color: var(--nature-500);
+    font-weight: 500;
+}
+
+/* Class Actions */
+.class-actions {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.class-card:hover .class-actions {
+    opacity: 1;
+}
+
+.class-actions button {
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-edit {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+}
+
+.btn-edit:hover {
+    background: rgba(52, 152, 219, 0.2);
+}
+
+.btn-delete {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--priority-high);
+}
+
+.btn-delete:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+/* ==========================================
+   LEGEND
+   ========================================== */
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: var(--nature-50);
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--nature-700);
+    font-weight: 500;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+/* ==========================================
+   MODAL
+   ========================================== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--nature-200);
+}
+
+.modal-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--green-800);
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--nature-500);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    background: var(--nature-100);
+    color: var(--nature-800);
+}
+
+/* Form */
+#classForm {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--nature-700);
+}
+
+.form-group input,
+.form-group select {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--nature-200);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Quicksand', sans-serif;
+    color: var(--nature-800);
+    transition: all 0.2s ease;
+    background-color: var(--nature-50);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--green-500);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+    background-color: white;
+}
+
+.form-group input::placeholder {
+    color: var(--nature-400);
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--nature-200);
+}
+
+.btn-cancel {
+    padding: 0.75rem 1.5rem;
+    background: var(--nature-100);
+    color: var(--nature-700);
+    border: 2px solid var(--nature-200);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+    background: var(--nature-200);
+    border-color: var(--nature-300);
+}
+
+.btn-save {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--green-600) 0%, var(--green-500) 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
+}
+
+.btn-save:hover {
+    background: linear-gradient(135deg, var(--green-700) 0%, var(--green-600) 100%);
+    box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+}

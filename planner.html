@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planner - Study Planner</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/planner.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" href="assets/icons/phosphor-icons.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"
+        onerror="this.onerror=null;this.href='assets/icons/phosphor-icons.min.css';"></script>
+</head>
+
+<body>
+   
+
+        <!-- Side Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1><i class="ph ph-graduation-cap"></i> StudyPlanner</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link">
+                    <i class="ph ph-house"></i>
+                    <span>Home</span>
+                </a>
+                <a href="planner.html" class="nav-link">
+                    <i class="ph ph-notebook"></i>
+                    <span>Planner</span>
+                </a>
+                <a href="timetable.html" class="nav-link">
+                    <i class="ph ph-calendar"></i>
+                    <span>Timetable</span>
+                </a>
+                <a href="calendar.html" class="nav-link">
+                    <i class="ph ph-calendar-blank"></i>
+                    <span>Calendar</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Page Body: planner + pomodoro side by side -->
+        <div class="page-body">
+
+            <!-- Left: Planner -->
+            <main class="planner-main">
+                <section class="planner-container">
+                    <h2>Your Study Plan</h2>
+
+                    <!-- Add Task Form -->
+                    <div class="task-form" role="form" aria-label="Add new task">
+                        <input type="text" id="taskTitle" placeholder="Task title..." class="input-title"
+                            maxlength="200" required aria-required="true" aria-label="Task title">
+                        <input type="text" id="taskCourse" placeholder="Course (optional)" class="input-course"
+                            maxlength="100" aria-label="Course name">
+                        <select id="taskCategory" class="input-category" aria-label="Task category">
+                            <option value="general">General</option>
+                            <option value="homework">Homework</option>
+                            <option value="project">Project</option>
+                            <option value="exam">Exam Prep</option>
+                            <option value="reading">Reading</option>
+                            <option value="lab">Lab Work</option>
+                        </select>
+                        <input type="date" id="taskDate" class="input-date" required aria-required="true"
+                            aria-label="Due date">
+                        <select id="taskPriority" class="input-priority" aria-label="Priority level">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                        <button id="addTaskBtn" aria-label="Add task">Add Task</button>
+                    </div>
+
+                    <!-- Search & Filters -->
+                    <div class="quick-filters">
+                        <div class="search-box">
+                            <i class="ph ph-magnifying-glass"></i>
+                            <input type="text" id="taskSearch" placeholder="Search tasks..." aria-label="Search tasks">
+                        </div>
+                        <div class="category-filters">
+                            <button class="category-filter active" data-category="all">All</button>
+                            <button class="category-filter" data-category="homework">Homework</button>
+                            <button class="category-filter" data-category="project">Project</button>
+                            <button class="category-filter" data-category="exam">Exam</button>
+                        </div>
+                    </div>
+
+                    <!-- Bulk Actions -->
+                    <div class="bulk-actions">
+                        <button id="selectAllBtn" class="btn-secondary">Select All</button>
+                        <button id="completeSelectedBtn" class="btn-secondary">Complete Selected</button>
+                        <button id="deleteSelectedBtn" class="btn-secondary">Delete Selected</button>
+                        <span id="selectedCount" class="selected-count">0 selected</span>
+                    </div>
+                </section>
+
+                <!-- Data Actions -->
+                <div class="data-actions">
+                    <button id="exportBtn" class="btn-secondary" aria-label="Export tasks">
+                        <i class="ph ph-export"></i> Export
+                    </button>
+                    <button id="importBtn" class="btn-secondary" aria-label="Import tasks">
+                        <i class="ph ph-import"></i> Import
+                    </button>
+                    <input type="file" id="importFile" accept=".json" style="display:none" aria-label="Import file">
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <i class="ph ph-clipboard-text"></i>
+                    <p>No tasks yet. Add one above!</p>
+                </div>
+
+                <!-- Task List -->
+                <div class="task-list" id="taskList"></div>
+            </main>
+
+            <!-- Right: Pomodoro Timer -->
+            <aside class="pomodoro-widget">
+                <div class="pomodoro-card">
+                    <div class="pomodoro-header">
+                        <h3><i class="ph ph-timer"></i> Pomodoro</h3>
+                        <div class="pomodoro-mode-indicator mode-focus" id="pomodoro-mode-indicator"></div>
+                    </div>
+                    <div class="pomodoro-display">
+                        <div class="pomodoro-timer" id="pomodoro-timer">25:00</div>
+                        <div class="pomodoro-mode" id="pomodoro-mode">Focus Session</div>
+                    </div>
+                    
+                    <!-- Pomodoro Settings -->
+                    <div class="pomodoro-settings">
+                        <div class="setting-row">
+                            <label for="focus-duration">Focus Duration (min)</label>
+                            <input type="number" id="focus-duration" min="1" max="60" value="25">
+                        </div>
+                        <div class="setting-row">
+                            <label for="break-duration">Break Duration (min)</label>
+                            <input type="number" id="break-duration" min="1" max="30" value="5">
+                        </div>
+                    </div>
+                    
+                    <div class="pomodoro-controls">
+                        <button id="pomodoro-start" class="btn-primary pomodoro-btn">Start</button>
+                        <button id="pomodoro-pause" class="btn-secondary pomodoro-btn" disabled>Pause</button>
+                        <button id="pomodoro-reset" class="btn-secondary pomodoro-btn">Reset</button>
+                    </div>
+                </div>
+                <div class="pomodoro-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="pomodoro-focus-count">0</span>
+                        <span class="stat-label">Focus</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="pomodoro-break-count">0</span>
+                        <span class="stat-label">Breaks</span>
+                    </div>
+                </div>
+            </aside>
+
+        </div><!-- /.page-body -->
+   
+
+    <script src="js/nav-active.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/pomodoro.js"></script>
+    <script src="js/planner.js"></script>
+</body>
+
+</html>

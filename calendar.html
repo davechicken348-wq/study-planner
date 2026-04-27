@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - Study Planner</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" href="assets/icons/phosphor-icons.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web" onerror="this.onerror=null;this.href='assets/icons/phosphor-icons.min.css';"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Side Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1><i class="ph ph-graduation-cap"></i> StudyPlanner</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link">
+                    <i class="ph ph-house"></i>
+                    <span>Home</span>
+                </a>
+                <a href="planner.html" class="nav-link">
+                    <i class="ph ph-notebook"></i>
+                    <span>Planner</span>
+                </a>
+                <a href="timetable.html" class="nav-link">
+                    <i class="ph ph-calendar"></i>
+                    <span>Timetable</span>
+                </a>
+                <a href="calendar.html" class="nav-link">
+                    <i class="ph ph-calendar-blank"></i>
+                    <span>Calendar</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <section class="calendar-container">
+                <div class="calendar-header">
+                    <div class="calendar-nav">
+                        <button id="prevMonth" class="nav-btn" aria-label="Previous month">
+                            <i class="ph ph-caret-left"></i>
+                        </button>
+                        <h2 id="currentMonthYear">January 2026</h2>
+                        <button id="nextMonth" class="nav-btn" aria-label="Next month">
+                            <i class="ph ph-caret-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-actions">
+                        <button id="todayBtn" class="btn-secondary">Today</button>
+                        <button id="addEventBtn" class="btn-primary">
+                            <i class="ph ph-plus"></i> Add Event
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Calendar Grid -->
+                <div class="calendar-grid">
+                    <div class="calendar-weekdays">
+                        <div class="weekday">Sun</div>
+                        <div class="weekday">Mon</div>
+                        <div class="weekday">Tue</div>
+                        <div class="weekday">Wed</div>
+                        <div class="weekday">Thu</div>
+                        <div class="weekday">Fri</div>
+                        <div class="weekday">Sat</div>
+                    </div>
+                    <div class="calendar-days" id="calendarDays"></div>
+                </div>
+
+                <!-- Quick Add Event Modal -->
+                <div class="modal-overlay" id="eventModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Add Event</h3>
+                            <button class="modal-close" id="closeModal" aria-label="Close modal">
+                                <i class="ph ph-x"></i>
+                            </button>
+                        </div>
+                        <form id="eventForm">
+                            <input type="hidden" id="eventDate" value="">
+                            <div class="form-group">
+                                <label for="eventTitle">Event Title *</label>
+                                <input type="text" id="eventTitle" required maxlength="100" placeholder="e.g., Math Exam">
+                            </div>
+                            <div class="form-group">
+                                <label for="eventCourse">Course (optional)</label>
+                                <input type="text" id="eventCourse" maxlength="50" placeholder="e.g., Calculus I">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="eventStart">Start Time</label>
+                                    <input type="time" id="eventStart">
+                                </div>
+                                <div class="form-group">
+                                    <label for="eventEnd">End Time</label>
+                                    <input type="time" id="eventEnd">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventCategory">Category</label>
+                                <select id="eventCategory">
+                                    <option value="exam">Exam</option>
+                                    <option value="project">Project</option>
+                                    <option value="homework">Homework</option>
+                                    <option value="lab">Lab</option>
+                                    <option value="meeting">Meeting</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventDescription">Description (optional)</label>
+                                <textarea id="eventDescription" rows="3" maxlength="500" placeholder="Add notes or details..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="eventReminder" checked>
+                                    Send reminder 1 hour before
+                                </label>
+                            </div>
+                            <div class="modal-actions">
+                                <button type="button" class="btn-secondary" id="cancelEvent">Cancel</button>
+                                <button type="submit" class="btn-primary">Save Event</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Event Details Modal -->
+                <div class="modal-overlay" id="detailModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="detailTitle">Event Details</h3>
+                            <button class="modal-close" id="closeDetail" aria-label="Close modal">
+                                <i class="ph ph-x"></i>
+                            </button>
+                        </div>
+                        <div id="detailBody"></div>
+                        <div class="modal-actions">
+                            <button type="button" class="btn-secondary" id="deleteEvent">Delete</button>
+                            <button type="button" class="btn-primary" id="editEvent">Edit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Events Sidebar -->
+                <div class="todays-events">
+                    <h3><i class="ph ph-calendar"></i> Today's Events</h3>
+                    <div id="todaysEventsList" class="todays-events-list">
+                        <p class="no-events">No events today</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/nav-active.js"></script>
+    <script src="js/calendar.js"></script>
+</body>
+</html>

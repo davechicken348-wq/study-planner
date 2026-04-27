@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Planner Test</title>
+</head>
+<body>
+    <h1>Planner Functions Test</h1>
+    <div id="results"></div>
+    <script>
+        // Simulate loading planner.js
+        const functions = ['toggleComplete', 'deleteTask', 'handleCheckboxChange', 'editTask'];
+        const results = document.getElementById('results');
+        functions.forEach(f => {
+            const exists = typeof window[f] !== 'undefined';
+            results.innerHTML += `<p style="color: ${exists ? 'green' : 'red'}">${exists ? '✓' : '✗'} ${f}: ${exists ? 'DEFINED' : 'UNDEFINED'}</p>`;
+        });
+    </script>
+    <script src="js/planner.js"></script>
+</body>
+</html>

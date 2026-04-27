@@ -1,0 +1,22 @@
+.task-form input:focus,
+.task-form select:focus {
+    outline: none;
+    border-color: var(--green-500);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+    background-color: white;
+}
+
+.task-form input.input-error,
+.task-form select.input-error {
+    border-color: var(--priority-high);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.task-form input:focus.input-error,
+.task-form select:focus.input-error {
+    background-color: white;
+}
+
+.task-form .input-title:focus {
+    border-color: var(--green-600);
+}

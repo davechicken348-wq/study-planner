@@ -1,0 +1,30 @@
+/* Phosphor Icons - Minimal Fallback */
+/* Contains only icons used in this project */
+
+@font-face {
+    font-family: 'Phosphor';
+    src: url('phosphor-icons-regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.ph {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: -0.125em;
+}
+
+/* Fallback: Use emoji/text if font fails */
+.ph.ph-graduation-cap::before { content: "🎓"; }
+.ph.ph-house::before { content: "🏠"; }
+.ph.ph-notebook::before { content: "📓"; }
+.ph.ph-calendar::before { content: "📅"; }
+.ph.ph-calendar-blank::before { content: "📆"; }
+.ph.ph-check-circle::before { content: "✅"; }
+.ph.ph-clock::before { content: "🕐"; }
+.ph.ph-plus::before { content: "+"; }
+.ph.ph-list::before { content: "☰"; }

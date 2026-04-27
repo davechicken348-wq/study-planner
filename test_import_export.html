@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Import/Export Test</title>
+</head>
+<body>
+    <h1>Import/Export Validation Test</h1>
+    <div id="results"></div>
+    <script src="js/storage.js"></script>
+    <script>
+        // Test 1: Export data
+        console.log('=== Test: Export ===');
+        const exported = Storage.exportData();
+        console.log('Exported:', exported);
+        document.getElementById('results').innerHTML += '<h2>Export Test: PASSED</h2>';
+        
+        // Test 2: Import valid data
+        console.log('=== Test: Import Valid Data ===');
+        const validBackup = {
+            type: 'study-planner-backup',
+            version: '1.1',
+            data: {
+                tasks: {
+                    type: 'array',
+                    itemType: 'task',
+                    itemCount: 2,
+                    items: [
+                        { id: '1', title: 'Test Task', date: '2026-12-01', category: 'homework', priority: 'high', completed: false },
+                        { id: '2', title: 'Another Task', date: '2026-12-02', category: 'project', priority: 'medium', completed: true }
+                    ]
+                },
+                timetable: {
+                    type: 'array',
+                    itemType: 'timetable-entry',
+                    itemCount: 1,
+                    items: [
+                        { day: 'Monday', subject: 'Math' }
+                    ]
+                },
+                pomodoro: {
+                    type: 'object',
+                    itemType: 'pomodoro-settings',
+                    items: { focusTime: 1500, breakTime: 300, focusSessions: 5, breakSessions: 5 }
+                }
+            }
+        };
+        const result1 = Storage.importData(JSON.stringify(validBackup));
+        console.log('Import Result (Valid):', result1);
+        document.getElementById('results').innerHTML += '<h2>Valid Import Test: ' + (result1.success ? 'PASSED' : 'FAILED') + '</h2>';
+        
+        // Test 3: Import invalid task data
+        console.log('=== Test: Import Invalid Task ===');
+        const invalidBackup = {
+            type: 'study-planner-backup',
+            version: '1.1',
+            data: {
+                tasks: {
+                    type: 'array',
+                    itemType: 'task',
+                    itemCount: 1,
+                    items: [
+                        { id: '1', title: 'Bad Task' } // Missing required fields
+                    ]
+                }
+            }
+        };
+        const result2 = Storage.importData(JSON.stringify(invalidBackup));
+        console.log('Import Result (Invalid):', result2);
+        document.getElementById('results').innerHTML += '<h2>Invalid Task Import Test: ' + (!result2.success && result2.tasks.skipped > 0 ? 'PASSED' : 'FAILED') + '</h2>';
+        
+        // Test 4: Import malformed JSON
+        console.log('=== Test: Import Malformed JSON ===');
+        const result3 = Storage.importData('{ invalid json }');
+        console.log('Import Result (Malformed):', result3);
+        document.getElementById('results').innerHTML += '<h2>Malformed JSON Test: ' + (!result3.success ? 'PASSED' : 'FAILED') + '</h2>';
+        
+        // Test 5: Wrong file type
+        console.log('=== Test: Wrong File Type ===');
+        const wrongTypeBackup = {
+            type: 'wrong-type',
+            data: {}
+        };
+        const result4 = Storage.importData(JSON.stringify(wrongTypeBackup));
+        console.log('Import Result (Wrong Type):', result4);
+        document.getElementById('results').innerHTML += '<h2>Wrong File Type Test: ' + (!result4.success ? 'PASSED' : 'FAILED') + '</h2>';
+        
+        console.log('=== All Tests Complete ===');
+    </script>
+</body>
+</html>

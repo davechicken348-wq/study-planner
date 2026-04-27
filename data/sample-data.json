@@ -1,0 +1,67 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "Complete Math homework",
+      "date": "2026-04-28",
+      "completed": false,
+      "subject": "Math"
+    },
+    {
+      "id": 2,
+      "text": "Study for Science exam",
+      "date": "2026-04-30",
+      "completed": false,
+      "subject": "Science"
+    },
+    {
+      "id": 3,
+      "text": "Read English literature chapter 5",
+      "date": "2026-04-29",
+      "completed": false,
+      "subject": "English"
+    }
+  ],
+  "timetable": [
+    {
+      "day": "Monday",
+      "schedule": [
+        { "time": "09:00", "subject": "Math", "room": "101" },
+        { "time": "10:00", "subject": "Science", "room": "102" },
+        { "time": "11:00", "subject": "English", "room": "103" }
+      ]
+    },
+    {
+      "day": "Tuesday",
+      "schedule": [
+        { "time": "09:00", "subject": "History", "room": "104" },
+        { "time": "10:00", "subject": "Math", "room": "101" },
+        { "time": "11:00", "subject": "Art", "room": "105" }
+      ]
+    },
+    {
+      "day": "Wednesday",
+      "schedule": [
+        { "time": "09:00", "subject": "Science", "room": "102" },
+        { "time": "10:00", "subject": "English", "room": "103" },
+        { "time": "11:00", "subject": "Music", "room": "106" }
+      ]
+    },
+    {
+      "day": "Thursday",
+      "schedule": [
+        { "time": "09:00", "subject": "Math", "room": "101" },
+        { "time": "10:00", "subject": "History", "room": "104" },
+        { "time": "11:00", "subject": "PE", "room": "Gym" }
+      ]
+    },
+    {
+      "day": "Friday",
+      "schedule": [
+        { "time": "09:00", "subject": "English", "room": "103" },
+        { "time": "10:00", "subject": "Science", "room": "102" },
+        { "time": "11:00", "subject": "Math", "room": "101" }
+      ]
+    }
+  ]
+}

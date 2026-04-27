@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPlanner - Stay Organized. Study Smarter.</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Phosphor Icons with fallback -->
+    <link rel="stylesheet" href="assets/icons/phosphor-icons.min.css">
+    <script src="https://unpkg.com/@phosphor-icons/web" onerror="this.onerror=null;this.href='assets/icons/phosphor-icons.min.css';"></script>
+</head>
+<body>
+    <!-- Slideshow Background -->
+    <div class="slideshow">
+        <div class="slide active" style="background-image: url('assets/images/pexels-n-voitkevich-6214370.webp');"></div>
+        <div class="slide" style="background-image: url('assets/images/pexels-punttim-53874.webp');"></div>
+        <div class="slide" style="background-image: url('assets/images/pexels-shkrabaanthony-6969292.webp');"></div>
+        <div class="slide active" style="background-image: url('assets/images/book.webp');"></div>
+        <div class="slide active" style="background-image: url('assets/images/arrange_books.webp');"></div>
+        <div class="slide active" style="background-image: url('assets/images/many_books_arranged.webp');"></div>
+        <div class="slide active" style="background-image: url('assets/images/many.webp');"></div>
+    </div>
+
+    <!-- Overlay for readability -->
+    <div class="overlay"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <main class="hero">
+            <div class="hero-icon">
+                <i class="ph ph-graduation-cap"></i>
+            </div>
+            <h1 class="hero-title">StudyPlanner</h1>
+            <h2 class="hero-heading">Stay Organized. Study Smarter.</h2>
+            <p class="hero-text">Plan your tasks, track deadlines, and stay on top of your university life.</p>
+            <p class="hero-hint">Quick add. Press Enter. Stay focused.</p>
+            
+            <div class="hero-cta">
+                <a href="planner.html" class="btn-primary">Get Started</a>
+                <a href="timetable.html" class="hero-sub-link">View Timetable</a>
+            </div>
+
+            <!-- Features Preview -->
+            <div class="features">
+                <div class="feature-item">
+                    <i class="ph ph-check-circle"></i>
+                    <span>Task Tracking</span>
+                </div>
+                <div class="feature-item">
+                    <i class="ph ph-bell"></i>
+                    <span>Deadline Reminders</span>
+                </div>
+                <div class="feature-item">
+                    <i class="ph ph-wifi-slash"></i>
+                    <span>Offline Access</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/nav-active.js"></script>
+    <script src="js/slideshow.js"></script>
+</body>
+</html>
