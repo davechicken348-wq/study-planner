@@ -45,7 +45,37 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <section class="calendar-container">
+            <div class="desktop-grid">
+                <!-- Left Column: Hero + Today's Events -->
+                <div class="left-column">
+                    <section class="hero-section">
+                        <div class="hero-background-slideshow">
+                            <div class="hero-slide active" style="background-image: url('assets/images/Calendar_Wallpaper/Calendar1.webp')"></div>
+                            <div class="hero-slide" style="background-image: url('assets/images/Calendar_Wallpaper/Calender2.webp')"></div>
+                            <div class="hero-slide" style="background-image: url('assets/images/Calendar_Wallpaper/Calender3.webp')"></div>
+                            <div class="hero-slide" style="background-image: url('assets/images/Calendar_Wallpaper/Calender4.webp')"></div>
+                            <div class="hero-slide" style="background-image: url('assets/images/Calendar_Wallpaper/Calender5.webp')"></div>
+                            <div class="hero-slide" style="background-image: url('assets/images/Calendar_Wallpaper/Calender6.webp')"></div>
+                            <div class="hero-slide" style="background-image: url('assets/images/Calendar_Wallpaper/Calender7.webp')"></div>
+                        </div>
+                        <div class="hero-overlay"></div>
+                        <div class="hero-content">
+                            <h1 id="heroTitle">Study Calendar</h1>
+                            <p id="heroMessage">Organize your academic schedule and track important dates</p>
+                        </div>
+                        <div class="hero-indicators"></div>
+                    </section>
+
+                    <div class="todays-events">
+                        <h3><i class="ph ph-calendar"></i> Today's Events</h3>
+                        <div id="todaysEventsList" class="todays-events-list">
+                            <p class="no-events">No events today</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar Container -->
+                <section class="calendar-container">
                 <div class="calendar-header">
                     <div class="calendar-nav">
                         <button id="prevMonth" class="nav-btn" aria-label="Previous month">
@@ -138,29 +168,21 @@
 
                 <!-- Event Details Modal -->
                 <div class="modal-overlay" id="detailModal">
-                    <div class="modal-content">
+                    <div class="modal-content detail-modal-content">
                         <div class="modal-header">
-                            <h3 id="detailTitle">Event Details</h3>
+                            <div class="detail-header-info">
+                                <span class="detail-date-label">Events for</span>
+                                <h3 id="detailTitle">Event Details</h3>
+                            </div>
                             <button class="modal-close" id="closeDetail" aria-label="Close modal">
                                 <i class="ph ph-x"></i>
                             </button>
                         </div>
-                        <div id="detailBody"></div>
-                        <div class="modal-actions">
-                            <button type="button" class="btn-secondary" id="deleteEvent">Delete</button>
-                            <button type="button" class="btn-primary" id="editEvent">Edit</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Today's Events Sidebar -->
-                <div class="todays-events">
-                    <h3><i class="ph ph-calendar"></i> Today's Events</h3>
-                    <div id="todaysEventsList" class="todays-events-list">
-                        <p class="no-events">No events today</p>
+                        <div class="modal-body" id="detailBody"></div>
                     </div>
                 </div>
             </section>
+            </div><!-- end desktop-grid -->
         </main>
     </div>
 

@@ -2,6 +2,65 @@
 // Handles task management, filtering, and UI updates
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Hero slideshow functionality
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.dot');
+    let slideInterval;
+
+    function showSlide(n) {
+        // Reset index if out of bounds
+        if (n >= slides.length) slideIndex = 0;
+        if (n < 0) slideIndex = slides.length - 1;
+        
+        // Update slide position
+        const offset = -slideIndex * 25; // 25% per slide (100% / 4)
+        document.querySelector('.hero-slides').style.transform = `translateX(${offset}%)`;
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === slideIndex);
+        });
+    }
+
+    function nextSlide() {
+        slideIndex++;
+        showSlide(slideIndex);
+    }
+
+    function startSlideshow() {
+        // Change slide every 7 seconds
+        slideInterval = setInterval(nextSlide, 7000);
+    }
+
+    function stopSlideshow() {
+        clearInterval(slideInterval);
+    }
+
+    // Initialize slideshow
+    function initSlideshow() {
+        showSlide(slideIndex);
+        startSlideshow();
+        
+        // Pause on hover
+        const heroSection = document.querySelector('.hero-section');
+        heroSection.addEventListener('mouseenter', stopSlideshow);
+        heroSection.addEventListener('mouseleave', startSlideshow);
+        
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                slideIndex = index;
+                showSlide(slideIndex);
+                // Reset interval to prevent rapid changes
+                stopSlideshow();
+                startSlideshow();
+            });
+        });
+    }
+
+    // Initialize slideshow after DOM is loaded
+    initSlideshow();
     // DOM element references
     const elements = {
         taskTitle: document.getElementById('taskTitle'),

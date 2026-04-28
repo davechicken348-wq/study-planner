@@ -1,441 +1,1392 @@
-/* Timetable Page Styles */
+/* ============================================================
+   TIMETABLE.CSS — Mobile-First Responsive Design
+   Breakpoints: xs (<360), sm (<480), md (<768), lg (<1024), xl (≥1024)
+   ============================================================ */
 
-/* ==========================================
-   TIMETABLE HEADER
-   ========================================== */
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES — Design Tokens
+   ============================================================ */
+:root {
+    /* Layout */
+    --time-column-width: 70px;
+    --slot-height: 60px;
+    --grid-gap: 0;
+
+    /* Typography */
+    --font-size-xs: 0.65rem;
+    --font-size-sm: 0.72rem;
+    --font-size-base: 0.82rem;
+    --font-size-lg: 0.95rem;
+
+    /* Spacing */
+    --card-padding-y: 0.4rem;
+    --card-padding-x: 0.5rem;
+    --gap-mini: 0.15rem;
+
+    /* Colors (inherited from style.css) */
+    /* Shadows inherited */
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 200ms ease;
+}
+
+/* ============================================================
+   1.5. TIMETABLE HERO — Page Header
+   ============================================================ */
+
+.timetable-hero {
+    text-align: center;
+    padding: 2rem 1.5rem 1.5rem;
+    background: linear-gradient(135deg, var(--green-50) 0%, white 100%);
+    border-radius: 12px;
+    border: 1px solid var(--green-200);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 1.25rem;
+    animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.timetable-hero .hero-icon {
+    margin-bottom: 0.75rem;
+}
+
+.timetable-hero .hero-icon i.ph {
+    font-size: 2.5rem;
+    color: var(--green-600);
+}
+
+.timetable-hero .hero-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--green-800);
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.01em;
+}
+
+.timetable-hero .hero-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--nature-700);
+    margin-bottom: 0.5rem;
+    line-height: 1.25;
+}
+
+.timetable-hero .hero-text {
+    font-size: 0.9rem;
+    color: var(--nature-600);
+    margin-bottom: 0.25rem;
+    line-height: 1.5;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.timetable-hero .hero-hint {
+    font-size: 0.8rem;
+    color: var(--nature-500);
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* ============================================================
+   2. BASE / MOBILE-FIRST — Stacked Card Layout (xs–md)
+   Target: Phones & small tablets — NO horizontal scrolling
+   ============================================================ */
+
+/* Container */
 .timetable-container {
-    background: white;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--nature-200);
-    max-width: 1400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    position: relative;
-    overflow: hidden;
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--nature-200);
+    box-shadow: var(--shadow-md);
 }
 
-/* Decorative top accent line */
-.timetable-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--green-500) 0%, var(--green-400) 50%, var(--green-500) 100%);
-}
-
+/* Header */
 .timetable-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
 }
 
 .timetable-header h2 {
-    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--green-800);
     margin: 0;
 }
 
-/* Add Class Button */
+.timetable-header h2 i.ph {
+    color: var(--green-600);
+    font-size: 1.4rem;
+}
+
 .btn-add-class {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
+    padding: 0.65rem 1rem;
     background: linear-gradient(135deg, var(--green-600) 0%, var(--green-500) 100%);
     color: white;
     border: none;
-    border-radius: 10px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
     font-weight: 600;
     font-family: 'Quicksand', sans-serif;
     cursor: pointer;
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
+    transition: all var(--transition-fast);
+    box-shadow: 0 2px 6px rgba(34, 197, 94, 0.25);
+    white-space: nowrap;
+    width: 100%;
 }
 
 .btn-add-class:hover {
     background: linear-gradient(135deg, var(--green-700) 0%, var(--green-600) 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
 }
 
-.btn-add-class:active {
-    transform: translateY(0);
-}
-
-.btn-add-class i.ph {
-    font-size: 1.25rem;
-}
-
-/* ==========================================
-   TIMETABLE GRID
-   ========================================== */
+/* Wrapper — no horizontal overflow on mobile */
 .timetable-wrapper {
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: visible;
-    border-radius: 12px;
-    border: 1px solid var(--nature-200);
-    background: var(--nature-50);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
+/* Timetable grid — mobile: stacked cards per day */
 .timetable-grid {
-    display: grid;
-    grid-template-columns: 80px repeat(5, 1fr);
-    min-width: 800px; /* Ensure minimum width for readability */
-}
-
-/* Time Column */
-.time-column {
     display: flex;
     flex-direction: column;
-    background: white;
-    border-right: 2px solid var(--nature-200);
-    position: sticky;
-    left: 0;
-    z-index: 10;
+    gap: 1rem;
 }
 
-.time-header {
-    height: 60px;
+/* Day sections (mobile) */
+.day-section {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    color: var(--green-800);
-    border-bottom: 2px solid var(--nature-200);
+    flex-direction: column;
+    border: 1px solid var(--nature-200);
+    border-radius: 10px;
     background: var(--nature-50);
-}
-
-.time-slot {
-    height: 60px;
-    border-bottom: 1px dashed var(--nature-200);
-    position: relative;
-    transition: background-color 0.2s ease;
-}
-
-.time-label {
-    position: absolute;
-    top: 0.25rem;
-    right: 0.5rem;
-    font-size: 0.75rem;
-    color: var(--nature-500);
-    font-weight: 500;
-}
-
-/* Day Columns */
-.day-column {
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid var(--nature-200);
-    min-height: calc(60px * 11); /* 8am-6pm = 11 hours */
-}
-
-.day-column:last-child {
-    border-right: none;
-}
-
-.day-header {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    color: var(--green-800);
-    background: linear-gradient(135deg, var(--green-50) 0%, white 100%);
-    border-bottom: 2px solid var(--nature-200);
-    text-transform: capitalize;
-}
-
-.time-slot {
-    height: 60px;
-    border-bottom: 1px dashed var(--nature-200);
-    position: relative;
-    transition: background-color 0.2s ease;
-}
-
-.time-slot:hover {
-    background-color: rgba(34, 197, 94, 0.04);
-}
-
-/* ==========================================
-   CLASS CARD
-   ========================================== */
-.class-card {
-    position: absolute;
-    left: 2px;
-    right: 2px;
-    top: 1px;
-    border-radius: 8px;
-    padding: 0.5rem;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    z-index: 1;
     overflow: hidden;
 }
 
-.class-card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    z-index: 2;
-}
-
-/* Priority-based colors */
-.class-card.priority-high {
-    background: linear-gradient(135deg, #fee2e2 0%, #fff 100%);
-    border-left: 3px solid var(--priority-high);
-    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.15);
-}
-
-.class-card.priority-medium {
-    background: linear-gradient(135deg, #fffbeb 0%, #fff 100%);
-    border-left: 3px solid var(--priority-medium);
-    box-shadow: 0 2px 6px rgba(249, 115, 22, 0.15);
-}
-
-.class-card.priority-low {
-    background: linear-gradient(135deg, var(--green-50) 0%, #fff 100%);
-    border-left: 3px solid var(--priority-low);
-    box-shadow: 0 2px 6px rgba(34, 197, 94, 0.15);
-}
-
-.class-content {
-    flex: 1;
-    min-height: 0;
-}
-
-.class-subject {
+.day-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    font-size: 0.85rem;
     font-weight: 700;
-    font-size: 0.9rem;
+    color: var(--green-800);
+    background: linear-gradient(145deg, var(--green-50) 0%, white 100%);
+    border-bottom: 2px solid var(--green-200);
+    text-transform: capitalize;
+}
+
+/* Time slots (mobile vertical stack) */
+.time-slot {
+    display: grid;
+    grid-template-columns: var(--time-column-width) 1fr;
+    min-height: var(--slot-height);
+    border-bottom: 1px solid var(--nature-100);
+    background: white;
+}
+
+.time-slot:last-child {
+    border-bottom: none;
+}
+
+/* Time label column (mobile) */
+.time-slot .time-label {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 0.4rem 0.5rem 0 0;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--nature-500);
+    background: var(--nature-50);
+    border-right: 2px solid var(--green-200);
+}
+
+/* Content area for class cards (mobile) */
+.time-slot .slot-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.35rem 0.5rem;
+    min-height: calc(var(--slot-height) - 2px);
+}
+
+/* ============================================================
+   3. CLASS CARDS — Mobile Stacked Style
+   ============================================================ */
+
+.mobile-class-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-mini);
+    padding: var(--card-padding-y) var(--card-padding-x);
+    border-radius: 6px;
+    width: 100%;
+    min-height: 44px;
+    box-sizing: border-box;
+    position: relative;
+    transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.mobile-class-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+/* Priority variants */
+.mobile-class-card.priority-high {
+    background: linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(239,68,68,0.08) 100%);
+    border-left: 3px solid var(--priority-high);
+}
+
+.mobile-class-card.priority-medium {
+    background: linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(249,115,22,0.08) 100%);
+    border-left: 3px solid var(--priority-medium);
+}
+
+.mobile-class-card.priority-low {
+    background: linear-gradient(135deg, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.08) 100%);
+    border-left: 3px solid var(--priority-low);
+}
+
+/* Card content */
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    overflow: hidden;
+}
+
+.card-subject {
+    font-size: var(--font-size-base);
+    font-weight: 700;
     color: var(--nature-800);
-    margin-bottom: 0.25rem;
+    line-height: 1.3;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.class-room {
-    font-size: 0.75rem;
+.card-room,
+.card-time {
+    font-size: var(--font-size-sm);
     color: var(--nature-600);
     display: flex;
     align-items: center;
-    gap: 0.25rem;
-    margin-bottom: 0.25rem;
+    gap: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.class-room i.ph {
-    font-size: 0.85rem;
+.card-room i.ph,
+.card-time i.ph {
+    font-size: 0.75rem;
+    flex-shrink: 0;
 }
 
-.class-time {
-    font-size: 0.7rem;
-    color: var(--nature-500);
-    font-weight: 500;
-}
-
-/* Class Actions */
-.class-actions {
+/* Card actions (mobile: always visible) */
+.card-actions {
     display: flex;
-    gap: 0.25rem;
-    margin-top: 0.25rem;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    gap: 4px;
+    margin-top: 2px;
 }
 
-.class-card:hover .class-actions {
-    opacity: 1;
-}
-
-.class-actions button {
-    padding: 0.25rem 0.5rem;
+.card-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.6rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.85rem;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-family: 'Quicksand', sans-serif;
+    transition: all var(--transition-fast);
+    min-width: 44px;
+    min-height: 44px;
 }
 
 .btn-edit {
-    background: rgba(52, 152, 219, 0.1);
+    background: rgba(52, 152, 219, 0.15);
     color: #3498db;
 }
 
 .btn-edit:hover {
-    background: rgba(52, 152, 219, 0.2);
+    background: rgba(52, 152, 219, 0.3);
 }
 
 .btn-delete {
-    background: rgba(239, 68, 68, 0.1);
+    background: rgba(239, 68, 68, 0.15);
     color: var(--priority-high);
 }
 
 .btn-delete:hover {
-    background: rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.3);
 }
 
-/* ==========================================
-   LEGEND
-   ========================================== */
+/* Empty slot indicator */
+.slot-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--nature-400);
+    font-size: var(--font-size-xs);
+    font-style: italic;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.time-slot:hover .slot-empty {
+    opacity: 1;
+}
+
+/* ============================================================
+   4. TABLET / DESKTOP — Traditional Grid Layout (min-width: 768px)
+   Switch from stacked cards to horizontal grid at 768px
+   ============================================================ */
+
+@media (min-width: 768px) {
+    /* Container */
+    .timetable-container {
+        padding: 1.5rem;
+        gap: 1.25rem;
+    }
+
+    /* Hero adjustments for larger screens */
+    .timetable-hero {
+        padding: 2rem 1.5rem 1.5rem;
+    }
+
+    .timetable-hero .hero-icon i.ph {
+        font-size: 3rem;
+    }
+
+    .timetable-hero .hero-title {
+        font-size: 1.75rem;
+    }
+
+    .timetable-hero .hero-heading {
+        font-size: 1.25rem;
+    }
+
+    .timetable-hero .hero-text {
+        font-size: 1rem;
+    }
+
+    /* Header */
+    .timetable-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .timetable-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .timetable-header h2 i.ph {
+        font-size: 1.5rem;
+    }
+
+    .btn-add-class {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.9rem;
+        width: auto;
+    }
+
+    /* Wrapper — enable horizontal scrolling */
+    .timetable-wrapper {
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+
+    /* Grid — traditional layout */
+    .timetable-grid {
+        display: grid;
+        grid-template-columns: var(--time-column-width) repeat(5, minmax(110px, 1fr));
+        min-width: 580px;
+        gap: 0;
+    }
+
+    /* Time column header */
+    .time-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 55px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--nature-500);
+        background: var(--nature-50);
+        border-bottom: 2px solid var(--green-200);
+    }
+
+    /* Day column — desktop grid column */
+    .day-column {
+        display: flex;
+        flex-direction: column;
+        background: transparent;
+        position: relative;
+    }
+
+    /* Add left border to all day columns except first */
+    .day-column + .day-column {
+        border-left: 1px solid var(--nature-200);
+    }
+
+    /* Day column — desktop grid column */
+    .day-column {
+        display: flex;
+        flex-direction: column;
+        background: transparent;
+        position: relative;
+    }
+
+    /* Add left border to all day columns except first */
+    .day-column + .day-column {
+        border-left: 1px solid var(--nature-200);
+    }
+
+    /* Day header */
+    .day-header {
+        height: 55px;
+        font-size: 0.9rem;
+        border-bottom: 2px solid var(--green-200);
+        border-left: none;
+        background: linear-gradient(145deg, var(--green-50) 0%, white 100%);
+        padding: 0 0.5rem;
+    }
+
+    /* Time slot cell (tablet+) */
+    .time-slot {
+        display: block;
+        height: var(--slot-height);
+        border-bottom: 1px solid var(--nature-100);
+        position: relative;
+        min-height: var(--slot-height);
+    }
+
+    /* Time column wrapper */
+    .time-column {
+        position: sticky;
+        left: 0;
+        z-index: 10;
+        background: white;
+        border-right: 2px solid var(--green-200);
+    }
+
+    .time-column .time-slot {
+        background: var(--nature-50);
+    }
+
+    .time-column .time-label {
+        display: block;
+        font-size: 0.72rem;
+    }
+
+    /* Hide mobile-specific elements */
+    .slot-empty {
+        display: none;
+    }
+
+    /* Desktop class cards — absolute positioned */
+    .desktop-class-card {
+        position: absolute;
+        left: 2px;
+        right: 2px;
+        top: 2px;
+        border-radius: 6px;
+        padding: var(--card-padding-y) var(--card-padding-x);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: default;
+        transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+        z-index: 2;
+        min-height: 0;
+    }
+
+    .desktop-class-card:hover {
+        box-shadow: var(--shadow-md);
+        transform: scale(1.01);
+        z-index: 3;
+    }
+
+    .desktop-class-card:hover .card-actions {
+        opacity: 1;
+    }
+
+    /* Priority colors (same as mobile) */
+    .desktop-class-card.priority-high {
+        background: linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(239,68,68,0.08) 100%);
+        border-left: 3px solid var(--priority-high);
+    }
+
+    .desktop-class-card.priority-medium {
+        background: linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(249,115,22,0.08) 100%);
+        border-left: 3px solid var(--priority-medium);
+    }
+
+    .desktop-class-card.priority-low {
+        background: linear-gradient(135deg, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.08) 100%);
+        border-left: 3px solid var(--priority-low);
+    }
+
+    /* Desktop card actions - show on hover */
+    .desktop-class-card .card-actions {
+        display: flex;
+        gap: 3px;
+        opacity: 0;
+        transition: opacity var(--transition-normal);
+        position: absolute;
+        top: 0.25rem;
+        right: 0.25rem;
+    }
+
+    .desktop-class-card .card-actions button {
+        padding: 0.2rem 0.35rem;
+        font-size: 0.72rem;
+    }
+
+    /* Desktop card sizing */
+    .desktop-class-card .card-subject {
+        font-size: 0.82rem;
+    }
+}
+    
+    /* Header */
+    .timetable-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .timetable-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .timetable-header h2 i.ph {
+        font-size: 1.6rem;
+    }
+    
+    .btn-add-class {
+        padding: 0.7rem 1.4rem;
+        font-size: 0.95rem;
+    }
+    
+    /* Wrapper — enable horizontal scrolling */
+    .timetable-wrapper {
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+    
+    /* Grid — traditional layout */
+    .timetable-grid {
+        display: grid;
+        grid-template-columns: var(--time-column-width) repeat(5, minmax(120px, 1fr));
+        min-width: 680px;
+        gap: 0;
+    }
+    
+    /* Day section becomes column in grid */
+    .day-section {
+        display: flex;
+        flex-direction: column;
+        border: none;
+        border-left: 1px solid var(--nature-200);
+        background: transparent;
+        border-radius: 0;
+    }
+    
+    .day-section:first-child {
+        border-left: none;
+    }
+    
+    /* Day header */
+    .day-header {
+        height: 60px;
+        font-size: 0.9rem;
+        border-bottom: 2px solid var(--green-200);
+        border-left: none;
+        background: linear-gradient(145deg, var(--green-50) 0%, white 100%);
+    }
+    
+    /* Time slot cell (desktop) */
+    .time-slot {
+        display: block;
+        height: var(--slot-height);
+        border-bottom: 1px solid var(--nature-100);
+        position: relative;
+        min-height: var(--slot-height);
+    }
+    
+    /* Time column */
+    .time-column {
+        position: sticky;
+        left: 0;
+        z-index: 10;
+        background: white;
+        border-right: 2px solid var(--green-200);
+    }
+    
+    .time-column .time-slot {
+        background: var(--nature-50);
+    }
+    
+    .time-column .time-label {
+        display: block;
+        font-size: 0.72rem;
+    }
+    
+    /* Hide mobile-specific elements */
+    .slot-empty {
+        display: none;
+    }
+    
+    /* Desktop class cards — absolute positioned */
+    .desktop-class-card {
+        position: absolute;
+        left: 2px;
+        right: 2px;
+        top: 2px;
+        border-radius: 6px;
+        padding: var(--card-padding-y) var(--card-padding-x);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: default;
+        transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+        z-index: 2;
+        min-height: 0;
+    }
+    
+    .desktop-class-card:hover {
+        box-shadow: var(--shadow-md);
+        transform: scale(1.01);
+        z-index: 3;
+    }
+    
+    .desktop-class-card:hover .card-actions {
+        opacity: 1;
+    }
+    
+    /* Priority colors (same as mobile) */
+    .desktop-class-card.priority-high {
+        background: linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(239,68,68,0.08) 100%);
+        border-left: 3px solid var(--priority-high);
+    }
+    
+    .desktop-class-card.priority-medium {
+        background: linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(249,115,22,0.08) 100%);
+        border-left: 3px solid var(--priority-medium);
+    }
+    
+    .desktop-class-card.priority-low {
+        background: linear-gradient(135deg, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.08) 100%);
+        border-left: 3px solid var(--priority-low);
+    }
+    
+    /* Desktop card actions - show on hover */
+    .desktop-class-card .card-actions {
+        display: flex;
+        gap: 3px;
+        opacity: 0;
+        transition: opacity var(--transition-fast);
+        position: absolute;
+        top: 0.25rem;
+        right: 0.25rem;
+    }
+    
+    .desktop-class-card .card-actions button {
+        padding: 0.2rem 0.35rem;
+        font-size: 0.72rem;
+    }
+    
+    /* Desktop card sizing */
+    .desktop-class-card .card-subject {
+        font-size: 0.82rem;
+    }
+}
+
+/* ============================================================
+   5. TABLET (lg < 1024px) — Intermediate grid
+   ============================================================ */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .timetable-container {
+        padding: 1.5rem;
+        gap: 1.25rem;
+    }
+
+    .timetable-hero {
+        padding: 1.75rem 1.25rem 1.25rem;
+    }
+
+    .timetable-hero .hero-icon i.ph {
+        font-size: 2.75rem;
+    }
+
+    .timetable-hero .hero-title {
+        font-size: 1.6rem;
+    }
+
+    .timetable-hero .hero-heading {
+        font-size: 1.15rem;
+    }
+
+    .timetable-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .btn-add-class {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .timetable-grid {
+        --time-column-width: 70px;
+        --slot-height: 55px;
+    }
+
+    .day-header {
+        height: 55px;
+        font-size: 0.9rem;
+    }
+
+    .time-slot {
+        min-height: 55px;
+    }
+
+    .time-label,
+    .card-subject {
+        font-size: 0.75rem;
+    }
+
+    .card-room,
+    .card-time {
+        font-size: 0.7rem;
+    }
+}
+
+/* ============================================================
+   6. SMALL TABLET / LARGE PHONE (md < 768px)
+   ============================================================ */
+
+@media (min-width: 480px) and (max-width: 767px) {
+    .timetable-container {
+        padding: 1rem;
+        gap: 0.875rem;
+    }
+
+    .timetable-hero {
+        padding: 1.5rem 1rem 1rem;
+    }
+
+    .timetable-hero .hero-icon i.ph {
+        font-size: 2.25rem;
+    }
+
+    .timetable-hero .hero-title {
+        font-size: 1.35rem;
+    }
+
+    .timetable-hero .hero-heading {
+        font-size: 1rem;
+    }
+
+    .timetable-hero .hero-text {
+        font-size: 0.85rem;
+    }
+
+    .timetable-header h2 {
+        font-size: 1.15rem;
+    }
+
+    .btn-add-class {
+        padding: 0.6rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .day-header {
+        height: 48px;
+        font-size: 0.8rem;
+    }
+
+    .time-slot {
+        --slot-height: 48px;
+    }
+
+    .time-label {
+        font-size: 0.68rem;
+    }
+
+    .mobile-class-card {
+        padding: 0.35rem 0.45rem;
+        min-height: 42px;
+    }
+
+    .card-subject {
+        font-size: 0.78rem;
+    }
+
+    .card-room,
+    .card-time {
+        font-size: 0.66rem;
+    }
+
+    .card-actions button {
+        min-height: 32px;
+        min-width: 32px;
+    }
+}
+
+/* ============================================================
+   7. SMALL PHONE (sm < 480px)
+   ============================================================ */
+
+@media (max-width: 479px) {
+    :root {
+        --time-column-width: 65px;
+    }
+
+    .timetable-container {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+
+    .timetable-hero {
+        padding: 1.5rem 1rem 1.25rem;
+    }
+
+    .timetable-hero .hero-icon i.ph {
+        font-size: 2rem;
+    }
+
+    .timetable-hero .hero-title {
+        font-size: 1.25rem;
+    }
+
+    .timetable-hero .hero-heading {
+        font-size: 1rem;
+    }
+
+    .timetable-hero .hero-text {
+        font-size: 0.85rem;
+    }
+
+    .timetable-hero .hero-hint {
+        font-size: 0.75rem;
+    }
+
+    .timetable-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .timetable-header h2 i.ph {
+        font-size: 1.25rem;
+    }
+
+    .btn-add-class {
+        padding: 0.55rem 0.875rem;
+        font-size: 0.85rem;
+    }
+
+    .day-header {
+        height: 45px;
+        font-size: 0.75rem;
+    }
+
+    .time-slot {
+        --slot-height: 45px;
+    }
+
+    .time-label {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.4rem 0 0;
+    }
+
+    .slot-content {
+        padding: 0.3rem 0.4rem;
+    }
+
+    .mobile-class-card {
+        padding: 0.3rem 0.4rem;
+        min-height: 38px;
+        gap: 0.05rem;
+    }
+
+    .card-subject {
+        font-size: 0.72rem;
+        line-height: 1.2;
+    }
+
+    .card-room,
+    .card-time {
+        font-size: 0.6rem;
+    }
+
+    .card-actions button {
+        padding: 0.2rem 0.3rem;
+        min-height: 26px;
+        min-width: 26px;
+        font-size: var(--font-size-xs);
+    }
+}
+
+    .timetable-container {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+    
+    .timetable-header {
+        gap: 0.5rem;
+    }
+    
+    .timetable-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .timetable-header h2 i.ph {
+        font-size: 1.25rem;
+    }
+    
+    .btn-add-class {
+        padding: 0.55rem 0.875rem;
+        font-size: 0.85rem;
+    }
+    
+    .day-header {
+        height: 45px;
+        font-size: 0.75rem;
+    }
+    
+    .time-slot {
+        --slot-height: 45px;
+    }
+    
+    .time-label {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.4rem 0 0;
+    }
+    
+    .slot-content {
+        padding: 0.3rem 0.4rem;
+    }
+    
+    .mobile-class-card {
+        padding: 0.3rem 0.4rem;
+        min-height: 38px;
+        gap: 0.05rem;
+    }
+    
+    .card-subject {
+        font-size: 0.72rem;
+        line-height: 1.2;
+    }
+    
+    .card-room,
+    .card-time {
+        font-size: 0.6rem;
+    }
+    
+    .card-actions button {
+        padding: 0.2rem 0.3rem;
+        min-height: 26px;
+        min-width: 26px;
+        font-size: var(--font-size-xs);
+    }
+}
+
+/* ============================================================
+   8. TINY PHONE (xs < 360px)
+   ============================================================ */
+
+@media (max-width: 359px) {
+    :root {
+        --time-column-width: 55px;
+        --slot-height: 40px;
+    }
+
+    .timetable-container {
+        padding: 0.5rem;
+        gap: 0.625rem;
+    }
+
+    .timetable-hero {
+        padding: 1.25rem 0.875rem 1rem;
+    }
+
+    .timetable-hero .hero-icon i.ph {
+        font-size: 1.75rem;
+    }
+
+    .timetable-hero .hero-title {
+        font-size: 1.125rem;
+    }
+
+    .timetable-hero .hero-heading {
+        font-size: 0.95rem;
+    }
+
+    .timetable-hero .hero-text {
+        font-size: 0.8rem;
+    }
+
+    .timetable-hero .hero-hint {
+        font-size: 0.75rem;
+    }
+
+    .timetable-header h2 {
+        font-size: 1rem;
+    }
+
+    .btn-add-class {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .day-header {
+        height: 40px;
+        font-size: 0.7rem;
+        padding: 0 0.25rem;
+    }
+
+    .time-label {
+        font-size: 0.6rem;
+        padding: 0.25rem 0.3rem 0 0;
+    }
+
+    .slot-content {
+        padding: 0.25rem 0.3rem;
+    }
+
+    .mobile-class-card {
+        padding: 0.25rem 0.3rem;
+        min-height: 34px;
+    }
+
+    .card-subject {
+        font-size: 0.68rem;
+    }
+
+    .card-room,
+    .card-time {
+        font-size: 0.55rem;
+    }
+
+    .card-actions button {
+        padding: 0.15rem 0.25rem;
+        min-height: 24px;
+        min-width: 24px;
+        font-size: 0.5rem;
+    }
+}
+
+/* ============================================================
+   MOBILE LAYOUT — day-grouped cards
+   ============================================================ */
+
+.timetable-grid[role="region"] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.day-section {
+    border: 1px solid var(--nature-200);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.day-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1rem;
+    background: linear-gradient(135deg, var(--green-800) 0%, var(--green-700) 100%);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.day-class-count {
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 0.8;
+    background: rgba(255,255,255,0.15);
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+}
+
+.day-cards {
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.day-empty {
+    padding: 0.875rem 1rem;
+    font-size: 0.82rem;
+    color: var(--nature-400);
+    font-style: italic;
+    margin: 0;
+    text-align: center;
+}
+
+.mobile-class-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid transparent;
+    border-bottom: 1px solid var(--nature-100);
+    transition: background 0.15s ease;
+    min-height: 56px;
+}
+
+.mobile-class-card:last-child { border-bottom: none; }
+.mobile-class-card:active { background: var(--nature-50); }
+
+.mobile-class-card.priority-high   { border-left-color: var(--priority-high); }
+.mobile-class-card.priority-medium { border-left-color: var(--priority-medium); }
+.mobile-class-card.priority-low    { border-left-color: var(--priority-low); }
+
+.mc-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.mc-subject {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--nature-800);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+.mc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.mc-time,
+.mc-room {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--nature-500);
+    white-space: nowrap;
+}
+
+.mc-time i.ph,
+.mc-room i.ph { font-size: 0.8rem; flex-shrink: 0; }
+
+.mc-actions {
+    display: flex;
+    gap: 0.35rem;
+    flex-shrink: 0;
+}
+
+.mc-actions button {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mc-actions .btn-edit   { background: rgba(52,152,219,0.12); color: #3498db; }
+.mc-actions .btn-edit:active   { background: rgba(52,152,219,0.25); }
+.mc-actions .btn-delete { background: rgba(239,68,68,0.12); color: var(--priority-high); }
+.mc-actions .btn-delete:active { background: rgba(239,68,68,0.25); }
+
+/* ============================================================
+   9. LEGEND — Responsive
+   ============================================================ */
+
 .legend {
     display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background: var(--nature-50);
-    border-radius: 10px;
+    align-items: center;
+    gap: 0.75rem;
     flex-wrap: wrap;
 }
 
 .legend-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--nature-700);
-    font-weight: 500;
+    gap: 0.35rem;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--nature-600);
 }
 
 .legend-color {
     width: 12px;
     height: 12px;
     border-radius: 3px;
+    flex-shrink: 0;
 }
 
-/* ==========================================
-   MODAL
-   ========================================== */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
+.legend-color.priority-high   { background: var(--priority-high); }
+.legend-color.priority-medium { background: var(--priority-medium); }
+.legend-color.priority-low    { background: var(--priority-low); }
+
+/* ============================================================
+   10. MODAL — Base styles (no changes needed, inherits)
+   ============================================================ */
+/* Modal styles already defined in style.css */
+
+/* ============================================================
+   13. MODAL — Base Styles
+   ============================================================ */
+
+.modal-backdrop {
     display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 500;
     align-items: center;
     justify-content: center;
+    padding: 1rem;
 }
 
-.modal.active {
+.modal-backdrop.active {
     display: flex;
 }
 
-.modal-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
+#classModal.active {
+    display: block;
 }
 
 .modal-content {
-    position: relative;
     background: white;
-    border-radius: 16px;
+    border-radius: 14px;
+    padding: 1.75rem;
     width: 100%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    z-index: 1;
-    animation: modalSlideIn 0.3s ease-out;
+    max-width: 480px;
+    box-shadow: var(--shadow-lg);
+    animation: modalIn 0.2s ease-out;
 }
 
-@keyframes modalSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+@keyframes modalIn {
+    from { opacity: 0; transform: translateY(-12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .modal-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1.5rem;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.875rem;
     border-bottom: 1px solid var(--nature-200);
 }
 
 .modal-header h3 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--green-800);
     margin: 0;
 }
 
 .modal-close {
-    background: none;
+    width: 36px;
+    height: 36px;
     border: none;
-    font-size: 1.5rem;
-    color: var(--nature-500);
+    background: var(--nature-100);
+    border-radius: 8px;
     cursor: pointer;
-    padding: 0.25rem;
-    border-radius: 4px;
-    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--nature-600);
+    font-size: 1.1rem;
+    transition: all var(--transition-normal);
 }
 
 .modal-close:hover {
-    background: var(--nature-100);
+    background: var(--nature-200);
     color: var(--nature-800);
 }
 
-/* Form */
-#classForm {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
+/* Form groups */
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
 }
 
-.form-row {
-    display: flex;
-    gap: 1rem;
+.form-group:last-of-type {
+    margin-bottom: 0;
 }
 
 .form-group label {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--nature-700);
 }
 
 .form-group input,
 .form-group select {
-    padding: 0.75rem 1rem;
+    padding: 0.7rem 1rem;
     border: 2px solid var(--nature-200);
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-family: 'Quicksand', sans-serif;
     color: var(--nature-800);
-    transition: all 0.2s ease;
-    background-color: var(--nature-50);
+    background: white;
+    transition: all var(--transition-normal);
 }
 
 .form-group input:focus,
@@ -443,59 +1394,249 @@
     outline: none;
     border-color: var(--green-500);
     box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
-    background-color: white;
 }
 
-.form-group input::placeholder {
-    color: var(--nature-400);
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
 }
 
 .form-row .form-group {
     flex: 1;
 }
 
+/* Modal action buttons */
 .modal-actions {
     display: flex;
     gap: 0.75rem;
-    justify-content: flex-end;
-    margin-top: 0.5rem;
-    padding-top: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
     border-top: 1px solid var(--nature-200);
 }
 
 .btn-cancel {
-    padding: 0.75rem 1.5rem;
-    background: var(--nature-100);
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: white;
     color: var(--nature-700);
     border: 2px solid var(--nature-200);
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     font-family: 'Quicksand', sans-serif;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-normal);
 }
 
 .btn-cancel:hover {
-    background: var(--nature-200);
+    background: var(--nature-50);
     border-color: var(--nature-300);
 }
 
 .btn-save {
-    padding: 0.75rem 1.5rem;
+    flex: 2;
+    padding: 0.75rem 1rem;
     background: linear-gradient(135deg, var(--green-600) 0%, var(--green-500) 100%);
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     font-family: 'Quicksand', sans-serif;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
+    transition: all var(--transition-normal);
+    box-shadow: 0 2px 6px rgba(34, 197, 94, 0.25);
 }
 
 .btn-save:hover {
     background: linear-gradient(135deg, var(--green-700) 0%, var(--green-600) 100%);
-    box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+}
+
+/* ============================================================
+   14. MODAL — Mobile Adjustments
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 1rem;
+        margin: 0.5rem;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .modal-close {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.6rem 0.875rem;
+        font-size: 0.9rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .modal-actions {
+        flex-direction: row;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .modal-actions button {
+        flex: 1;
+        padding: 0.6rem 0.75rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 0.875rem;
+        margin: 0.5rem;
+    }
+
+    .modal-header h3 {
+        font-size: 1rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.55rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .modal-actions button {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .modal-content {
+        padding: 0.75rem;
+        margin: 0.4rem;
+    }
+
+    .modal-header {
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .modal-header h3 {
+        font-size: 0.95rem;
+    }
+
+    .modal-close {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.75rem;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.8rem;
+    }
+
+    .modal-actions {
+        margin-top: 1rem;
+        gap: 0.5rem;
+    }
+
+    .modal-actions button {
+        padding: 0.45rem 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* ============================================================
+   15. PRINT
+   ============================================================ */
+
+@media print {
+    .timetable-wrapper {
+        overflow: visible !important;
+    }
+    
+    .btn-add-class,
+    .card-actions {
+        display: none !important;
+    }
+    
+    .day-section {
+        page-break-inside: avoid;
+    }
+    
+    .timetable-container {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
+}
+
+/* Focus visible for keyboard navigation */
+.btn-add-class:focus-visible,
+.card-actions button:focus-visible,
+.modal-close:focus-visible,
+.btn-save:focus-visible,
+.btn-cancel:focus-visible {
+    outline: 2px solid var(--green-500);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .mobile-class-card,
+    .desktop-class-card {
+        border: 1px solid var(--nature-400);
+    }
+}
+
+/* ============================================================
+   12. PRINT STYLES
+   ============================================================ */
+
+@media print {
+    .timetable-container {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .btn-add-class,
+    .card-actions {
+        display: none !important;
+    }
+    
+    .day-section {
+        page-break-inside: avoid;
+    }
 }

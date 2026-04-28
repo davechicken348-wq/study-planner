@@ -135,6 +135,8 @@ body {
     gap: 2rem;
     padding: 2rem;
     align-items: flex-start;
+    margin-left: 250px;
+    justify-content: center;
 }
 
 /* Planner Container */

@@ -1,641 +1,1525 @@
-/* Responsive Styles */
+/* ============================================================
+   RESPONSIVE.CSS — Study Planner
+   Mobile-first. Breakpoints:
+     xs:  < 360px   (tiny phones)
+     sm:  < 480px   (small phones)
+     md:  < 768px   (phones / phablets)
+     lg:  < 1024px  (tablets)
+     xl:  ≥ 1024px  (desktops — base styles live in style.css)
+   ============================================================ */
 
-/* ==========================================
-   MOBILE - Bottom Navigation & Stacked Layout
-   ========================================== */
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES — responsive tokens
+   ============================================================ */
+:root {
+    --sidebar-width: 250px;
+    --bottom-nav-height: 64px;
+    --page-padding: 2rem;
+    --card-radius: 12px;
+}
+
+@media (max-width: 1024px) {
+    :root { --sidebar-width: 200px; --page-padding: 1.5rem; }
+}
+
 @media (max-width: 768px) {
-    /* Sidebar becomes bottom navigation */
+    :root { --sidebar-width: 0px; --page-padding: 1rem; }
+}
+
+@media (max-width: 480px) {
+    :root { --page-padding: 0.75rem; }
+}
+
+/* ============================================================
+   2. TABLET  (≤ 1024px)
+   ============================================================ */
+ @media (max-width: 1024px) {
+
+    /* --- Sidebar --- */
+    .sidebar { width: var(--sidebar-width); }
+
+    /* --- Page layouts --- */
+    .main-content,
+    .page-body {
+        margin-left: var(--sidebar-width);
+        padding: var(--page-padding);
+    }
+
+    footer { margin-left: var(--sidebar-width); }
+
+    /* --- Planner: stack pomodoro below on tablet --- */
+    .page-body {
+        flex-wrap: wrap;
+        gap: 1.25rem;
+    }
+
+    .pomodoro-widget {
+        width: 100%;
+        position: static;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .pomodoro-card { flex: 1; }
+    .pomodoro-stats { flex: 0 0 140px; flex-direction: column; }
+
+    /* --- Timetable --- */
+    .timetable-container {
+        padding: var(--page-padding);
+    }
+
+    .timetable-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .timetable-header h2 { font-size: 1.4rem; }
+    .btn-add-class {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .time-slot, .time-header, .day-header { height: 55px; }
+    .time-label { font-size: 0.7rem; }
+
+    /* Timetable grid adjustments */
+    .timetable-grid {
+        grid-template-columns: 70px repeat(5, minmax(100px, 1fr));
+    }
+
+    .time-column {
+        width: 70px;
+        min-width: 70px;
+    }
+
+    .day-header {
+        font-size: 0.9rem;
+        padding: 0 0.5rem;
+    }
+
+    .class-card {
+        padding: 0.4rem;
+    }
+
+    .class-subject {
+        font-size: 0.85rem;
+    }
+
+    .class-room, .class-time {
+        font-size: 0.7rem;
+    }
+
+     /* --- Calendar --- */
+     .calendar-container {
+         padding: var(--page-padding);
+         border-radius: var(--card-radius);
+         margin: 0 auto;
+         align-self: center;
+         width: 100%;
+         max-width: 1200px;
+     }
+
+     /* --- Timetable --- */
+     .timetable-container {
+         padding: var(--page-padding);
+         border-radius: var(--card-radius);
+         margin: 0 auto;
+         align-self: center;
+         width: 100%;
+         max-width: 1200px;
+     }
+
+    .calendar-header {
+        gap: 1rem;
+    }
+
+    .calendar-nav h2 {
+        font-size: 1.5rem;
+    }
+
+    .calendar-day {
+        min-height: 100px;
+    }
+
+    .day-event {
+        font-size: 0.65rem;
+    }
+
+    /* --- Hero (index.html) Tablet --- */
+    .container { padding: 1.5rem; }
+    .hero {
+        padding: 2.5rem 2rem;
+        max-width: 600px;
+    }
+    .hero-icon i.ph { font-size: 3.5rem; }
+    .hero-title   { font-size: 2.75rem; }
+    .hero-heading { font-size: 1.875rem; }
+    .hero-text    { font-size: 1.1rem; }
+    .hero-hint    { font-size: 1rem; }
+    .btn-primary  { padding: 1rem 2.25rem; font-size: 1.1rem; }
+    .features     { gap: 1rem; }
+    .feature-item { min-width: 130px; padding: 1rem 1.25rem; }
+    .feature-item i.ph { font-size: 1.65rem; }
+    .feature-item span { font-size: 0.9rem; }
+}
+
+/* ============================================================
+    3. MOBILE  (≤ 768px)
+    ============================================================ */
+@media (max-width: 768px) {
+
+    /* --- Sidebar → bottom navigation bar --- */
     .sidebar {
         width: 100%;
-        height: auto;
+        height: var(--bottom-nav-height);
         position: fixed;
         bottom: 0;
         top: auto;
         left: 0;
         flex-direction: row;
-        justify-content: space-around;
-        padding: 0.5rem 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.15);
-        background: linear-gradient(180deg, var(--green-800) 0%, var(--green-900) 100%);
+        padding: 0;
+        border-top: 1px solid rgba(255,255,255,0.12);
+        z-index: 200;
     }
 
-    .logo {
-        display: none;
+    .logo { display: none; }
+
+    .sidebar-nav {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        padding: 0 1rem;
+        gap: 0.5rem;
     }
+
+    .nav-link {
+        flex: 0 1 auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.2rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.7rem;
+        border-radius: 0;
+        text-align: center;
+    }
+
+    .nav-link i.ph { font-size: 1.4rem; width: auto; height: auto; }
+
+    .nav-link.active {
+        background: rgba(255,255,255,0.15);
+        border-top: 2px solid var(--green-400);
+    }
+
+    /* --- Page layouts --- */
+    .main-content,
+    .page-body {
+        margin-left: 0;
+        padding: var(--page-padding);
+        padding-bottom: calc(var(--bottom-nav-height) + 1rem);
+        flex-direction: column;
+    }
+
+    footer {
+        margin-left: 0;
+        margin-bottom: var(--bottom-nav-height);
+    }
+
+    /* --- Calendar --- */
+    .calendar-container {
+        padding: var(--page-padding);
+        border-radius: var(--card-radius);
+        margin: 0 auto;
+        align-self: center;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    /* --- Timetable --- */
+    .timetable-container {
+        padding: var(--page-padding);
+        border-radius: var(--card-radius);
+        margin: 0 auto;
+        align-self: center;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    .logo { display: none; }
 
     .sidebar-nav {
         flex-direction: row;
         width: 100%;
         justify-content: space-around;
-        padding: 0 1rem;
+        align-items: center;
+        padding: 0;
         gap: 0;
     }
 
     .nav-link {
+        flex: 1;
         flex-direction: column;
-        gap: 0.25rem;
-        padding: 0.5rem;
-        font-size: 0.75rem;
+        align-items: center;
+        justify-content: center;
+        gap: 0.2rem;
+        padding: 0.5rem 0.25rem;
+        font-size: 0.7rem;
+        border-radius: 0;
         text-align: center;
     }
 
+    .nav-link i.ph { font-size: 1.4rem; width: auto; height: auto; }
+
     .nav-link.active {
-        background: linear-gradient(135deg, var(--green-500) 0%, var(--green-400) 100%);
+        background: rgba(255,255,255,0.15);
+        border-top: 2px solid var(--green-400);
     }
 
-    .nav-icon {
-        font-size: 1.5rem;
-        width: auto;
-    }
-
-    .main-content {
-        flex-direction: column;
+    /* --- Page layouts --- */
+    .main-content,
+    .page-body {
         margin-left: 0;
-        margin-bottom: 80px; /* Space for bottom nav */
-        padding: 1rem;
-        gap: 1rem;
+        padding: var(--page-padding);
+        padding-bottom: calc(var(--bottom-nav-height) + 1rem);
+        flex-direction: column;
     }
 
     footer {
         margin-left: 0;
-        margin-bottom: 80px; /* Space for bottom nav */
+        margin-bottom: var(--bottom-nav-height);
     }
 
-    /* Hero adjustments */
-    .hero {
-        padding: 2rem 1rem;
+    /* --- Planner layout --- */
+    .planner-main { gap: 0.875rem; }
+
+    .planner-container { padding: 1.25rem; border-radius: var(--card-radius); }
+    .planner-container h2 { font-size: 1.3rem; text-align: left; }
+
+    /* Task form: 2-col grid on mobile */
+    .task-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem;
     }
 
-    .hero h2 {
-        font-size: 1.8rem;
+    .task-form .input-title  { grid-column: 1 / -1; }
+    .task-form .input-course { grid-column: 1 / -1; }
+    .task-form button        { grid-column: 1 / -1; }
+
+    .task-form input,
+    .task-form select,
+    .task-form button {
+        padding: 0.7rem 0.875rem;
+        font-size: 0.9rem;
     }
 
-    .hero-title {
-        font-size: 2.25rem;
+    /* Quick filters */
+    .quick-filters {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.625rem;
     }
 
-    .hero-heading {
-        font-size: 1.5rem;
+    .search-box { min-width: 0; }
+
+    .category-filters { justify-content: flex-start; flex-wrap: wrap; }
+    .category-filter  { font-size: 0.78rem; padding: 0.35rem 0.75rem; }
+
+    /* Bulk actions */
+    .bulk-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
     }
 
-    .hero-text {
+    .bulk-actions #selectAllBtn        { grid-column: 1; }
+    .bulk-actions #completeSelectedBtn { grid-column: 2; }
+    .bulk-actions #deleteSelectedBtn   { grid-column: 1; }
+    .bulk-actions .selected-count      { grid-column: 2; text-align: right; margin-left: 0; align-self: center; }
+
+    /* Data actions */
+    .data-actions { gap: 0.5rem; }
+    .data-actions .btn-secondary { flex: 1; justify-content: center; }
+
+    /* Task items */
+    .task-item {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding: 0.875rem 1rem;
+    }
+
+    .task-info { flex-basis: calc(100% - 34px); }
+
+    .task-meta { gap: 0.35rem; }
+
+    .task-actions {
+        flex-basis: 100%;
+        justify-content: flex-end;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--nature-100);
+        gap: 0.5rem;
+    }
+
+    .task-actions button { flex: 1; text-align: center; }
+
+    /* Pomodoro on mobile: horizontal card */
+    .pomodoro-widget {
+        width: 100%;
+        position: static;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .pomodoro-card { padding: 1.25rem; }
+
+    .pomodoro-controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .pomodoro-btn { padding: 0.6rem 0.25rem; font-size: 0.82rem; }
+
+    .pomodoro-stats { flex-direction: row; }
+    .stat-item { flex: 1; }
+
+    /* --- Timetable --- */
+    .timetable-container { padding: var(--page-padding); }
+
+    .timetable-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .timetable-header h2 { font-size: 1.2rem; text-align: center; }
+    .btn-add-class { width: 100%; justify-content: center; }
+
+    /* Mobile: remove wrapper scroll — cards stack naturally */
+    .timetable-wrapper {
+        overflow: visible;
+        border: none;
+        border-radius: 0;
+    }
+
+    /* Legend */
+    .legend {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .legend-item {
+        font-size: 0.75rem;
+    }
+
+    /* Add Class Modal */
+    .modal-overlay {
+        padding: 0.5rem;
+    }
+
+    .modal-content {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    .modal-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .modal-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+     .calendar-container {
+         padding: var(--page-padding);
+         border-radius: var(--card-radius);
+         margin: 0 auto;
+         align-self: center;
+         width: 100%;
+         max-width: 1200px;
+     }
+
+    .calendar-header {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+    }
+
+    .calendar-nav { 
+        justify-content: center; 
+        width: 100%;
+    }
+
+    .calendar-nav h2 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+
+    .calendar-actions { 
+        display: flex; 
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .calendar-actions .btn-secondary,
+    .calendar-actions .btn-primary { 
+        flex: 1; 
+        justify-content: center; 
+        text-align: center;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .calendar-grid {
+        border-radius: 8px;
+    }
+
+    .calendar-weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+    .weekday {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.7rem;
+    }
+
+    .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 1px;
+    }
+
+    .calendar-day { 
+        min-height: 70px; 
+        padding: 0.35rem;
+        font-size: 0.8rem;
+    }
+
+    .day-number {
+        font-size: 0.85rem;
+    }
+
+    .day-events {
+        gap: 1px;
+    }
+
+    .day-event {
+        font-size: 0.6rem;
+        padding: 1px 3px;
+        border-radius: 2px;
+    }
+
+    .calendar-day.has-event::before {
+        top: 4px;
+        right: 4px;
+        width: 5px;
+        height: 5px;
+    }
+
+    .calendar-day.today .day-number {
+        width: 24px;
+        height: 24px;
+        font-size: 0.75rem;
+    }
+
+    /* Today's Events Mobile Improvements */
+    .todays-events {
+        margin-top: 0.75rem;
+        padding: 1rem;
+    }
+
+    .todays-events h3 {
+        font-size: 0.95rem;
+        margin-bottom: 0.625rem;
+    }
+
+    .today-event-item {
+        padding: 0.65rem;
+        gap: 0.5rem;
+        border-radius: 8px;
+    }
+
+    .today-event-item .event-category {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.4rem;
+    }
+
+    .today-event-item .event-title {
+        font-size: 0.85rem;
+    }
+
+    .today-event-item .event-time {
+        font-size: 0.75rem;
+    }
+
+    /* Calendar Modal Mobile Improvements */
+    .modal-content {
+        margin: 0.75rem;
+        max-height: 88vh;
+        border-radius: var(--card-radius);
+    }
+
+    .modal-body {
+        padding: 0 1rem 1rem;
+    }
+
+    .event-detail-item {
+        padding: 0.75rem;
+        border-left-width: 3px;
+    }
+
+    .event-detail-item h4 {
+        font-size: 0.95rem;
+    }
+
+    .event-category-badge {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.6rem;
+    }
+
+    .event-actions {
+        margin-top: 0.5rem;
+        gap: 0.35rem;
+    }
+
+    .event-actions button {
+        padding: 0.45rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .no-events-detailed {
+        padding: 1.5rem 1rem;
+    }
+
+    .no-events-detailed i.ph {
+        font-size: 2.5rem;
+    }
+
+    .no-events-detailed p {
+        font-size: 0.9rem;
+    }
+
+    .btn-cancel, .btn-save,
+    .modal-actions .btn-secondary,
+    .modal-actions .btn-primary {
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* Calendar Modal */
+    .modal-overlay {
+        padding: 0.5rem;
+    }
+
+    .modal-content {
+        padding: 1rem;
+    }
+
+    .modal-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .modal-header h3 {
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
+    .modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.875rem;
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0.875rem;
+    }
+
+    .modal-actions {
+        flex-direction: row;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .modal-actions button {
+        flex: 1;
+        padding: 0.6rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .todays-events { 
+        margin-top: 1rem; 
+        padding: 1rem;
+    }
+
+    .todays-events h3 {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .event-item {
+        padding: 0.625rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .modals ---
+    .modal-content,
+    .modal-overlay .modal-content { margin: 0.75rem; max-height: 88vh; }
+
+    .form-row { flex-direction: column; gap: 0; }
+
+    .modal-actions { flex-direction: row; gap: 0.5rem; }
+    .btn-cancel, .btn-save,
+    .modal-actions .btn-secondary,
+    .modal-actions .btn-primary { flex: 1; text-align: center; justify-content: center; }
+
+    /* Event Details Modal - Tablet */
+    .event-detail-item {
+        padding: 0.85rem;
+    }
+
+    .event-detail-item h4 {
         font-size: 1rem;
     }
 
-    .hero-hint {
-        font-size: 0.875rem;
+    .event-actions button {
+        padding: 0.45rem 0.6rem;
+        font-size: 0.75rem;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .hero-icon i.ph {
-        font-size: 3rem;
-    }
+    /* --- Hero (index.html) --- */
+    .container { padding: 1.5rem; }
+    .hero { padding: 2rem 1.5rem; }
+    .hero h2 { font-size: 1.75rem; }
+    .hero-title   { font-size: 2.25rem; }
+    .hero-heading { font-size: 1.5rem; }
+    .hero-text    { font-size: 1rem; }
+    .hero-hint    { font-size: 0.875rem; }
+    .hero-icon i.ph { font-size: 3rem; }
 
     .btn-primary {
         padding: 0.875rem 2rem;
         font-size: 1rem;
     }
 
-    .hero-sub-link {
-        font-size: 0.9rem;
-    }
+    .features { gap: 0.875rem; }
+    .feature-item { min-width: 120px; padding: 0.875rem 1rem; }
+    .feature-item i.ph { font-size: 1.5rem; }
+    .feature-item span { font-size: 0.85rem; }
+}
 
-    .features {
-        gap: 1rem;
-        margin-top: 2rem;
-    }
+/* ============================================================
+   4. SMALL MOBILE  (≤ 480px)
+   ============================================================ */
+@media (max-width: 480px) {
 
-    .feature-item {
-        min-width: 120px;
-        padding: 0.875rem 1rem;
-    }
+    /* Nav: icons only */
+    .nav-link span:not(.nav-icon) { display: none; }
+    .nav-link { padding: 0.6rem 0; }
+    .nav-link i.ph { font-size: 1.5rem; }
 
-    .feature-item i.ph {
-        font-size: 1.5rem;
-    }
-
-    .feature-item span {
-        font-size: 0.85rem;
-    }
-
-    /* Planner form adjustments */
+    /* Task form: single column */
     .task-form {
-        flex-direction: column;
-        gap: 0.75rem;
+        grid-template-columns: 1fr;
     }
 
-    .task-form input,
-    .task-form select,
-    .task-form button {
-        width: 100%;
-        min-width: 100%;
+    .task-form .input-category,
+    .task-form .input-priority,
+    .task-form .input-date { grid-column: 1 / -1; }
+
+    /* Bulk actions: single column */
+    .bulk-actions {
+        grid-template-columns: 1fr;
     }
 
-    .task-form .input-title {
-        flex: none;
+    .bulk-actions #selectAllBtn,
+    .bulk-actions #completeSelectedBtn,
+    .bulk-actions #deleteSelectedBtn { grid-column: 1; }
+    .bulk-actions .selected-count    { grid-column: 1; text-align: left; }
+
+    /* Planner container */
+    .planner-container { padding: 1rem; }
+    .planner-container h2 { font-size: 1.2rem; }
+
+    /* Task items */
+    .task-title  { font-size: 0.95rem; }
+    .task-meta   { font-size: 0.75rem; }
+    .task-course { font-size: 0.72rem; }
+
+    /* Pomodoro */
+    .pomodoro-timer { font-size: 2.75rem; }
+    .pomodoro-controls { grid-template-columns: 1fr 1fr 1fr; }
+
+    /* Timetable */
+    .timetable-container {
+        padding: var(--page-padding);
     }
 
-    .task-form .input-course {
-        flex: none;
+    .timetable-header h2 {
+        font-size: 1.1rem;
     }
 
-    .task-form .input-date {
-        flex: none;
-    }
-
-    .task-form .input-priority {
-        width: 100%;
-    }
-
-    /* Task item adjustments */
-    .task-item {
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: left;
-        padding: 1rem;
-    }
-
-    .task-checkbox {
-        order: -1;
-        align-self: flex-start;
-    }
-
-    .task-actions {
-        align-self: stretch;
-        display: flex;
-        justify-content: flex-end;
-        padding-top: 0;
-    }
-
-    .task-meta {
-        flex-direction: column;
-        gap: 0.25rem;
-    }
-
-    /* Filter buttons */
-    .filters {
-        gap: 0.5rem;
-    }
-
-    .filter-btn {
+    .btn-add-class {
         padding: 0.5rem 1rem;
         font-size: 0.85rem;
     }
 
-    /* Planner container */
-    
-    .planner-container h2 {
-        font-size: 1.35rem;
-        margin-bottom: 1rem;
-    }
-    
-    .task-form {
-        grid-template-columns: 1fr;
-        padding: 1rem;
-        gap: 0.6rem;
-    }
-    
-    .task-form input,
-    .task-form select,
-    .task-form button {
-        padding: 0.7rem 0.9rem;
-        font-size: 0.9rem;
-    }
-    
-    .task-form .input-category,
-    .task-form .input-priority {
-        background-position: right 0.6rem center;
-        padding-right: 2rem;
-    }
-    
-    .quick-filters {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0.875rem;
-        gap: 0.75rem;
-    }
-    
-    .search-box {
-        min-width: auto;
-    }
-    
-    .category-filters {
-        justify-content: center;
-    }
-    
-    .category-filter {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.75rem;
-    }
-    
-    .bulk-actions {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0.875rem;
-    }
-    
-    .bulk-actions .btn-secondary {
-        width: 100%;
-        text-align: center;
-    }
-    
-    .selected-count {
-        margin-left: 0;
-        text-align: center;
-        margin-top: 0.5rem;
-    }
-    
-    .data-actions {
-        flex-direction: column;
-    }
-    
-    .data-actions .btn-secondary {
-        width: 100%;
-        text-align: center;
-    }
-    
-    .task-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
-        padding: 1rem 1.25rem;
-    }
-    
-    .task-item::before {
-        width: 3px;
-    }
-    
-    .task-checkbox {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-    }
-    
-    .task-info {
-        width: 100%;
-    }
-    
-    .task-meta {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.35rem;
-    }
-    
-    .task-actions {
-        align-self: stretch;
-        justify-content: flex-end;
-        padding-top: 0.5rem;
-        border-top: 1px solid var(--nature-100);
-        margin-top: 0.5rem;
-    }
-    
-    .task-actions button {
-        flex: 1;
-    }
-    
- {
-        padding: 1.5rem;
+    .timetable-wrapper {
+        margin: 0 calc(-1 * var(--page-padding));
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
     }
 
-    /* Pomodoro widget on mobile */
-    .pomodoro-widget {
-        width: 100%;
-        margin-left: 0;
-        margin-top: 2rem;
-        min-height: auto;
-        height: auto;
-        position: static;
-        padding: 0 1rem 2rem;
+    .timetable-grid {
+        grid-template-columns: 55px repeat(5, minmax(80px, 1fr));
+        min-width: 475px;
     }
-    
-    .pomodoro-card {
-        padding: 1.25rem;
-    }
-    
-    .pomodoro-timer {
-        font-size: 2.75rem;
-    }
-    
-    .pomodoro-controls {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-    
-    .pomodoro-btn {
-        flex: 1;
-        min-width: 0;
-    }
-    
-    .pomodoro-stats {
-        flex-direction: row;
-    }
-    
-    .stat-item {
-        flex: 1;
-    }
-}
 
-/* ==========================================
-   SMALL MOBILE - Icons Only
-   ========================================== */
-@media (max-width: 480px) {
-    .sidebar-nav .nav-link span:not(.nav-icon) {
+    .time-column {
+        width: 55px;
+        min-width: 55px;
+    }
+
+    .time-header { 
+        height: 45px;
+        font-size: 0.7rem;
+    }
+
+    .time-slot { 
+        height: 45px; 
+    }
+
+    .day-header { 
+        height: 45px;
+        font-size: 0.65rem; 
+        padding: 0 0.2rem;
+    }
+
+    .time-label { 
         display: none;
     }
 
-    .nav-link {
-        padding: 0.75rem;
+    .class-card { 
+        padding: 0.2rem;
+        margin: 1px;
     }
 
-    .nav-icon {
-        font-size: 1.75rem;
-    }
-
-    .main-content {
-        padding: 0.75rem;
-    }
-
-    footer {
-        font-size: 0.85rem;
-        padding: 0.75rem;
-    }
-
-    .hero h2 {
-        font-size: 1.5rem;
-    }
-
-    .hero p {
-        font-size: 1rem;
-    }
-
-    .planner-container h2 {
-        font-size: 1.5rem;
-    }
-
-    /* Task form on very small screens */
-    .task-form .input-priority {
-        padding-right: 12px;
-        font-size: 0.9rem;
-    }
-
-    .task-form button {
-        padding: 0.75rem 1rem;
-        font-size: 0.95rem;
-    }
-
-    .task-item {
-        padding: 0.875rem;
-    }
-
-    .task-title {
-        font-size: 1.05rem;
-    }
-
-    .task-course {
-        font-size: 0.75rem;
-        padding: 0.2rem 0.4rem;
-    }
-
-    .filter-btn {
-        padding: 0.5rem 0.875rem;
-        font-size: 0.8rem;
-    }
-
-    footer {
-        font-size: 0.85rem;
-        padding: 0.75rem;
-    }
-
-    .hero h2 {
-        font-size: 1.5rem;
-    }
-
-    .hero p {
-        font-size: 1rem;
-    }
-
-    .hero-title {
-        font-size: 1.875rem;
-    }
-
-    .hero-heading {
-        font-size: 1.25rem;
-    }
-
-    .hero-text {
-        font-size: 0.95rem;
-        padding: 0 0.5rem;
-    }
-
-    .hero-hint {
-        font-size: 0.85rem;
-    }
-
-    .hero-icon i.ph {
-        font-size: 2.5rem;
-    }
-
-    .btn-primary {
-        padding: 0.75rem 1.5rem;
-        font-size: 0.95rem;
-        min-width: 180px;
-    }
-
-    .hero-sub-link {
-        font-size: 0.85rem;
-    }
-
-    .feature-item {
-        min-width: 100px;
-        padding: 0.75rem;
-    }
-
-    .feature-item i.ph {
-        font-size: 1.25rem;
-    }
-
-    .feature-item span {
-        font-size: 0.8rem;
-    }
-
-    .task-meta {
-        font-size: 0.8rem;
-    }
-}
-
-/* ==========================================
-   TABLET - Adjust sidebar width
-   ========================================== */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .sidebar {
-        width: 200px;
-    }
-
-    .main-content {
-        margin-left: 200px;
-    }
-
-    footer {
-        margin-left: 200px;
-    }
-}
-
-/* ==========================================
-   REDUCED MOTION - Accessible animations
-   ========================================== */
-@media (prefers-reduced-motion: no-preference) {
-    .task-item {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .nav-link {
-        transition: all 0.2s ease;
-    }
-    
-    .btn {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-}
-
-/* ==========================================
-   TIMETABLE RESPONSIVE
-   ========================================== */
-
-/* Tablet - moderate screen */
-@media (max-width: 1024px) {
-    .timetable-container {
-        padding: 1.5rem;
-    }
-
-    .timetable-header h2 {
-        font-size: 1.5rem;
-    }
-
-    .btn-add-class {
-        padding: 0.625rem 1.25rem;
-        font-size: 0.9rem;
-    }
-
-    .time-slot {
-        height: 55px;
-    }
-
-    .time-header,
-    .day-header {
-        height: 55px;
-    }
-
-    .time-label {
-        font-size: 0.7rem;
-    }
-}
-
-/* Mobile - small screens */
-@media (max-width: 768px) {
-    .timetable-container {
-        padding: 1rem;
-    }
-
-    .timetable-header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
-    }
-
-    .timetable-header h2 {
-        font-size: 1.25rem;
-        text-align: center;
-    }
-
-    .btn-add-class {
-        width: 100%;
-        justify-content: center;
-    }
-
-    /* Make time column sticky */
-    .time-column {
-        position: sticky;
-        left: 0;
-        z-index: 5;
-    }
-
-    .day-header {
-        font-size: 0.85rem;
-        padding: 0 0.5rem;
-    }
-
-    .time-label {
-        font-size: 0.65rem;
-    }
-
-    .class-card {
-        padding: 0.375rem;
-    }
-
-    .class-subject {
-        font-size: 0.8rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .class-subject { 
+        font-size: 0.65rem; 
     }
 
     .class-room,
-    .class-time {
-        font-size: 0.65rem;
+    .class-time { 
+        font-size: 0.55rem; 
     }
 
     .class-actions {
-        opacity: 1; /* Always show on mobile */
-        position: absolute;
-        top: 0.25rem;
-        right: 0.25rem;
+        top: 0.1rem;
+        right: 0.1rem;
     }
 
-    .class-actions button {
-        padding: 0.2rem 0.4rem;
-        font-size: 0.75rem;
-    }
-}
-
-/* Small mobile */
-@media (max-width: 480px) {
-    .timetable-wrapper {
-        margin: 0 -1rem;
-        border-left: none;
-        border-right: none;
-        border-radius: 0;
+    .class-actions button { 
+        padding: 0.1rem 0.2rem; 
+        font-size: 0.6rem;
+        min-width: 18px;
+        min-height: 18px;
     }
 
-    .time-slot {
-        height: 50px;
+    /* Legend */
+    .legend {
+        gap: 0.4rem;
     }
 
-    .time-header,
-    .day-header {
-        height: 50px;
+    .legend-item {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .legend-color {
+        width: 10px;
+        height: 10px;
+    }
+
+     /* Calendar */
+     .calendar-container {
+         padding: 0.75rem;
+         margin: 0 auto;
+         align-self: center;
+         width: 100%;
+         max-width: 1200px;
+         border-radius: 0;
+     }
+
+     /* Timetable */
+     .timetable-container {
+         padding: 0.75rem;
+         margin: 0 auto;
+         align-self: center;
+         width: 100%;
+         max-width: 1200px;
+         border-radius: 0;
+     }
+
+    .calendar-header {
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .calendar-nav h2 {
+        font-size: 1.1rem;
+    }
+
+    .nav-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+
+    /* Add Class Modal */
+    .modal-content {
+        padding: 0.75rem;
+        margin: 0.5rem;
+        max-height: 92vh;
+    }
+
+    .modal-header h3 {
+        font-size: 1rem;
+    }
+
+    .form-group label {
         font-size: 0.8rem;
     }
 
-    .time-label {
-        display: none; /* Hide time labels on very small screens */
+    .form-group input,
+    .form-group select {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.85rem;
     }
 
+    .modal-actions button {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.8rem;
+    }
+
+    .todays-events {
+        padding: 0.75rem;
+    }
+
+    .todays-events h3 {
+        font-size: 0.9rem;
+    }
+
+    .event-item {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.8rem;
+    }
+
+    /* Event Details Modal */
     .modal-content {
-        margin: 1rem;
-        max-height: 85vh;
+        padding: 0.75rem;
     }
 
-    .form-row {
+    .modal-header h3 {
+        font-size: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.75rem;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.85rem;
+    }
+
+    .modal-actions button {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.8rem;
+    }
+
+    /* Mobile Event Details */
+    .event-detail-item {
+        padding: 0.6rem;
+        border-left-width: 3px;
+    }
+
+    .event-detail-item h4 {
+        font-size: 0.9rem;
+    }
+
+    .event-meta-row {
+        gap: 0.4rem;
         flex-direction: column;
-        gap: 0;
+        align-items: flex-start;
     }
 
-    .modal-actions {
-        flex-direction: column;
+    .event-category-badge {
+        font-size: 0.6rem;
+        padding: 0.15rem 0.5rem;
     }
 
-    .btn-cancel,
-    .btn-save {
+    .event-actions {
+        margin-top: 0.5rem;
+        gap: 0.25rem;
+    }
+
+    .event-actions button {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.7rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .no-events-detailed {
+        padding: 1.25rem 0.75rem;
+    }
+
+    .no-events-detailed i.ph {
+        font-size: 2.25rem;
+    }
+
+    .no-events-detailed p {
+        font-size: 0.85rem;
+    }
+
+    .no-events-detailed .btn-primary {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
         width: 100%;
+    }
+
+    .modal-actions .btn-primary {
+        width: 100%;
+    }
+
+    .event-detail-item h4 {
+        font-size: 0.9rem;
+    }
+
+    .event-meta-row {
+        gap: 0.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .event-category-badge {
+        font-size: 0.6rem;
+        padding: 0.15rem 0.5rem;
+    }
+
+    .event-actions {
+        margin-top: 0.5rem;
+        gap: 0.25rem;
+    }
+
+    .event-actions button {
+        padding: 0.4rem 0.45rem;
+        font-size: 0.7rem;
+    }
+
+    .no-events-detailed {
+        padding: 1.25rem 0.75rem;
+    }
+
+    .no-events-detailed i.ph {
+        font-size: 2.25rem;
+    }
+
+    .no-events-detailed p {
+        font-size: 0.85rem;
+    }
+
+    .no-events-detailed .btn-primary {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .calendar-weekdays {
+        gap: 1px;
+    }
+
+    .weekday {
+        padding: 0.4rem 0.2rem;
+        font-size: 0.6rem;
+    }
+
+    .calendar-days {
+        gap: 1px;
+    }
+
+    .calendar-day { 
+        min-height: 55px; 
+        padding: 0.25rem;
+        font-size: 0.7rem;
+    }
+
+    .day-number {
+        font-size: 0.75rem;
+    }
+
+    .day-events {
+        display: none;
+    }
+
+    .calendar-day.has-event::before {
+        top: 3px;
+        right: 3px;
+        width: 4px;
+        height: 4px;
+    }
+
+    .calendar-day.today .day-number {
+        width: 22px;
+        height: 22px;
+        font-size: 0.7rem;
+    }
+
+    /* Calendar Modal */
+    .modal-content {
+        padding: 0.875rem;
+    }
+
+    .modal-header h3 {
+        font-size: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.75rem;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.85rem;
+    }
+
+    .modal-actions button {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.8rem;
+    }
+
+    .todays-events {
+        padding: 0.75rem;
+    }
+
+    .todays-events h3 {
+        font-size: 0.9rem;
+    }
+
+    .event-item {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.8rem;
+    }
+
+    /* Hero */
+    /* --- Hero (index.html) --- */
+    .container { padding: 1rem; align-items: center; }
+
+    .hero {
+        padding: 1.75rem 1.25rem;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .hero-icon { margin-bottom: 1rem; }
+    .hero-icon i.ph { font-size: 2.5rem; }
+
+    .hero-title   { font-size: 1.875rem; }
+    .hero-heading { font-size: 1.25rem; margin-bottom: 0.75rem; }
+    .hero-text    { font-size: 0.95rem; margin-bottom: 0.375rem; }
+    .hero-hint    { font-size: 0.85rem; margin-bottom: 1.25rem; }
+
+    .hero-cta { gap: 0.75rem; margin-bottom: 1.75rem; }
+    .btn-primary { padding: 0.75rem 1.5rem; font-size: 0.95rem; min-width: 160px; }
+
+    .features { gap: 0.625rem; }
+    .feature-item { min-width: 100px; padding: 0.75rem; }
+    .feature-item i.ph { font-size: 1.25rem; }
+    .feature-item span { font-size: 0.78rem; }
+
+    /* Modals */
+    .modal-content,
+    .modal-overlay .modal-content { margin: 0.5rem; max-height: 92vh; }
+}
+
+/* ============================================================
+   5. TINY PHONES  (≤ 360px)
+   ============================================================ */
+@media (max-width: 360px) {
+
+    :root { --page-padding: 0.625rem; }
+
+    .planner-container { padding: 0.875rem; }
+    .task-form input,
+    .task-form select,
+    .task-form button { padding: 0.6rem 0.75rem; font-size: 0.85rem; }
+
+    .pomodoro-timer { font-size: 2.4rem; }
+    .stat-value     { font-size: 1.4rem; }
+
+     /* Calendar */
+     .calendar-container {
+         padding: 0.5rem;
+         margin: 0 auto;
+         align-self: center;
+         width: 100%;
+         max-width: 1200px;
+     }
+
+     /* Timetable */
+     .timetable-container {
+         padding: 0.5rem;
+         margin: 0 auto;
+         align-self: center;
+         width: 100%;
+         max-width: 1200px;
+     }
+
+    .calendar-header {
+        gap: 0.4rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .calendar-nav h2 {
+        font-size: 1rem;
+    }
+
+    .nav-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    .calendar-actions .btn-secondary,
+    .calendar-actions .btn-primary {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .weekday {
+        padding: 0.3rem 0.15rem;
+        font-size: 0.55rem;
+    }
+
+    .calendar-day { 
+        min-height: 45px; 
+        padding: 0.2rem;
+        font-size: 0.65rem;
+    }
+
+    .day-number {
+        font-size: 0.7rem;
+    }
+
+    .calendar-day.has-event::before {
+        top: 2px;
+        right: 2px;
+        width: 3px;
+        height: 3px;
+    }
+
+    .calendar-day.today .day-number {
+        width: 20px;
+        height: 20px;
+        font-size: 0.65rem;
+    }
+
+    /* Calendar Modal */
+    .modal-content {
+        padding: 0.75rem;
+    }
+
+    .modal-header h3 {
+        font-size: 0.95rem;
+    }
+
+    .modal-close {
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.625rem;
+    }
+
+    .form-group label {
+        font-size: 0.75rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.45rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .modal-actions button {
+        padding: 0.45rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .todays-events {
+        padding: 0.5rem;
+    }
+
+    .todays-events h3 {
+        font-size: 0.85rem;
+    }
+
+    .event-item {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    /* --- Hero (index.html) --- */
+    .container { padding: 0.75rem; }
+
+    .hero { padding: 1.5rem 1rem; }
+
+    .hero-icon i.ph { font-size: 2.25rem; }
+    .hero-title   { font-size: 1.625rem; }
+    .hero-heading { font-size: 1.1rem; }
+    .hero-text    { font-size: 0.9rem; }
+    .hero-hint    { font-size: 0.8rem; }
+
+    .btn-primary  { min-width: 140px; font-size: 0.9rem; }
+
+    .features { gap: 0.5rem; }
+    .feature-item { min-width: 88px; padding: 0.625rem 0.75rem; }
+    .feature-item i.ph { font-size: 1.1rem; }
+    .feature-item span { font-size: 0.72rem; }
+
+    .category-filter { font-size: 0.72rem; padding: 0.3rem 0.6rem; }
+
+     /* Timetable */
+     .timetable-container {
+         padding: 0.5rem;
+         margin: 0 auto;
+         align-self: center;
+         width: 100%;
+         max-width: 1200px;
+     }
+
+    .timetable-header h2 {
+        font-size: 1rem;
+    }
+
+    .btn-add-class {
+        padding: 0.45rem 0.875rem;
+        font-size: 0.8rem;
+    }
+
+    .timetable-grid {
+        grid-template-columns: 50px repeat(5, minmax(70px, 1fr));
+        min-width: 400px;
+    }
+
+    .time-column {
+        width: 50px;
+        min-width: 50px;
+    }
+
+    .time-header { 
+        height: 40px;
+        font-size: 0.65rem;
+    }
+
+    .time-slot { 
+        height: 40px; 
+    }
+
+    .day-header { 
+        height: 40px;
+        font-size: 0.6rem; 
+        padding: 0 0.15rem;
+    }
+
+    .class-card { 
+        padding: 0.15rem;
+        margin: 1px;
+    }
+
+    .class-subject { 
+        font-size: 0.6rem; 
+    }
+
+    .class-room,
+    .class-time { 
+        font-size: 0.5rem; 
+    }
+
+     .class-actions button { 
+         padding: 0.1rem 0.15rem; 
+         font-size: 0.55rem;
+         min-width: 16px;
+         min-height: 16px;
+     }
+
+     /* Event Details Modal - Small Mobile */
+     .event-detail-item {
+         padding: 0.6rem 0.75rem;
+         border-left-width: 3px;
+     }
+
+     .event-detail-item h4 {
+         font-size: 0.9rem;
+         margin-bottom: 0.2rem;
+     }
+
+     .event-meta-row {
+         gap: 0.4rem;
+         flex-direction: column;
+         align-items: flex-start;
+     }
+
+     .event-category-badge {
+         font-size: 0.6rem;
+         padding: 0.15rem 0.45rem;
+     }
+
+     .event-actions {
+         margin-top: 0.5rem;
+         gap: 0.25rem;
+     }
+
+     .event-actions button {
+         padding: 0.4rem 0.5rem;
+         font-size: 0.7rem;
+     }
+
+     .no-events-detailed {
+         padding: 1.25rem 0.75rem;
+     }
+
+     .no-events-detailed i.ph {
+         font-size: 2.25rem;
+     }
+
+     .no-events-detailed p {
+         font-size: 0.85rem;
+     }
+
+     .no-events-detailed .btn-primary {
+         padding: 0.6rem 1rem;
+         font-size: 0.85rem;
+     }
+
+    /* Legend */
+    .legend {
+        gap: 0.3rem;
+    }
+
+    .legend-item {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.4rem;
+    }
+
+    .legend-color {
+        width: 8px;
+        height: 8px;
+    }
+
+    /* Add Class Modal */
+    .modal-content {
+        padding: 0.75rem;
+    }
+
+    .modal-header h3 {
+        font-size: 1rem;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .modal-actions button {
+        padding: 0.4rem 0.45rem;
+        font-size: 0.8rem;
     }
 }
 
+/* ============================================================
+   6. ACCESSIBILITY — reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================================
+   7. PRINT
+   ============================================================ */
+@media print {
+    .sidebar, .pomodoro-widget, .data-actions,
+    .bulk-actions, .quick-filters { display: none !important; }
+
+    .main-content, .page-body {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+
+    .task-item { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+}

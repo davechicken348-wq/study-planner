@@ -43,11 +43,6 @@ class Calendar {
 
         document.getElementById('eventForm').addEventListener('submit', (e) => this.saveEvent(e));
         document.getElementById('cancelEvent').addEventListener('click', () => this.closeModal());
-        
-        document.getElementById('deleteEvent').addEventListener('click', () => this.deleteCurrentEvent());
-        document.getElementById('editEvent').addEventListener('click', () => this.editCurrentEvent());
-
-        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.closeModal();
@@ -210,10 +205,9 @@ class Calendar {
         
         if (dateEvents.length === 0) {
             body.innerHTML = `
-                <p style="text-align: center; color: var(--nature-500); padding: 2rem 0;">
-                    No events scheduled for this day.
-                </p>
-                <div class="modal-actions" style="border-top: none; padding: 0 1.5rem 1.5rem; margin-top: 0;">
+                <div class="no-events-detailed">
+                    <i class="ph ph-calendar-x"></i>
+                    <p>No events scheduled for this day.</p>
                     <button type="button" class="btn-primary" onclick="calendar.openEventModal(new Date(${date.getTime()}))">
                         <i class="ph ph-plus"></i> Add Event
                     </button>
@@ -221,35 +215,40 @@ class Calendar {
             `;
         } else {
             let html = '<div class="events-list">';
-            dateEvents.forEach((event, index) => {
+            dateEvents.forEach(event => {
+                const timeLabel = event.startTime
+                    ? `${event.startTime}${event.endTime ? ' – ' + event.endTime : ''}`
+                    : 'All day';
                 html += `
-                    <div class="event-detail-item" style="padding: 1rem 0; border-bottom: 1px solid var(--nature-100);">
-                        <div style="display: flex; justify-content: space-between; align-items: start;">
-                            <div>
-                                <h4 style="color: var(--nature-800); margin-bottom: 0.25rem;">${this.escapeHtml(event.title)}</h4>
-                                ${event.course ? `<p style="color: var(--nature-600); font-size: 0.9rem; margin-bottom: 0.5rem;">${this.escapeHtml(event.course)}</p>` : ''}
-                                <div class="detail-category-badge category-badge-${event.category}">${event.category}</div>
-                                ${event.startTime ? `<p style="color: var(--nature-600); font-size: 0.85rem; margin-top: 0.5rem;">
-                                    <i class="ph ph-clock"></i> ${event.startTime}${event.endTime ? ' - ' + event.endTime : ''}
-                                </p>` : ''}
+                    <div class="event-detail-item event-detail-${event.category}" data-event-id="${event.id}">
+                        <div class="event-detail-top">
+                            <div class="event-detail-title-row">
+                                <h4>${this.escapeHtml(event.title)}</h4>
+                                <span class="event-category-badge category-badge-${event.category}">${event.category}</span>
                             </div>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <button onclick="calendar.editEvent('${event.id}')" class="btn-secondary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Edit</button>
-                                <button onclick="calendar.deleteEvent('${event.id}')" class="btn-secondary" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; color: var(--priority-high);">Delete</button>
+                            <div class="event-detail-meta">
+                                <span class="event-time"><i class="ph ph-clock" aria-hidden="true"></i>${timeLabel}</span>
+                                ${event.course ? `<span class="event-course-tag"><i class="ph ph-book-open" aria-hidden="true"></i>${this.escapeHtml(event.course)}</span>` : ''}
                             </div>
+                            ${event.description ? `<p class="event-description">${this.escapeHtml(event.description)}</p>` : ''}
                         </div>
-                        ${event.description ? `<p style="margin-top: 0.5rem; color: var(--nature-600); font-size: 0.9rem;">${this.escapeHtml(event.description)}</p>` : ''}
+                        <div class="event-actions">
+                            <button type="button" class="btn-edit-event" onclick="calendar.editEvent('${event.id}')" aria-label="Edit ${this.escapeHtml(event.title)}">
+                                <i class="ph ph-pencil-simple" aria-hidden="true"></i> Edit
+                            </button>
+                            <button type="button" class="btn-delete-event" onclick="calendar.deleteEvent('${event.id}')" aria-label="Delete ${this.escapeHtml(event.title)}">
+                                <i class="ph ph-trash" aria-hidden="true"></i> Delete
+                            </button>
+                        </div>
                     </div>
                 `;
             });
-            html += '</div>';
-            html += `
-                <div class="modal-actions" style="border-top: none; padding: 1rem 1.5rem 0;">
+            html += `</div>
+                <div class="detail-add-btn">
                     <button type="button" class="btn-primary" onclick="calendar.openEventModal(new Date(${date.getTime()}))">
                         <i class="ph ph-plus"></i> Add Another Event
                     </button>
-                </div>
-            `;
+                </div>`;
             body.innerHTML = html;
         }
         
@@ -385,15 +384,17 @@ class Calendar {
         if (todayEvents.length === 0) {
             list.innerHTML = '<p class="no-events">No events today</p>';
         } else {
-            list.innerHTML = todayEvents.map(event => `
-                <div class="today-event-item">
-                    <span class="event-category">${event.category}</span>
-                    <div>
+            list.innerHTML = todayEvents.map(event => {
+                const timeLabel = event.startTime ? `${event.startTime}${event.endTime ? ' - ' + event.endTime : ''}` : 'All day';
+                return `
+                <div class="today-event-item" role="button" tabindex="0" aria-label="${event.title}, ${event.category}, ${timeLabel}" onclick="calendar.openDetailModal(new Date())" onkeypress="if(event.key==='Enter'||event.key===' ') calendar.openDetailModal(new Date())">
+                    <span class="event-category" aria-hidden="true">${event.category}</span>
+                    <div class="event-details">
                         <div class="event-title">${this.escapeHtml(event.title)}</div>
-                        ${event.startTime ? `<div class="event-time">${event.startTime}${event.endTime ? ' - ' + event.endTime : ''}</div>` : ''}
+                        ${event.startTime ? `<div class="event-time"><i class="ph ph-clock" aria-hidden="true"></i> ${event.startTime}${event.endTime ? ' - ' + event.endTime : ''}</div>` : ''}
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
     }
 
@@ -430,4 +431,139 @@ class Calendar {
 let calendar;
 document.addEventListener('DOMContentLoaded', () => {
     calendar = new Calendar();
+    initHeroSlideshow();
 });
+
+// ==========================================
+// HERO SECTION SLIDESHOW
+// ==========================================
+
+class HeroSlideshow {
+    constructor() {
+        this.slides = document.querySelectorAll('.hero-slide');
+        this.titleElement = document.getElementById('heroTitle');
+        this.messageElement = document.getElementById('heroMessage');
+        this.indicatorsContainer = document.querySelector('.hero-indicators');
+        
+        this.currentIndex = 0;
+        this.slideInterval = null;
+        this.slideDuration = 5000; // 5 seconds per slide
+        
+        this.titles = [
+            "Study Calendar",
+            "Plan Your Success",
+            "Stay Organized",
+            "Achieve Your Goals",
+            "Master Your Time"
+        ];
+        
+        this.messages = [
+            "Organize your academic schedule and track important dates",
+            "Turn your dreams into plans with smart scheduling",
+            "A clear plan leads to better results",
+            "Every goal needs a plan to achieve it",
+            "Time management is the key to success"
+        ];
+        
+        this.init();
+    }
+    
+    init() {
+        // Create indicators
+        this.createIndicators();
+        
+        // Start slideshow
+        this.startSlideshow();
+        
+        // Pause on hover
+        const heroSection = document.querySelector('.hero-section');
+        heroSection.addEventListener('mouseenter', () => this.pauseSlideshow());
+        heroSection.addEventListener('mouseleave', () => this.startSlideshow());
+        
+        // Click on indicators to switch
+        document.querySelectorAll('.hero-dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                this.goToSlide(index);
+                this.resetInterval();
+            });
+        });
+    }
+    
+    createIndicators() {
+        this.slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = `hero-dot ${index === 0 ? 'active' : ''}`;
+            dot.setAttribute('data-index', index);
+            this.indicatorsContainer.appendChild(dot);
+        });
+    }
+    
+    updateIndicators() {
+        document.querySelectorAll('.hero-dot').forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentIndex);
+        });
+    }
+    
+    goToSlide(index) {
+        // Remove active from current slide
+        this.slides[this.currentIndex].classList.remove('active');
+        
+        // Update index
+        this.currentIndex = index;
+        
+        // Add active to new slide
+        this.slides[this.currentIndex].classList.add('active');
+        
+        // Update indicators
+        this.updateIndicators();
+        
+        // Update content with animation
+        this.animateContentChange();
+    }
+    
+    nextSlide() {
+        const nextIndex = (this.currentIndex + 1) % this.slides.length;
+        this.goToSlide(nextIndex);
+    }
+    
+    startSlideshow() {
+        this.slideInterval = setInterval(() => {
+            this.nextSlide();
+        }, this.slideDuration);
+    }
+    
+    pauseSlideshow() {
+        clearInterval(this.slideInterval);
+    }
+    
+    resetInterval() {
+        clearInterval(this.slideInterval);
+        this.startSlideshow();
+    }
+    
+    animateContentChange() {
+        // Fade out
+        this.titleElement.style.animation = 'none';
+        this.messageElement.style.animation = 'none';
+        
+        // Trigger reflow
+        void this.titleElement.offsetWidth;
+        void this.messageElement.offsetWidth;
+        
+        // Use modulo to cycle through titles and messages
+        const titleIndex = this.currentIndex % this.titles.length;
+        const messageIndex = this.currentIndex % this.messages.length;
+        
+        // Update text
+        this.titleElement.textContent = this.titles[titleIndex];
+        this.messageElement.textContent = this.messages[messageIndex];
+        
+        // Fade in with animation
+        this.titleElement.style.animation = 'fadeInUp 0.8s ease';
+        this.messageElement.style.animation = 'fadeInUp 0.8s ease 0.2s both';
+    }
+}
+
+function initHeroSlideshow() {
+    new HeroSlideshow();
+}

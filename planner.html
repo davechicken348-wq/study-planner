@@ -20,7 +20,50 @@
 </head>
 
 <body>
-   
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-slides">
+                <!-- Slide 1 -->
+                <div class="hero-slide active">
+                    <div class="hero-content">
+                        <h1>Study Planner</h1>
+                        <p>Organize your academic life and achieve your goals</p>
+                    </div>
+                </div>
+                
+                <!-- Slide 2 -->
+                <div class="hero-slide">
+                    <div class="hero-content">
+                        <h1>Stay Focused</h1>
+                        <p>Track your tasks, deadlines, and progress in one place</p>
+                    </div>
+                </div>
+                
+                <!-- Slide 3 -->
+                <div class="hero-slide">
+                    <div class="hero-content">
+                        <h1>Plan Your Success</h1>
+                        <p>Create study schedules that work for your unique learning style</p>
+                    </div>
+                </div>
+                
+                <!-- Slide 4 -->
+                <div class="hero-slide">
+                    <div class="hero-content">
+                        <h1>Never Miss a Deadline</h1>
+                        <p>Get reminders and stay on top of your assignments and exams</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation dots -->
+            <div class="hero-nav">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </section>
 
         <!-- Side Navigation -->
         <aside class="sidebar">
@@ -134,19 +177,6 @@
                         <div class="pomodoro-timer" id="pomodoro-timer">25:00</div>
                         <div class="pomodoro-mode" id="pomodoro-mode">Focus Session</div>
                     </div>
-                    
-                    <!-- Pomodoro Settings -->
-                    <div class="pomodoro-settings">
-                        <div class="setting-row">
-                            <label for="focus-duration">Focus Duration (min)</label>
-                            <input type="number" id="focus-duration" min="1" max="60" value="25">
-                        </div>
-                        <div class="setting-row">
-                            <label for="break-duration">Break Duration (min)</label>
-                            <input type="number" id="break-duration" min="1" max="30" value="5">
-                        </div>
-                    </div>
-                    
                     <div class="pomodoro-controls">
                         <button id="pomodoro-start" class="btn-primary pomodoro-btn">Start</button>
                         <button id="pomodoro-pause" class="btn-secondary pomodoro-btn" disabled>Pause</button>
