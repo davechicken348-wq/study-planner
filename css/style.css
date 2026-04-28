@@ -701,6 +701,41 @@ body {
     color: var(--sun-500);
 }
 
+.pomodoro-settings {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 0.25rem;
+}
+
+.pomodoro-settings label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--nature-600);
+    font-weight: 500;
+}
+
+.pomodoro-settings input[type="number"] {
+    width: 46px;
+    padding: 0.3rem 0.4rem;
+    border: 1.5px solid var(--nature-200);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--nature-800);
+    background: var(--nature-50);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.pomodoro-settings input[type="number"]:focus {
+    border-color: var(--green-400);
+    background: white;
+}
+
 .pomodoro-controls {
     display: flex;
     flex-direction: column;

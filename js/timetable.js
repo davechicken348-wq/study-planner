@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
         room: document.getElementById('classRoom'),
         startTime: document.getElementById('startTime'),
         endTime: document.getElementById('endTime'),
-        priority: document.getElementById('classPriority')
+        priority: document.getElementById('classPriority'),
+        reminder: document.getElementById('classReminder')
     };
 
     // State
@@ -42,13 +43,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function init() {
         classes = Storage.getTimetable() || [];
-        
+
+        // Backward compatibility: ensure all classes have reminder field, default to true
+        classes = classes.map(cls => ({
+            ...cls,
+            reminder: cls.reminder !== undefined ? cls.reminder : true
+        }));
+
         buildGrid();
         updatePixelsPerHour();
         renderClasses();
         currentLayout = getLayoutMode();
-        
+
         setupEventListeners();
+
+        // Trigger initial notification check
+        if (typeof Notifications !== 'undefined') {
+            const reminderClasses = classes.filter(c => c.reminder);
+            Notifications.triggerImmediateCheck([], [], reminderClasses);
+        }
 
         // Handle responsive layout switching on resize
         let resizeTimeout;
@@ -293,12 +306,14 @@ document.addEventListener('DOMContentLoaded', () => {
             fields.startTime.value = cls.startTime;
             fields.endTime.value = cls.endTime;
             fields.priority.value = cls.priority;
+            fields.reminder.checked = cls.reminder !== undefined ? cls.reminder : true;
         } else {
             modalTitle.textContent = 'Add Class';
             form.reset();
             fields.startTime.value = '09:00';
             fields.endTime.value = '10:00';
             fields.priority.value = 'medium';
+            fields.reminder.checked = true;
         }
 
         modal.classList.add('active');
@@ -324,7 +339,8 @@ document.addEventListener('DOMContentLoaded', () => {
             room: fields.room.value.trim(),
             startTime: fields.startTime.value,
             endTime: fields.endTime.value,
-            priority: fields.priority.value
+            priority: fields.priority.value,
+            reminder: fields.reminder.checked
         };
 
         // Validate
@@ -350,6 +366,11 @@ document.addEventListener('DOMContentLoaded', () => {
         sortClasses();
         saveAndRender();
         closeModal();
+
+        // Trigger reminder check
+        if (typeof Notifications !== 'undefined') {
+            Notifications.triggerImmediateCheck();
+        }
     }
 
     function hasConflict(newClass) {
@@ -388,6 +409,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!confirm('Delete this class?')) return;
         classes = classes.filter(c => c.id !== id);
         saveAndRender();
+
+        // Trigger reminder check
+        if (typeof Notifications !== 'undefined') {
+            Notifications.triggerImmediateCheck();
+        }
     };
 
     window.editClass = function(id) {

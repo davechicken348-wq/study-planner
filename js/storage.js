@@ -20,7 +20,7 @@ const Storage = {
     // Validate task object structure
     _validateTask(task) {
         if (!task || typeof task !== 'object') return false;
-        const required = ['id', 'title', 'date', 'category', 'priority', 'completed'];
+        const required = ['id', 'title', 'date', 'category', 'priority', 'completed', 'reminder'];
         for (const key of required) {
             if (!(key in task)) return false;
         }
@@ -29,14 +29,18 @@ const Storage = {
                typeof task.date === 'string' &&
                typeof task.category === 'string' &&
                typeof task.priority === 'string' &&
-               typeof task.completed === 'boolean';
+               typeof task.completed === 'boolean' &&
+               typeof task.reminder === 'boolean';
     },
     
     // Validate timetable entry structure
     _validateTimetableEntry(entry) {
         if (!entry || typeof entry !== 'object') return false;
         return typeof entry.day === 'string' &&
-               typeof entry.subject === 'string';
+               typeof entry.name === 'string' &&
+               typeof entry.startTime === 'string' &&
+               typeof entry.endTime === 'string' &&
+               typeof entry.priority === 'string';
     },
     
     // Validate pomodoro settings structure

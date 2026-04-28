@@ -41,7 +41,7 @@
 
 .hero-slide:nth-child(2) {
     background-image: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(34, 197, 94, 0.1)),
-                      url('../assets/images/Planner_Wallpaper/Planner2.webp');
+                      url('../assets/images/Planner_Wallpaper/Planner4.webp');
 }
 
 .hero-slide:nth-child(3) {
@@ -51,7 +51,7 @@
 
 .hero-slide:nth-child(4) {
     background-image: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(34, 197, 94, 0.1)),
-                      url('../assets/images/Planner_Wallpaper/Planner9.webp');
+                      url('../assets/images/Planner_Wallpaper/Planner7.webp');
 }
 
 /* Overlay for better text readability */
@@ -273,15 +273,51 @@
     white-space: nowrap;
 }
 
-#addTaskBtn:hover {
-    background: linear-gradient(135deg, var(--green-700), var(--green-600));
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-}
+ #addTaskBtn:hover {
+     background: linear-gradient(135deg, var(--green-700), var(--green-600));
+     transform: translateY(-1px);
+     box-shadow: var(--shadow-md);
+ }
 
-/* ==========================================
-   SEARCH & FILTERS
-   ========================================== */
+ /* Reminder checkbox row */
+ .reminder-row {
+     margin-top: 0.75rem;
+     padding: 0.75rem 1rem;
+     background: var(--nature-100, #edf4ed);
+     border-radius: 8px;
+     border: 1px solid var(--nature-200, #dbeadd);
+ }
+
+ .reminder-row .checkbox-label {
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+     cursor: pointer;
+     font-size: 0.9rem;
+     color: var(--nature-700, #3d5a3f);
+     user-select: none;
+ }
+
+ .reminder-row .checkbox-label input[type="checkbox"] {
+     width: 1.1em;
+     height: 1.1em;
+     accent-color: var(--green-600, #16a34a);
+     margin: 0;
+     cursor: pointer;
+ }
+
+ .reminder-row .checkbox-custom {
+     display: none;
+ }
+
+ .reminder-row .ph-bell {
+     color: var(--sun-500, #f59e0b);
+     font-size: 1.1rem;
+ }
+
+ /* ==========================================
+    SEARCH & FILTERS
+    ========================================== */
 
 .quick-filters {
     display: flex;

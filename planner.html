@@ -13,6 +13,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
     <!-- Phosphor Icons -->
     <link rel="stylesheet" href="assets/icons/phosphor-icons.min.css">
     <script src="https://unpkg.com/@phosphor-icons/web"
@@ -122,6 +123,15 @@
                         <button id="addTaskBtn" aria-label="Add task">Add Task</button>
                     </div>
 
+                    <!-- Reminder Toggle -->
+                    <div class="reminder-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="taskReminder" checked>
+                            <span class="checkbox-custom"></span>
+                            <i class="ph ph-bell"></i> Remind me before this task
+                        </label>
+                    </div>
+
                     <!-- Search & Filters -->
                     <div class="quick-filters">
                         <div class="search-box">
@@ -177,6 +187,16 @@
                         <div class="pomodoro-timer" id="pomodoro-timer">25:00</div>
                         <div class="pomodoro-mode" id="pomodoro-mode">Focus Session</div>
                     </div>
+                    <div class="pomodoro-settings">
+                        <label>
+                            <span>Focus</span>
+                            <input type="number" id="focus-duration" min="1" max="60" value="25"> min
+                        </label>
+                        <label>
+                            <span>Break</span>
+                            <input type="number" id="break-duration" min="1" max="30" value="5"> min
+                        </label>
+                    </div>
                     <div class="pomodoro-controls">
                         <button id="pomodoro-start" class="btn-primary pomodoro-btn">Start</button>
                         <button id="pomodoro-pause" class="btn-secondary pomodoro-btn" disabled>Pause</button>
@@ -202,7 +222,9 @@
     <script src="js/storage.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/pomodoro.js"></script>
+    <script src="js/notifications.js"></script>
     <script src="js/planner.js"></script>
+    <script src="js/sw-register.js"></script>
 </body>
 
 </html>

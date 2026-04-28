@@ -93,18 +93,34 @@ document.addEventListener('DOMContentLoaded', () => {
     function init() {
         // Load saved tasks from localStorage
         tasks = Storage.getTasks() || [];
-        
+
+        // Backward compatibility: ensure all tasks have reminder field, default to true
+        tasks = tasks.map(task => ({
+            ...task,
+            reminder: task.reminder !== undefined ? task.reminder : true
+        }));
+
         // Sort tasks by date and priority
         sortTasks();
-        
+
         // Set default date to today
         elements.taskDate.valueAsDate = new Date();
-        
+
         // Setup event listeners
         setupEventListeners();
-        
+
         // Initial render
         renderTasks();
+
+        // Trigger immediate notification check
+        if (typeof Notifications !== 'undefined') {
+            Notifications.triggerImmediateCheck(getEventsForNotification(), [], []);
+        }
+    }
+
+    function getEventsForNotification() {
+        // Return events/tasks that have reminders enabled
+        return tasks.filter(task => task.reminder);
     }
 
     function setupEventListeners() {
@@ -261,6 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const category = elements.taskCategory.value;
         const date = elements.taskDate.value;
         const priority = elements.taskPriority.value;
+        const reminder = document.getElementById('taskReminder').checked;
 
         // Validation with visual feedback
         let isValid = true;
@@ -329,7 +346,8 @@ document.addEventListener('DOMContentLoaded', () => {
             category: category,
             date: date,
             completed: false,
-            priority: priority
+            priority: priority,
+            reminder: reminder
         };
 
         // Add to tasks array
@@ -368,6 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveAndRender() {
         saveTasks();
         renderTasks();
+        triggerNotificationCheck();
     }
 
     // Get tasks filtered by current filter
@@ -505,6 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
         task.completed = !task.completed;
         sortTasks();
         saveAndRender();
+        triggerNotificationCheck();
     };
 
     function handleCheckboxChange(id) {
@@ -536,5 +556,13 @@ document.addEventListener('DOMContentLoaded', () => {
         tasks = tasks.filter(t => t.id !== id);
         sortTasks();
         saveAndRender();
+        triggerNotificationCheck();
     };
+
+    // Trigger notification check after data changes
+    function triggerNotificationCheck() {
+        if (typeof Notifications !== 'undefined') {
+            Notifications.triggerImmediateCheck();
+        }
+    }
 });

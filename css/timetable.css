@@ -1458,15 +1458,51 @@
     box-shadow: 0 2px 6px rgba(34, 197, 94, 0.25);
 }
 
-.btn-save:hover {
-    background: linear-gradient(135deg, var(--green-700) 0%, var(--green-600) 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
-}
+ .btn-save:hover {
+     background: linear-gradient(135deg, var(--green-700) 0%, var(--green-600) 100%);
+     transform: translateY(-1px);
+     box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+ }
 
-/* ============================================================
-   14. MODAL — Mobile Adjustments
-   ============================================================ */
+ /* Reminder checkbox row */
+ .reminder-row {
+     margin-top: 0.75rem;
+     padding: 0.75rem 1rem;
+     background: var(--nature-100, #edf4ed);
+     border-radius: 8px;
+     border: 1px solid var(--nature-200, #dbeadd);
+ }
+
+ .reminder-row .checkbox-label {
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+     cursor: pointer;
+     font-size: 0.9rem;
+     color: var(--nature-700, #3d5a3f);
+     user-select: none;
+ }
+
+ .reminder-row .checkbox-label input[type="checkbox"] {
+     width: 1.1em;
+     height: 1.1em;
+     accent-color: var(--green-600, #16a34a);
+     margin: 0;
+     cursor: pointer;
+ }
+
+ .reminder-row .checkbox-custom {
+     display: none;
+ }
+
+ .reminder-row .ph-bell {
+     color: var(--sun-500, #f59e0b);
+     font-size: 1.1rem;
+ }
+
+ /* ============================================================
+    14. MODAL — Mobile Adjustments
+    ============================================================ */
 
 @media (max-width: 768px) {
     .modal-content {

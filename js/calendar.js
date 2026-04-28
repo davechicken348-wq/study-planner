@@ -6,6 +6,13 @@ class Calendar {
         this.currentDate = new Date();
         this.selectedDate = new Date();
         this.events = this.loadEvents();
+
+        // Backward compatibility: ensure reminder field exists, default to true
+        this.events = this.events.map(ev => ({
+            ...ev,
+            reminder: ev.reminder !== undefined ? ev.reminder : true
+        }));
+
         this.categories = [
             { value: 'exam', label: 'Exam', color: '#ef4444' },
             { value: 'project', label: 'Project', color: '#be185d' },
@@ -287,6 +294,9 @@ class Calendar {
 
         // Show success notification
         this.showNotification('Event saved successfully!');
+
+        // Trigger reminder check
+        this.triggerNotificationCheck();
     }
 
     editEvent(eventId) {
@@ -324,6 +334,9 @@ class Calendar {
             this.updateTodaysEvents();
             this.closeModal();
             this.showNotification('Event updated successfully!');
+
+            // Trigger reminder check
+            this.triggerNotificationCheck();
         };
     }
 
@@ -335,6 +348,9 @@ class Calendar {
             this.updateTodaysEvents();
             this.closeDetailModal();
             this.showNotification('Event deleted successfully!');
+
+            // Trigger reminder check
+            this.triggerNotificationCheck();
         }
     }
 
@@ -408,6 +424,12 @@ class Calendar {
         return div.innerHTML;
     }
 
+    triggerNotificationCheck() {
+        if (typeof Notifications !== 'undefined') {
+            Notifications.triggerImmediateCheck();
+        }
+    }
+
     loadEvents() {
         try {
             const stored = localStorage.getItem('studyPlanner_events');
@@ -432,6 +454,12 @@ let calendar;
 document.addEventListener('DOMContentLoaded', () => {
     calendar = new Calendar();
     initHeroSlideshow();
+
+    // Trigger initial notification check
+    if (typeof Notifications !== 'undefined') {
+        const reminderEvents = calendar.events.filter(e => e.reminder);
+        Notifications.triggerImmediateCheck(reminderEvents, [], []);
+    }
 });
 
 // ==========================================
