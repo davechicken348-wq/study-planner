@@ -442,7 +442,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveAndRender() {
         saveTasks();
         renderTasks();
-        triggerNotificationCheck();
+        if (typeof Notifications !== 'undefined') {
+            Notifications.triggerImmediateCheck();
+        }
     }
 
     // Get tasks filtered by current filter
@@ -580,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
         task.completed = !task.completed;
         sortTasks();
         saveAndRender();
-        triggerNotificationCheck();
+        // triggerNotificationCheck() already called in saveAndRender()
     };
 
     function handleCheckboxChange(id) {
@@ -612,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tasks = tasks.filter(t => t.id !== id);
         sortTasks();
         saveAndRender();
-        triggerNotificationCheck();
+        // triggerNotificationCheck() already called in saveAndRender()
     };
 
     // Reset notification permission (for users who accidentally denied)
