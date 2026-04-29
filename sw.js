@@ -227,6 +227,11 @@ function broadcastShownChange(id) {
 }
 
 function showNotification(title, body, icon = '/favicon.png') {
+    // Check permission before showing notification
+    if (self.registration.notificationPermission !== 'granted') {
+        console.log('[SW] Notification permission not granted, skipping:', self.registration.notificationPermission);
+        return;
+    }
     self.registration.showNotification(title, {
         body, icon, badge: '/favicon.png',
         tag: 'study-planner', renotify: false, vibrate: [200,100,200]
