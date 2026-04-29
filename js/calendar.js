@@ -91,6 +91,19 @@ class Calendar {
                 this.closeDetailModal();
             }
         });
+
+        // Category pill selection
+        const categoryPills = document.querySelectorAll('.cat-pill');
+        categoryPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                // Remove active from all
+                categoryPills.forEach(p => p.classList.remove('active'));
+                // Add active to clicked
+                pill.classList.add('active');
+                // Update hidden input
+                document.getElementById('eventCategory').value = pill.dataset.value;
+            });
+        });
     }
 
     changeMonth(delta) {
@@ -214,14 +227,17 @@ class Calendar {
         this.openDetailModal(date);
     }
 
-    openEventModal(date = null) {
+    openEventModal(date = null, editEvent = null) {
         const dateToUse = date || this.selectedDate;
         document.getElementById('eventDate').value = this.formatDate(dateToUse);
         document.getElementById('eventTitle').value = '';
         document.getElementById('eventCourse').value = '';
         document.getElementById('eventStart').value = '';
         document.getElementById('eventEnd').value = '';
-        document.getElementById('eventCategory').value = 'other';
+        
+        // Reset category to 'other' for new events, setActiveCategory updates both hidden input and pill UI
+        this.setActiveCategory('other');
+        
         document.getElementById('eventDescription').value = '';
         document.getElementById('eventReminder').checked = true;
         
@@ -231,6 +247,17 @@ class Calendar {
 
     closeModal() {
         document.getElementById('eventModal').classList.remove('active');
+    }
+
+    setActiveCategory(category) {
+        const pills = document.querySelectorAll('.cat-pill');
+        pills.forEach(p => {
+            p.classList.remove('active');
+            if (p.dataset.value === category) {
+                p.classList.add('active');
+            }
+        });
+        document.getElementById('eventCategory').value = category;
     }
 
     openDetailModal(date) {
@@ -344,11 +371,13 @@ class Calendar {
         document.getElementById('eventDate').value = event.date;
         document.getElementById('eventTitle').value = event.title;
         document.getElementById('eventCourse').value = event.course;
-        document.getElementById('eventCategory').value = event.category;
         document.getElementById('eventStart').value = event.startTime;
         document.getElementById('eventEnd').value = event.endTime;
         document.getElementById('eventDescription').value = event.description;
         document.getElementById('eventReminder').checked = event.reminder;
+        
+        // Set active category pill (must be after all fields set)
+        this.setActiveCategory(event.category);
 
         this.closeDetailModal();
         document.getElementById('eventModal').classList.add('active');

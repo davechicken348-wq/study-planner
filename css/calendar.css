@@ -527,66 +527,310 @@
     font-weight: 400;
 }
 
+  /* ==========================================
+     FORM STYLES
+     ========================================== */
+
+.modal-content .form-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--nature-700);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 0.25rem;
+}
+
+.form-group label i.ph {
+    font-size: 1rem;
+    color: var(--warm-orange);
+}
+
+.required {
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin-left: 0.25rem;
+}
+
+.optional {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #a8a29e;
+    margin-left: 0.1rem;
+}
+
+/* Input Fields with subtle background */
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="time"],
 .form-group textarea {
-    resize: none;
-    line-height: 1.5;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #f3e8d6;
+    border-radius: 12px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.95rem;
+    color: var(--nature-800);
+    background: #fefdfb;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--warm-orange);
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+    background: white;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.6;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #c4b5a5;
+    font-weight: 400;
 }
 
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
-/* --- Category Pills --- */
+/* Category Pills - Enhanced */
 .category-pill-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.5rem;
 }
 
 .cat-pill {
-    padding: 0.4rem 0.8rem;
+    position: relative;
+    padding: 0.6rem 1.1rem;
     border-radius: 999px;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     font-weight: 600;
     font-family: 'Quicksand', sans-serif;
     cursor: pointer;
-    border: 1.5px solid transparent;
+    border: 2px solid transparent;
     background: #f5f5f4;
     color: #57534e;
-    transition: all 0.18s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
 }
 
 .cat-pill:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.cat-pill-exam.active        { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
-.cat-pill-project.active     { background: #fce7f3; color: #9d174d; border-color: #f9a8d4; }
-.cat-pill-homework.active    { background: #dbeafe; color: #1e3a8a; border-color: #93c5fd; }
-.cat-pill-lab.active         { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
-.cat-pill-meeting.active     { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
-.cat-pill-other.active       { background: #fff7ed; color: #c2410c; border-color: #fdba74; }
+.cat-pill.active {
+    border-width: 2px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transform: scale(1.03);
+}
 
-.cat-pill-exam:not(.active):hover        { background: #fee2e2; color: #991b1b; }
-.cat-pill-project:not(.active):hover     { background: #fce7f3; color: #9d174d; }
-.cat-pill-homework:not(.active):hover    { background: #dbeafe; color: #1e3a8a; }
-.cat-pill-lab:not(.active):hover         { background: #fef3c7; color: #92400e; }
-.cat-pill-meeting:not(.active):hover     { background: #ede9fe; color: #5b21b6; }
-.cat-pill-other:not(.active):hover       { background: #fff7ed; color: #c2410c; }
+/* Add checkmark for active state */
+.cat-pill.active::after {
+    content: '✓';
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-left: 0.25rem;
+}
 
-/* --- Reminder Checkbox --- */
+/* Category Colors - Distinct pastel with dark text */
+.cat-pill-exam.active        { background: #fef2f2; color: #b91c1c; border-color: #f87171; }
+.cat-pill-project.active     { background: #fdf2f8; color: #be185d; border-color: #f472b6; }
+.cat-pill-homework.active    { background: #eff6ff; color: #1d4ed8; border-color: #60a5fa; }
+.cat-pill-lab.active         { background: #fffbeb; color: #b45309; border-color: #fbbf24; }
+.cat-pill-meeting.active     { background: #f5f3ff; color: #7c3aed; border-color: #a78bfa; }
+.cat-pill-other.active       { background: #fef5f5; color: #c2410c; border-color: #fb923c; }
+
+.cat-pill-exam:not(.active):hover        { background: #fef2f2; color: #b91c1c; border-color: #f87171; }
+.cat-pill-project:not(.active):hover     { background: #fdf2f8; color: #be185d; border-color: #f472b6; }
+.cat-pill-homework:not(.active):hover    { background: #eff6ff; color: #1d4ed8; border-color: #60a5fa; }
+.cat-pill-lab:not(.active):hover         { background: #fffbeb; color: #b45309; border-color: #fbbf24; }
+.cat-pill-meeting:not(.active):hover     { background: #f5f3ff; color: #7c3aed; border-color: #a78bfa; }
+.cat-pill-other:not(.active):hover       { background: #fef5f5; color: #c2410c; border-color: #fb923c; }
+
+/* Reminder Checkbox Row - Enhanced */
 .reminder-row {
-    background: #fff7ed;
-    border: 1.5px solid #fde8c8;
-    border-radius: 10px;
-    padding: 0.65rem 0.9rem;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border: 1.5px solid #fcd34d;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-top: 0.5rem;
 }
 
 .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--nature-700);
+    user-select: none;
+    margin: 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: var(--green-600);
+    margin: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkbox-label .ph-bell {
+    color: var(--warm-orange);
+    font-size: 1.25rem;
+}
+
+/* Modal Actions */
+.modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    padding: 1rem 1.5rem 1.5rem;
+    border-top: 1px solid #f0e9e2;
+    background: #faf9f7;
+}
+
+.btn-cancel,
+.btn-save {
+    flex: 1;
+    padding: 0.875rem 1.5rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-cancel {
+    background: white;
+    color: var(--nature-700);
+    border: 2px solid #e7e5e2;
+}
+
+.btn-cancel:hover {
+    background: #f5f5f4;
+    border-color: #d4d4d4;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, var(--green-600) 0%, var(--green-500) 100%);
+    color: white;
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25);
+}
+
+.btn-save:hover {
+    background: linear-gradient(135deg, var(--green-700) 0%, var(--green-600) 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(22, 163, 74, 0.3);
+}
+
+/* Modal Content Box */
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    max-width: 520px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid #f0e9e2;
+}
+
+.modal-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #f0e9e2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: linear-gradient(135deg, #fef7f0 0%, #fef3c8 100%);
+    border-radius: 16px 16px 0 0;
+}
+
+.modal-header-text .modal-eyebrow {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--warm-orange);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.modal-header-text h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--nature-800);
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.25rem;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: var(--nature-800);
+}
+
+/* Scrollbar Styling */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: #f5f5f4;
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #d4d4d4;
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #b0b0b0;
+}
     display: flex !important;
     flex-direction: row !important;
     align-items: center;
