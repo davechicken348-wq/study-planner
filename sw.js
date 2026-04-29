@@ -1,6 +1,8 @@
 // Study Planner - Service Worker
 // Background notifications with persistent reminder storage
 
+// Detect base path for GitHub Pages deployment
+const BASE_PATH = location.pathname.replace(/\/[^/]*$/, '') || '/';
 const CACHE_NAME = 'study-planner-v1';
 const CHECK_INTERVAL = 60 * 1000;
 const DB_NAME = 'study-planner-notifications';
@@ -33,13 +35,34 @@ function getDB() {
 self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
-            return cache.addAll([
-                '/', '/index.html', '/planner.html', '/timetable.html', '/calendar.html',
-                '/favicon.svg', '/favicon-32x32.png', '/favicon-16x16.png', '/manifest.json',
-                '/css/style.css', '/css/planner.css', '/css/timetable.css', '/css/calendar.css', '/css/responsive.css',
-                '/js/utils.js', '/js/storage.js', '/js/nav-active.js', '/js/pomodoro.js', '/js/app.js',
-                '/js/planner.js', '/js/timetable.js', '/js/calendar.js', '/js/notifications.js', '/js/slideshow.js'
-            ]);
+            // Use dynamic base path for GitHub Pages subfolder deployment
+            const resources = [
+                BASE_PATH + '/', 
+                BASE_PATH + '/index.html', 
+                BASE_PATH + '/planner.html', 
+                BASE_PATH + '/timetable.html', 
+                BASE_PATH + '/calendar.html',
+                BASE_PATH + '/favicon.svg', 
+                BASE_PATH + '/favicon-32x32.png', 
+                BASE_PATH + '/favicon-16x16.png', 
+                BASE_PATH + '/manifest.json',
+                BASE_PATH + '/css/style.css', 
+                BASE_PATH + '/css/planner.css', 
+                BASE_PATH + '/css/timetable.css', 
+                BASE_PATH + '/css/calendar.css', 
+                BASE_PATH + '/css/responsive.css',
+                BASE_PATH + '/js/utils.js', 
+                BASE_PATH + '/js/storage.js', 
+                BASE_PATH + '/js/nav-active.js', 
+                BASE_PATH + '/js/pomodoro.js', 
+                BASE_PATH + '/js/app.js',
+                BASE_PATH + '/js/planner.js', 
+                BASE_PATH + '/js/timetable.js', 
+                BASE_PATH + '/js/calendar.js', 
+                BASE_PATH + '/js/notifications.js', 
+                BASE_PATH + '/js/slideshow.js'
+            ];
+            return cache.addAll(resources);
         }).catch(err => {
             console.error('[SW] Install cache addAll failed:', err);
             // Still skip waiting even if some resources fail
@@ -87,7 +110,7 @@ self.addEventListener('fetch', (e) => {
                 }
                 return resp;
             });
-        }).catch(() => caches.match('/index.html'))
+        }).catch(() => caches.match(BASE_PATH + '/index.html'))
     );
 });
 

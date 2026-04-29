@@ -4,53 +4,61 @@
 (function() {
     'use strict';
 
-    const SW_PATH = '/sw.js';
     const SW_KEY = 'studyPlanner_swRegistered';
 
-    // Register service worker
+    // Dynamically detect base path for GitHub Pages subfolder deployment
+    function getBasePath() {
+        const path = location.pathname;
+        // Extract the base path (e.g., /Study-Planner/ from /Study-Planner/planner.html)
+        const match = path.match(/^(\/[^/]+\/)/);
+        return match ? match[1] : '/';
+    }
+
     async function registerSW() {
-        // Check if service worker is supported
         if (!('serviceWorker' in navigator)) {
-            console.log('Service Worker not supported in this browser');
+            console.log('Service Worker not supported');
             return;
         }
 
-        // Check if already registered
         if (localStorage.getItem(SW_KEY)) {
-            console.log('Service Worker already registered');
+            console.log('SW already registered');
             return;
         }
+
+        const basePath = getBasePath();
+        const swPath = basePath + 'sw.js';
+        
+        console.log('Attempting to register Service Worker at:', swPath);
 
         try {
-            const registration = await navigator.serviceWorker.register(SW_PATH);
-            console.log('Service Worker registered successfully:', registration.scope);
-
+            const registration = await navigator.serviceWorker.register(swPath);
+            console.log('Service Worker registered at:', swPath, 'scope:', registration.scope);
             localStorage.setItem(SW_KEY, 'true');
-
-            // Notify Notifications module that SW is ready
-            if (typeof Notifications !== 'undefined' && registration.active) {
-                // Wait a moment for SW to activate
-                setTimeout(() => {
-                    if (typeof Notifications.triggerImmediateCheck === 'function') {
-                        Notifications.triggerImmediateCheck();
-                    }
-                }, 1000);
+            
+            if (typeof Notifications !== 'undefined') {
+                setTimeout(() => Notifications.triggerImmediateCheck?.(), 1000);
             }
-        } catch (error) {
-            console.error('Service Worker registration failed:', error);
+        } catch (err) {
+            console.error('Service Worker registration failed:', err.message);
+            // Try root path as fallback
+            if (basePath !== '/') {
+                try {
+                    const fallbackReg = await navigator.serviceWorker.register('/sw.js');
+                    console.log('Service Worker registered at root /sw.js');
+                    localStorage.setItem(SW_KEY, 'true');
+                } catch (fallbackErr) {
+                    console.error('Fallback registration also failed:', fallbackErr.message);
+                }
+            }
         }
     }
 
-    // Listen for service worker updates
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.addEventListener('controllerchange', () => {
-            console.log('Service Worker controller changed - page reload recommended');
-            // Optionally reload page to get new SW
-            // window.location.reload();
+            console.log('SW controller changed');
         });
     }
 
-    // Register when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', registerSW);
     } else {
