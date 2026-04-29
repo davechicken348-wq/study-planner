@@ -20,7 +20,20 @@ const Notifications = (function() {
 
     async function init() {
         loadShownNotifications();
-        await registerServiceWorker();
+        // Service worker registration handled by sw-register.js
+        // Just wait for it to become ready
+        if ('serviceWorker' in navigator) {
+            try {
+                const reg = await navigator.serviceWorker.ready;
+                serviceWorkerReady = true;
+                console.log('[Notifications] Service Worker ready');
+                sendReminderDataToSW();
+            } catch (err) {
+                console.log('[Notifications] SW not available:', err.message);
+            }
+        } else {
+            console.log('[Notifications] Service Worker not supported');
+        }
         await requestPermission();
         startPeriodicCheck();
         triggerImmediateCheck();
