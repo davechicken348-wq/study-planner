@@ -135,15 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
             statusEl.style.display = 'none';
         }
     }
-        });
-        form.addEventListener('submit', handleSubmit);
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
-            }
-        });
-    }
 
     function updatePixelsPerHour() {
         const slot = document.querySelector('.time-slot');
