@@ -129,7 +129,12 @@ self.addEventListener('message', (e) => {
     const { type, payload } = e.data || {};
     switch (type) {
         case 'UPDATE_REMINDERS':
-            saveReminderDataToDB(payload || { events: [], tasks: [], classes: [] });
+            // Save data then immediately check
+            saveReminderDataToDB(payload || { events: [], tasks: [], classes: [] }).then(() => {
+                checkAndNotify();
+            }).catch(err => {
+                console.error('[SW] Failed to save reminders:', err);
+            });
             break;
         case 'SHOW_NOTIFICATION':
             showNotification(payload?.title, payload?.body, payload?.icon);
@@ -140,14 +145,7 @@ self.addEventListener('message', (e) => {
                 persistShownNotifications(payload.ids);
             }
             break;
-        case 'TRIGGER_CHECK':
-            checkAndNotify();
-            break;
-        case 'PERMISSION_STATUS':
-            // Client is reporting its permission status
-            clientPermission = payload?.permission;
-            console.log('[SW] Client permission status:', clientPermission);
-            break;
+        // TRIGGER_CHECK removed — SW auto-checks after UPDATE_REMINDERS
     }
 });
 
@@ -241,27 +239,22 @@ function broadcastShownChange(id) {
     });
 }
 
-let clientPermission = null;
+let clientPermission = Notification.permission; // Initialize with current permission
 
 function showNotification(title, body, icon = '/favicon.png') {
-    // If we know permission is not granted, skip
-    if (clientPermission === 'denied' || clientPermission === 'default') {
-        console.log('[SW] Skipping notification, permission:', clientPermission);
+    // Skip if permission denied
+    if (Notification.permission === 'denied') {
+        console.log('[SW] Notification skipped — permission denied');
         return;
     }
     
-    // If we don't know yet, ask the client
-    if (clientPermission === null) {
-        self.clients.matchAll({ type: 'window' }).then(clients => {
-            if (clients.length > 0) {
-                clients[0].postMessage({ type: 'CHECK_PERMISSION' });
-            }
-        });
-        // Don't try to show yet, wait for response
+    // Permission must be 'granted' or 'default' (default will prompt)
+    // Service Worker can only show if permission is 'granted'
+    if (Notification.permission !== 'granted') {
+        console.log('[SW] Cannot show — permission not granted:', Notification.permission);
         return;
     }
     
-    // Permission is granted, show it
     doShow(title, body, icon);
 }
 

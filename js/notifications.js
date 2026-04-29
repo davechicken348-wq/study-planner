@@ -17,7 +17,7 @@ const Notifications = (function() {
     let shownNotifications = new Set();
     let serviceWorkerReady = false;
 
-    // Listen for messages from service worker
+    // Setup message listener for SW communication
     function setupMessageListener() {
         if (!('serviceWorker' in navigator)) return;
         navigator.serviceWorker.addEventListener('message', (event) => {
@@ -32,34 +32,21 @@ const Notifications = (function() {
                         console.error('[Notifications] Failed to save shown ID:', e);
                     }
                 }
-            } else if (type === 'CHECK_PERMISSION') {
-                // SW is asking for current permission status
-                sendPermissionStatusToSW();
             }
-        });
-    }
-
-    function sendPermissionStatusToSW() {
-        if (!serviceWorkerReady || !('serviceWorker' in navigator)) return;
-        const permission = Notification.permission;
-        navigator.serviceWorker.controller?.postMessage({
-            type: 'PERMISSION_STATUS',
-            payload: { permission }
+            // PERMISSION_STATUS no longer needed — SW reads permission directly
         });
     }
 
     async function init() {
         loadShownNotifications();
-        setupMessageListener();
+        setupMessageListener(); // defined inline above
 
-        // Wait for service worker
         if ('serviceWorker' in navigator) {
             try {
                 const reg = await navigator.serviceWorker.ready;
                 serviceWorkerReady = true;
                 console.log('[Notifications] Service Worker ready');
                 sendReminderDataToSW();
-                sendPermissionStatusToSW();
             } catch (err) {
                 console.log('[Notifications] SW unavailable:', err.message);
             }
@@ -74,10 +61,7 @@ const Notifications = (function() {
 
     async function requestPermission() {
         const already = localStorage.getItem(PERMISSION_REQUESTED_KEY);
-        if (already) {
-            sendPermissionStatusToSW();
-            return;
-        }
+        if (already) return;
 
         if (!('Notification' in window)) return;
 
@@ -87,8 +71,7 @@ const Notifications = (function() {
         if (permission === 'granted') {
             console.log('[Notifications] Permission granted');
         }
-
-        sendPermissionStatusToSW();
+        // No need to inform SW — it reads Notification.permission directly
     }
 
     function loadShownNotifications() {
@@ -131,7 +114,8 @@ const Notifications = (function() {
             classes: (data.classes || []).filter(c => c.reminder)
         };
 
-        saveReminderDataToDB(payload);
+        // Save to IndexedDB first, then notify SW (SW will auto-check)
+        await saveReminderDataToDB(payload);
 
         try {
             const reg = await navigator.serviceWorker.ready;
@@ -146,8 +130,12 @@ const Notifications = (function() {
             const req = indexedDB.open('study-planner-notifications', 3);
             req.onupgradeneeded = (e) => {
                 const db = e.target.result;
+                // Create both stores to match SW schema (version 3)
                 if (!db.objectStoreNames.contains('reminders')) {
                     db.createObjectStore('reminders', { keyPath: 'type' });
+                }
+                if (!db.objectStoreNames.contains('shownIds')) {
+                    db.createObjectStore('shownIds', { keyPath: 'id' });
                 }
             };
             req.onsuccess = (e) => {
@@ -260,15 +248,9 @@ const Notifications = (function() {
         // Always run page-side check (shows notifications if tab active)
         checkAll();
 
-        // Also sync reminder data to service worker and ask it to check
+        // Also sync reminder data to service worker (which auto-triggers check)
         if (serviceWorkerReady) {
-            sendReminderDataToSW().then(() => {
-                // Ask SW to run immediate check after data synced
-                const reg = navigator.serviceWorker.controller;
-                if (reg) {
-                    reg.postMessage({ type: 'TRIGGER_CHECK' });
-                }
-            }).catch(err => {
+            sendReminderDataToSW().catch(err => {
                 console.error('[Notifications] Failed to sync data to SW:', err);
             });
         }
