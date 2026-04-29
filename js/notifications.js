@@ -26,11 +26,19 @@ const Notifications = (function() {
             navigator.serviceWorker.addEventListener('message', (event) => {
                 if (event.data?.type === 'CHECK_PERMISSION') {
                     const permission = Notification.permission;
+                    console.log('[Notifications] Sending permission status:', permission);
                     navigator.serviceWorker.controller.postMessage({
                         type: 'PERMISSION_STATUS',
                         payload: { permission }
                     });
                 }
+            });
+            
+            // Immediately send permission status when SW controller is available
+            const permission = Notification.permission;
+            navigator.serviceWorker.controller.postMessage({
+                type: 'PERMISSION_STATUS',
+                payload: { permission }
             });
         }
         

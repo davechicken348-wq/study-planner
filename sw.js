@@ -87,11 +87,21 @@ self.addEventListener('activate', (e) => {
             await loadShownFromDB();
             // Start periodic checking
             startPeriodicCheck();
-            // Immediate check
-            checkAndNotify();
             self.clients.claim();
         })()
     );
+});
+
+// When a client connects, request permission and do initial check
+self.addEventListener('message', (e) => {
+    if (e.data?.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+});
+
+// Listen for client connections
+self.addEventListener('install', (e) => {
+    self.skipWaiting();
 });
 
 // Fetch
