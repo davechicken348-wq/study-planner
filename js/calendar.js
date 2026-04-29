@@ -30,6 +30,41 @@ class Calendar {
         this.bindEvents();
         this.updateTodaysEvents();
         this.updateHeader();
+        this.setupNotificationStatus();
+    }
+
+    setupNotificationStatus() {
+        const statusEl = document.getElementById('notificationStatus');
+        if (!statusEl) return;
+
+        if (Notification.permission === 'denied') {
+            statusEl.style.display = 'flex';
+            statusEl.innerHTML = `
+                <i class="ph ph-warning"></i>
+                <span>
+                    Notifications are blocked. 
+                    <button id="enableNotificationsBtn" title="Try enabling">Try Enable</button> 
+                    If that doesn't work, click the lock icon → Notifications → Allow → Reload.
+                </span>
+            `;
+            const btn = document.getElementById('enableNotificationsBtn');
+            if (btn) {
+                btn.onclick = async () => {
+                    const permission = await Notification.requestPermission();
+                    if (permission === 'granted') {
+                        localStorage.setItem('studyPlanner_permissionRequested', 'true');
+                        statusEl.style.display = 'none';
+                        if (typeof Notifications !== 'undefined') {
+                            Notifications.triggerImmediateCheck();
+                        }
+                    } else {
+                        alert('Still blocked. Click the lock icon in your address bar, set Notifications to "Allow", then reload.');
+                    }
+                };
+            }
+        } else {
+            statusEl.style.display = 'none';
+        }
     }
 
     bindEvents() {

@@ -187,6 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const exportBtn = document.getElementById('exportBtn');
         const importBtn = document.getElementById('importBtn');
         const importFile = document.getElementById('importFile');
+        const notifStatus = document.getElementById('notificationStatus');
+        const enableNotifBtn = document.getElementById('enableNotificationsBtn');
 
         if (exportBtn) {
             exportBtn.addEventListener('click', exportTasks);
@@ -194,6 +196,60 @@ document.addEventListener('DOMContentLoaded', () => {
         if (importBtn && importFile) {
             importBtn.addEventListener('click', () => importFile.click());
             importFile.addEventListener('change', importTasks);
+        }
+
+        // Notification permission status
+        checkNotificationPermission();
+        if (enableNotifBtn) {
+            enableNotifBtn.addEventListener('click', async () => {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    localStorage.setItem('studyPlanner_permissionRequested', 'true');
+                    notifStatus.style.display = 'none';
+                    // Trigger immediate check for notifications
+                    if (typeof Notifications !== 'undefined') {
+                        Notifications.triggerImmediateCheck();
+                    }
+                }
+            });
+        }
+    }
+
+    function checkNotificationPermission() {
+        const notifStatus = document.getElementById('notificationStatus');
+        if (!notifStatus) return;
+
+        if (Notification.permission === 'denied') {
+            notifStatus.style.display = 'flex';
+            notifStatus.innerHTML = `
+                <i class="ph ph-warning"></i>
+                <span>
+                    Notifications are blocked. 
+                    <button id="enableNotificationsBtn" title="Try enabling">Try Enable</button> 
+                    If that doesn't work, click the lock icon in your address bar → Notifications → Allow → Reload.
+                </span>
+            `;
+            // Re-bind the button
+            const btn = document.getElementById('enableNotificationsBtn');
+            if (btn) {
+                btn.onclick = async () => {
+                    const permission = await Notification.requestPermission();
+                    if (permission === 'granted') {
+                        localStorage.setItem('studyPlanner_permissionRequested', 'true');
+                        notifStatus.style.display = 'none';
+                        if (typeof Notifications !== 'undefined') {
+                            Notifications.triggerImmediateCheck();
+                        }
+                    } else {
+                        alert('If notifications are still blocked, click the lock icon in your address bar, set Notifications to "Allow", then reload the page.');
+                    }
+                };
+            }
+        } else if (Notification.permission === 'granted') {
+            notifStatus.style.display = 'none';
+        } else {
+            // 'default' — not requested yet
+            notifStatus.style.display = 'none';
         }
     }
 
@@ -559,10 +615,20 @@ document.addEventListener('DOMContentLoaded', () => {
         triggerNotificationCheck();
     };
 
-    // Trigger notification check after data changes
-    function triggerNotificationCheck() {
-        if (typeof Notifications !== 'undefined') {
-            Notifications.triggerImmediateCheck();
+    // Reset notification permission (for users who accidentally denied)
+    function resetNotificationPermission() {
+        if (!confirm('This will clear notification permissions. You will be asked to allow them again on next page load. Continue?')) {
+            return;
         }
+
+        // Clear local storage flags
+        localStorage.removeItem('studyPlanner_permissionRequested');
+
+        // Clear service worker registration flag so it can re-register cleanly
+        localStorage.removeItem('studyPlanner_swRegistered');
+
+        // Reload page to re-init everything
+        alert('Permissions reset. The page will reload. Please allow notifications when prompted.');
+        window.location.reload();
     }
 });

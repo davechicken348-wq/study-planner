@@ -56,11 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentLayout = getLayoutMode();
 
         setupEventListeners();
+        setupNotificationStatus();
 
         // Trigger initial notification check
         if (typeof Notifications !== 'undefined') {
             const reminderClasses = classes.filter(c => c.reminder);
-            Notifications.triggerImmediateCheck([], [], reminderClasses);
+            Notifications.triggerImmediateCheck();
         }
 
         // Handle responsive layout switching on resize
@@ -88,10 +89,52 @@ document.addEventListener('DOMContentLoaded', () => {
         btnClose.addEventListener('click', closeModal);
         btnCancel.addEventListener('click', closeModal);
         backdrop.addEventListener('click', (e) => {
-            // Only close if clicking directly on backdrop, not on modal content
             if (e.target === backdrop) {
                 closeModal();
             }
+        });
+        form.addEventListener('submit', handleSubmit);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    }
+
+    function setupNotificationStatus() {
+        const statusEl = document.getElementById('notificationStatus');
+        if (!statusEl) return;
+
+        if (Notification.permission === 'denied') {
+            statusEl.style.display = 'flex';
+            statusEl.innerHTML = `
+                <i class="ph ph-warning"></i>
+                <span>
+                    Notifications are blocked. 
+                    <button id="enableNotificationsBtn" title="Try enabling">Try Enable</button> 
+                    If that doesn't work, click the lock icon → Notifications → Allow → Reload.
+                </span>
+            `;
+            const btn = document.getElementById('enableNotificationsBtn');
+            if (btn) {
+                btn.onclick = async () => {
+                    const permission = await Notification.requestPermission();
+                    if (permission === 'granted') {
+                        localStorage.setItem('studyPlanner_permissionRequested', 'true');
+                        statusEl.style.display = 'none';
+                        if (typeof Notifications !== 'undefined') {
+                            Notifications.triggerImmediateCheck();
+                        }
+                    } else {
+                        alert('Still blocked. Click the lock icon in your address bar, set Notifications to "Allow", then reload.');
+                    }
+                };
+            }
+        } else {
+            statusEl.style.display = 'none';
+        }
+    }
         });
         form.addEventListener('submit', handleSubmit);
 

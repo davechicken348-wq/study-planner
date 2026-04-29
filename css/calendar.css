@@ -859,7 +859,7 @@
     RESPONSIVE MODAL ADJUSTMENTS
     ========================================== */
 
-/* Reminder checkbox row in modals */
+ /* Reminder checkbox row in modals */
 .reminder-row {
     margin-top: 0.75rem;
     padding: 0.75rem 1rem;
@@ -893,6 +893,40 @@
 .reminder-row .ph-bell {
     color: var(--warm-orange, #f97316);
     font-size: 1.1rem;
+}
+
+/* Notification status banner */
+.notification-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    color: #92400e;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+}
+
+.notification-status i {
+    font-size: 1.2rem;
+    color: #d97706;
+}
+
+.notification-status button {
+    background: none;
+    border: none;
+    color: #059669;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: inherit;
+    padding: 0;
+}
+
+.notification-status button:hover {
+    color: #047857;
 }
 
 @media (max-width: 768px) {

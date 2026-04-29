@@ -239,22 +239,20 @@ function broadcastShownChange(id) {
     });
 }
 
-let clientPermission = Notification.permission; // Initialize with current permission
-
 function showNotification(title, body, icon = '/favicon.png') {
-    // Skip if permission denied
-    if (Notification.permission === 'denied') {
-        console.log('[SW] Notification skipped — permission denied');
+    const permission = Notification.permission;
+    
+    if (permission === 'denied') {
+        console.warn('[SW] Notifications blocked. Enable via browser settings.');
         return;
     }
     
-    // Permission must be 'granted' or 'default' (default will prompt)
-    // Service Worker can only show if permission is 'granted'
-    if (Notification.permission !== 'granted') {
-        console.log('[SW] Cannot show — permission not granted:', Notification.permission);
+    if (permission === 'default') {
+        console.log('[SW] Permission not requested yet — page will handle it');
         return;
     }
     
+    // permission === 'granted'
     doShow(title, body, icon);
 }
 

@@ -61,17 +61,30 @@ const Notifications = (function() {
 
     async function requestPermission() {
         const already = localStorage.getItem(PERMISSION_REQUESTED_KEY);
-        if (already) return;
+        if (already) {
+            // Already requested before — check current status
+            if (Notification.permission === 'denied') {
+                console.warn('[Notifications] Permission previously denied. User must enable via browser settings.');
+                return 'denied';
+            }
+            return Notification.permission;
+        }
 
-        if (!('Notification' in window)) return;
+        if (!('Notification' in window)) {
+            console.warn('[Notifications] Notifications not supported');
+            return 'unsupported';
+        }
 
         const permission = await Notification.requestPermission();
         localStorage.setItem(PERMISSION_REQUESTED_KEY, 'true');
 
         if (permission === 'granted') {
             console.log('[Notifications] Permission granted');
+        } else if (permission === 'denied') {
+            console.warn('[Notifications] Permission denied by user');
         }
-        // No need to inform SW — it reads Notification.permission directly
+
+        return permission;
     }
 
     function loadShownNotifications() {

@@ -157,11 +157,14 @@
 
                 <!-- Data Actions -->
                 <div class="data-actions">
+                    <!-- Notification status banner (shown if blocked) -->
+                    <div id="notificationStatus" class="notification-status" style="display: none;">
+                        <i class="ph ph-warning"></i>
+                        <span>Notifications are blocked. <button id="enableNotificationsBtn">Enable</button> to get reminders.</span>
+                    </div>
+
                     <button id="exportBtn" class="btn-secondary" aria-label="Export tasks">
                         <i class="ph ph-export"></i> Export
-                    </button>
-                    <button id="importBtn" class="btn-secondary" aria-label="Import tasks">
-                        <i class="ph ph-import"></i> Import
                     </button>
                     <input type="file" id="importFile" accept=".json" style="display:none" aria-label="Import file">
                 </div>
