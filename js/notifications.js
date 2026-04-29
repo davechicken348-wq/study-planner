@@ -1,13 +1,12 @@
 // Study Planner - Notifications Module
-// Main page coordinates reminders; Service Worker displays them in background
+// Handles browser notifications for events, tasks, and classes
 
 const Notifications = (function() {
-    const CHECK_INTERVAL = 60 * 1000; // 60 seconds
+    const CHECK_INTERVAL = 60 * 1000;
     const REMINDER_WINDOW_MINUTES = 60;
     const STORAGE_KEY = 'studyPlanner_notificationsShown';
     const PERMISSION_REQUESTED_KEY = 'studyPlanner_permissionRequested';
 
-    // Storage keys
     const KEYS = {
         events: 'studyPlanner_events',
         tasks: 'study_planner_tasks',
@@ -18,71 +17,67 @@ const Notifications = (function() {
     let shownNotifications = new Set();
     let serviceWorkerReady = false;
 
+    // Listen for messages from service worker
+    function setupMessageListener() {
+        if (!('serviceWorker' in navigator)) return;
+        navigator.serviceWorker.addEventListener('message', (event) => {
+            const { type, payload } = event.data || {};
+            if (type === 'NOTIFICATION_SHOWN') {
+                const { id } = payload || {};
+                if (id && !shownNotifications.has(id)) {
+                    shownNotifications.add(id);
+                    try {
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify([...shownNotifications]));
+                    } catch (e) {
+                        console.error('[Notifications] Failed to save shown ID:', e);
+                    }
+                }
+            } else if (type === 'CHECK_PERMISSION') {
+                // SW is asking for current permission status
+                sendPermissionStatusToSW();
+            }
+        });
+    }
+
+    function sendPermissionStatusToSW() {
+        if (!serviceWorkerReady || !('serviceWorker' in navigator)) return;
+        const permission = Notification.permission;
+        navigator.serviceWorker.controller?.postMessage({
+            type: 'PERMISSION_STATUS',
+            payload: { permission }
+        });
+    }
+
     async function init() {
         loadShownNotifications();
-        
-        // Listen for messages from Service Worker
-        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-            navigator.serviceWorker.addEventListener('message', (event) => {
-                if (event.data?.type === 'CHECK_PERMISSION') {
-                    const permission = Notification.permission;
-                    console.log('[Notifications] Sending permission status:', permission);
-                    navigator.serviceWorker.controller.postMessage({
-                        type: 'PERMISSION_STATUS',
-                        payload: { permission }
-                    });
-                }
-            });
-            
-            // Immediately send permission status when SW controller is available
-            const permission = Notification.permission;
-            navigator.serviceWorker.controller.postMessage({
-                type: 'PERMISSION_STATUS',
-                payload: { permission }
-            });
-        }
-        
-        // Service worker registration handled by sw-register.js
-        // Just wait for it to become ready
+        setupMessageListener();
+
+        // Wait for service worker
         if ('serviceWorker' in navigator) {
             try {
                 const reg = await navigator.serviceWorker.ready;
                 serviceWorkerReady = true;
                 console.log('[Notifications] Service Worker ready');
                 sendReminderDataToSW();
+                sendPermissionStatusToSW();
             } catch (err) {
-                console.log('[Notifications] SW not available:', err.message);
+                console.log('[Notifications] SW unavailable:', err.message);
             }
         } else {
             console.log('[Notifications] Service Worker not supported');
         }
+
         await requestPermission();
         startPeriodicCheck();
         triggerImmediateCheck();
     }
 
-    // Register service worker
-    async function registerServiceWorker() {
-        if (!('serviceWorker' in navigator)) {
-            console.warn('Service Worker not supported');
+    async function requestPermission() {
+        const already = localStorage.getItem(PERMISSION_REQUESTED_KEY);
+        if (already) {
+            sendPermissionStatusToSW();
             return;
         }
-
-        try {
-            const registration = await navigator.serviceWorker.register('/sw.js');
-            serviceWorkerReady = true;
-            console.log('[Notifications] Service Worker registered');
-
-            // Forward current reminder data to SW
-            sendReminderDataToSW();
-        } catch (err) {
-            console.error('[Notifications] SW registration failed:', err);
-        }
-    }
-
-    async function requestPermission() {
-        const alreadyRequested = localStorage.getItem(PERMISSION_REQUESTED_KEY);
-        if (alreadyRequested) return;
 
         if (!('Notification' in window)) return;
 
@@ -92,15 +87,14 @@ const Notifications = (function() {
         if (permission === 'granted') {
             console.log('[Notifications] Permission granted');
         }
+
+        sendPermissionStatusToSW();
     }
 
     function loadShownNotifications() {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                const parsed = JSON.parse(stored);
-                shownNotifications = new Set(parsed);
-            }
+            shownNotifications = stored ? new Set(JSON.parse(stored)) : new Set();
         } catch (e) {
             shownNotifications = new Set();
         }
@@ -127,7 +121,6 @@ const Notifications = (function() {
         saveShownNotifications();
     }
 
-    // Send reminder data to service worker for background checking
     async function sendReminderDataToSW() {
         if (!serviceWorkerReady) return;
 
@@ -138,31 +131,26 @@ const Notifications = (function() {
             classes: (data.classes || []).filter(c => c.reminder)
         };
 
-        // Save to IndexedDB so SW can read even if page is closed
         saveReminderDataToDB(payload);
 
         try {
             const reg = await navigator.serviceWorker.ready;
-            reg.active?.postMessage({
-                type: 'UPDATE_REMINDERS',
-                payload: payload
-            });
+            reg.active?.postMessage({ type: 'UPDATE_REMINDERS', payload });
         } catch (err) {
             console.error('[Notifications] Failed to send data to SW:', err);
         }
     }
 
-    // Save reminder data to IndexedDB for SW persistence
     async function saveReminderDataToDB(data) {
         return new Promise((resolve, reject) => {
-            const request = indexedDB.open('study-planner-data', 2);
-            request.onupgradeneeded = (e) => {
+            const req = indexedDB.open('study-planner-notifications', 3);
+            req.onupgradeneeded = (e) => {
                 const db = e.target.result;
                 if (!db.objectStoreNames.contains('reminders')) {
                     db.createObjectStore('reminders', { keyPath: 'type' });
                 }
             };
-            request.onsuccess = (e) => {
+            req.onsuccess = (e) => {
                 const db = e.target.result;
                 const tx = db.transaction('reminders', 'readwrite');
                 const store = tx.objectStore('reminders');
@@ -171,122 +159,92 @@ const Notifications = (function() {
                 store.put({ type: 'classes', data: data.classes || [] });
                 resolve();
             };
-            request.onerror = (e) => reject(e.target.error);
+            req.onerror = (e) => reject(e.target.error);
         });
     }
 
-    // Show notification via service worker (preferred) or fallback
     async function showBrowserNotification(title, body, icon = '/favicon.png') {
-        // Try service worker first (works in background)
         if (serviceWorkerReady) {
             try {
                 const reg = await navigator.serviceWorker.ready;
-                reg.active?.postMessage({
-                    type: 'SHOW_NOTIFICATION',
-                    payload: { title, body, icon }
-                });
+                reg.active?.postMessage({ type: 'SHOW_NOTIFICATION', payload: { title, body, icon } });
                 return;
             } catch (err) {
                 console.warn('[Notifications] SW show failed, falling back:', err);
             }
         }
 
-        // Fallback to direct Notification API
-        if (!('Notification' in window)) return;
-        if (Notification.permission !== 'granted') return;
+        if (!('Notification' in window) || Notification.permission !== 'granted') return;
 
         const notification = new Notification(title, { body, icon });
-        notification.onclick = () => {
-            window.focus();
-            notification.close();
-        };
+        notification.onclick = () => { window.focus(); notification.close(); };
         setTimeout(() => notification.close(), 10000);
     }
 
-    // Main check: runs in page context
     function checkAll() {
         const data = loadAllData();
         const now = new Date();
 
-        // Events
-        (data.events || []).forEach(event => {
-            if (!event.reminder || !event.startTime || !event.date) return;
-            const eventTime = new Date(`${event.date}T${event.startTime}`);
-            const minutesUntil = (eventTime - now) / 60000;
-
-            if (minutesUntil > 0 && minutesUntil <= REMINDER_WINDOW_MINUTES) {
-                const notifId = generateNotificationId('event', event.id, 'hour');
-                if (!wasNotified(notifId)) {
-                    showBrowserNotification(
-                        'Upcoming Study Session',
-                        `${event.title} starts at ${formatTime12h(event.startTime)}${event.course ? ` (${event.course})` : ''}`
-                    );
-                    markNotified(notifId);
+        (data.events || []).forEach(ev => {
+            if (!ev.reminder || !ev.startTime || !ev.date) return;
+            const evTime = new Date(`${ev.date}T${ev.startTime}`);
+            const diffMin = (evTime - now) / 60000;
+            if (diffMin > 0 && diffMin <= REMINDER_WINDOW_MINUTES) {
+                const id = `evt_${ev.id}_hour`;
+                if (!wasNotified(id)) {
+                    showBrowserNotification('Upcoming Study Session', `${ev.title} at ${formatTime12h(ev.startTime)}${ev.course ? ` (${ev.course})` : ''}`);
+                    markNotified(id);
                 }
             }
         });
 
-        // Tasks
         (data.tasks || []).forEach(task => {
             if (!task.reminder) return;
             const taskDate = new Date(task.date);
             const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             const taskDay = new Date(taskDate.getFullYear(), taskDate.getMonth(), taskDate.getDate());
             const daysUntil = Math.floor((taskDay - today) / (1000 * 60 * 60 * 24));
-
             if (daysUntil >= 0 && daysUntil <= 1) {
-                const notifId = generateNotificationId('task', task.id, daysUntil);
-                if (!wasNotified(notifId)) {
-                    const dayLabel = daysUntil === 0 ? 'today' : 'tomorrow';
-                    showBrowserNotification(
-                        'Task Due Soon',
-                        `${task.title} is due ${dayLabel}${task.course ? ` (${task.course})` : ''}`
-                    );
-                    markNotified(notifId);
+                const id = `task_${task.id}_${daysUntil}`;
+                if (!wasNotified(id)) {
+                    const label = daysUntil === 0 ? 'today' : 'tomorrow';
+                    showBrowserNotification('Task Due Soon', `${task.title} is due ${label}${task.course ? ` (${task.course})` : ''}`);
+                    markNotified(id);
                 }
             }
         });
 
-        // Classes
         (data.classes || []).forEach(cls => {
-            if (!cls.reminder) return;
+            if (!cls.reminder || !cls.day || !cls.startTime) return;
             const today = new Date();
-            const dayOfWeek = today.getDay();
-            const map = { monday:1, tuesday:2, wednesday:3, thursday:4, friday:5, saturday:6, sunday:0 };
-            const classDayNum = map[cls.day?.toLowerCase()];
-            if (classDayNum === undefined) return;
+            const dow = today.getDay();
+            const map = {monday:1,tuesday:2,wednesday:3,thursday:4,friday:5,saturday:6,sunday:0};
+            const cDow = map[cls.day.toLowerCase()];
+            if (cDow === undefined) return;
 
-            const daysUntilClass = (classDayNum - dayOfWeek + 7) % 7;
-            if (daysUntilClass <= 1) {
+            const daysUntil = (cDow - dow + 7) % 7;
+            if (daysUntil <= 1) {
                 const clsMin = parseTime(cls.startTime);
                 const nowMin = today.getHours() * 60 + today.getMinutes();
-
-                if (daysUntilClass === 0) {
-                    const minutesUntil = clsMin - nowMin;
-                    if (minutesUntil > 0 && minutesUntil <= REMINDER_WINDOW_MINUTES) {
-                        const notifId = generateNotificationId('class', cls.id, 'today');
-                        if (!wasNotified(notifId)) {
-                            showBrowserNotification(
-                                'Class Starting Soon',
-                                `${cls.name} starts at ${formatTime12h(cls.startTime)} in ${cls.room || 'scheduled room'}`
-                            );
-                            markNotified(notifId);
+                if (daysUntil === 0) {
+                    const diff = clsMin - nowMin;
+                    if (diff > 0 && diff <= REMINDER_WINDOW_MINUTES) {
+                        const id = `cls_${cls.id}_today`;
+                        if (!wasNotified(id)) {
+                            showBrowserNotification('Class Starting Soon', `${cls.name} at ${formatTime12h(cls.startTime)}${cls.room ? ' in '+cls.room : ''}`);
+                            markNotified(id);
                         }
                     }
                 } else {
-                    const notifId = generateNotificationId('class', cls.id, 'tomorrow');
-                    if (!wasNotified(notifId)) {
-                        showBrowserNotification(
-                            'Class Tomorrow',
-                            `${cls.name} is scheduled for tomorrow at ${formatTime12h(cls.startTime)}`
-                        );
-                        markNotified(notifId);
+                    const id = `cls_${cls.id}_tomorrow`;
+                    if (!wasNotified(id)) {
+                        showBrowserNotification('Class Tomorrow', `${cls.name} at ${formatTime12h(cls.startTime)}`);
+                        markNotified(id);
                     }
                 }
             }
         });
 
-        // Sync new shown IDs to service worker
         sendShownNotificationsToSW();
     }
 
@@ -294,15 +252,26 @@ const Notifications = (function() {
         if (!serviceWorkerReady) return;
         const reg = navigator.serviceWorker.controller;
         if (reg) {
-            reg.postMessage({
-                type: 'SYNC_SHOWN_NOTIFICATIONS',
-                payload: { ids: [...shownNotifications] }
-            });
+            reg.postMessage({ type: 'SYNC_SHOWN_NOTIFICATIONS', payload: { ids: [...shownNotifications] } });
         }
     }
 
     function triggerImmediateCheck() {
+        // Always run page-side check (shows notifications if tab active)
         checkAll();
+
+        // Also sync reminder data to service worker and ask it to check
+        if (serviceWorkerReady) {
+            sendReminderDataToSW().then(() => {
+                // Ask SW to run immediate check after data synced
+                const reg = navigator.serviceWorker.controller;
+                if (reg) {
+                    reg.postMessage({ type: 'TRIGGER_CHECK' });
+                }
+            }).catch(err => {
+                console.error('[Notifications] Failed to sync data to SW:', err);
+            });
+        }
     }
 
     function startPeriodicCheck() {
@@ -331,32 +300,14 @@ const Notifications = (function() {
         return h * 60 + m;
     }
 
-     function formatTime12h(t) {
-         const [h, m] = t.split(':').map(Number);
-         const period = h >= 12 ? 'PM' : 'AM';
-         const hour12 = h % 12 || 12;
-         return `${hour12}:${m.toString().padStart(2, '0')} ${period}`;
-     }
-
-    // Listen for messages from service worker about notifications it showed
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.addEventListener('message', (event) => {
-            if (event.data?.type === 'NOTIFICATION_SHOWN') {
-                const { id } = event.data.payload;
-                if (id && !shownNotifications.has(id)) {
-                    shownNotifications.add(id);
-                    try {
-                        localStorage.setItem(STORAGE_KEY, JSON.stringify([...shownNotifications]));
-                    } catch (e) {
-                        console.error('Failed to save shown notif:', e);
-                    }
-                }
-            }
-        });
+    function formatTime12h(t) {
+        const [h, m] = t.split(':').map(Number);
+        const p = h >= 12 ? 'PM' : 'AM';
+        const h12 = h % 12 || 12;
+        return `${h12}:${m.toString().padStart(2,'0')} ${p}`;
     }
 
     return { init, triggerImmediateCheck, startPeriodicCheck, stopPeriodicCheck };
- })();
+})();
 
- // Initialize on DOM ready
- document.addEventListener('DOMContentLoaded', () => Notifications.init());
+document.addEventListener('DOMContentLoaded', () => Notifications.init());
