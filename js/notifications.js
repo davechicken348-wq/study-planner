@@ -20,6 +20,20 @@ const Notifications = (function() {
 
     async function init() {
         loadShownNotifications();
+        
+        // Listen for messages from Service Worker
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data?.type === 'CHECK_PERMISSION') {
+                    const permission = Notification.permission;
+                    navigator.serviceWorker.controller.postMessage({
+                        type: 'PERMISSION_STATUS',
+                        payload: { permission }
+                    });
+                }
+            });
+        }
+        
         // Service worker registration handled by sw-register.js
         // Just wait for it to become ready
         if ('serviceWorker' in navigator) {

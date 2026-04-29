@@ -133,6 +133,10 @@ self.addEventListener('message', (e) => {
         case 'TRIGGER_CHECK':
             checkAndNotify();
             break;
+        case 'PERMISSION_STATUS':
+            // Client is reporting its permission status
+            console.log('[SW] Client permission status:', payload?.permission);
+            break;
     }
 });
 
@@ -227,15 +231,30 @@ function broadcastShownChange(id) {
 }
 
 function showNotification(title, body, icon = '/favicon.png') {
-    // Check permission before showing notification
-    if (self.registration.notificationPermission !== 'granted') {
-        console.log('[SW] Notification permission not granted, skipping:', self.registration.notificationPermission);
-        return;
-    }
-    self.registration.showNotification(title, {
-        body, icon, badge: '/favicon.png',
-        tag: 'study-planner', renotify: false, vibrate: [200,100,200]
+    // Check permission using the clients API to get the permission state
+    self.clients.matchAll({ type: 'window' }).then(clients => {
+        if (clients.length === 0) {
+            // No clients, try to show anyway
+            doShow(title, body, icon);
+            return;
+        }
+        // Send message to client to check permission
+        clients[0].postMessage({ type: 'CHECK_PERMISSION' });
     });
+    
+    // Also try to show - it will fail gracefully if no permission
+    doShow(title, body, icon);
+}
+
+function doShow(title, body, icon) {
+    try {
+        self.registration.showNotification(title, {
+            body, icon, badge: '/favicon.png',
+            tag: 'study-planner', renotify: false, vibrate: [200,100,200]
+        });
+    } catch (err) {
+        console.log('[SW] Notification show failed:', err.message);
+    }
 }
 
 self.addEventListener('notificationclick', (e) => {
