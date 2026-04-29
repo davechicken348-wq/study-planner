@@ -135,7 +135,8 @@ self.addEventListener('message', (e) => {
             break;
         case 'PERMISSION_STATUS':
             // Client is reporting its permission status
-            console.log('[SW] Client permission status:', payload?.permission);
+            clientPermission = payload?.permission;
+            console.log('[SW] Client permission status:', clientPermission);
             break;
     }
 });
@@ -230,31 +231,39 @@ function broadcastShownChange(id) {
     });
 }
 
+let clientPermission = null;
+
 function showNotification(title, body, icon = '/favicon.png') {
-    // Check permission using the clients API to get the permission state
-    self.clients.matchAll({ type: 'window' }).then(clients => {
-        if (clients.length === 0) {
-            // No clients, try to show anyway
-            doShow(title, body, icon);
-            return;
-        }
-        // Send message to client to check permission
-        clients[0].postMessage({ type: 'CHECK_PERMISSION' });
-    });
+    // If we know permission is not granted, skip
+    if (clientPermission === 'denied' || clientPermission === 'default') {
+        console.log('[SW] Skipping notification, permission:', clientPermission);
+        return;
+    }
     
-    // Also try to show - it will fail gracefully if no permission
+    // If we don't know yet, ask the client
+    if (clientPermission === null) {
+        self.clients.matchAll({ type: 'window' }).then(clients => {
+            if (clients.length > 0) {
+                clients[0].postMessage({ type: 'CHECK_PERMISSION' });
+            }
+        });
+        // Don't try to show yet, wait for response
+        return;
+    }
+    
+    // Permission is granted, show it
     doShow(title, body, icon);
 }
 
 function doShow(title, body, icon) {
-    try {
-        self.registration.showNotification(title, {
-            body, icon, badge: '/favicon.png',
-            tag: 'study-planner', renotify: false, vibrate: [200,100,200]
-        });
-    } catch (err) {
+    self.registration.showNotification(title, {
+        body, icon, badge: '/favicon.png',
+        tag: 'study-planner', renotify: false, vibrate: [200,100,200]
+    }).then(() => {
+        console.log('[SW] Notification shown:', title);
+    }).catch(err => {
         console.log('[SW] Notification show failed:', err.message);
-    }
+    });
 }
 
 self.addEventListener('notificationclick', (e) => {
