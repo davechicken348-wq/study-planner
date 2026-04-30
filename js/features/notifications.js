@@ -164,7 +164,7 @@ const Notifications = (function() {
         });
     }
 
-    async function showBrowserNotification(title, body, icon = '/favicon.png') {
+     async function showBrowserNotification(title, body, icon = '/favicon/favicon.png') {
         if (serviceWorkerReady) {
             try {
                 const reg = await navigator.serviceWorker.ready;

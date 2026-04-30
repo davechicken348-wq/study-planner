@@ -36,32 +36,32 @@ self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
             // Use dynamic base path for GitHub Pages subfolder deployment
-            const resources = [
-                BASE_PATH + '/', 
-                BASE_PATH + '/index.html', 
-                BASE_PATH + '/planner.html', 
-                BASE_PATH + '/timetable.html', 
-                BASE_PATH + '/calendar.html',
-                BASE_PATH + '/favicon.svg', 
-                BASE_PATH + '/favicon-32x32.png', 
-                BASE_PATH + '/favicon-16x16.png', 
-                BASE_PATH + '/manifest.json',
-                BASE_PATH + '/css/style.css', 
-                BASE_PATH + '/css/planner.css', 
-                BASE_PATH + '/css/timetable.css', 
-                BASE_PATH + '/css/calendar.css', 
-                BASE_PATH + '/css/responsive.css',
-                BASE_PATH + '/js/utils.js', 
-                BASE_PATH + '/js/storage.js', 
-                BASE_PATH + '/js/nav-active.js', 
-                BASE_PATH + '/js/pomodoro.js', 
-                BASE_PATH + '/js/app.js',
-                BASE_PATH + '/js/planner.js', 
-                BASE_PATH + '/js/timetable.js', 
-                BASE_PATH + '/js/calendar.js', 
-                BASE_PATH + '/js/notifications.js', 
-                BASE_PATH + '/js/slideshow.js'
-            ];
+             const resources = [
+                 BASE_PATH + '/', 
+                 BASE_PATH + '/public/index.html', 
+                 BASE_PATH + '/public/planner.html', 
+                 BASE_PATH + '/public/timetable.html', 
+                 BASE_PATH + '/public/calendar.html',
+                 BASE_PATH + '/favicon/favicon.svg', 
+                 BASE_PATH + '/favicon/favicon-32x32.png', 
+                 BASE_PATH + '/favicon/favicon-16x16.png', 
+                 BASE_PATH + '/pwa/manifest.json',
+                 BASE_PATH + '/css/core/style.css', 
+                 BASE_PATH + '/css/core/responsive.css',
+                 BASE_PATH + '/css/pages/planner.css', 
+                 BASE_PATH + '/css/pages/timetable.css', 
+                 BASE_PATH + '/css/pages/calendar.css',
+                 BASE_PATH + '/js/core/app.js', 
+                 BASE_PATH + '/js/core/storage.js', 
+                 BASE_PATH + '/js/core/utils.js', 
+                 BASE_PATH + '/js/core/nav-active.js', 
+                 BASE_PATH + '/js/features/pomodoro.js', 
+                 BASE_PATH + '/js/features/planner.js', 
+                 BASE_PATH + '/js/features/timetable.js', 
+                 BASE_PATH + '/js/features/calendar.js', 
+                 BASE_PATH + '/js/features/notifications.js', 
+                 BASE_PATH + '/js/features/slideshow.js'
+             ];
             return cache.addAll(resources);
         }).catch(err => {
             console.error('[SW] Install cache addAll failed:', err);
@@ -239,7 +239,7 @@ function broadcastShownChange(id) {
     });
 }
 
-function showNotification(title, body, icon = '/favicon.png') {
+ function showNotification(title, body, icon = '/favicon/favicon.png') {
     const permission = Notification.permission;
     
     if (permission === 'denied') {
@@ -257,9 +257,9 @@ function showNotification(title, body, icon = '/favicon.png') {
 }
 
 function doShow(title, body, icon) {
-    self.registration.showNotification(title, {
-        body, icon, badge: '/favicon.png',
-        tag: 'study-planner', renotify: false, vibrate: [200,100,200]
+     self.registration.showNotification(title, {
+         body, icon, badge: '/favicon/favicon-32x32.png',
+         tag: 'study-planner', renotify: false, vibrate: [200,100,200]
     }).then(() => {
         console.log('[SW] Notification shown:', title);
     }).catch(err => {

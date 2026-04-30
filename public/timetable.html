@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timetable - Study Planner</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/timetable.css">
+    <link rel="stylesheet" href="../css/core/style.css">
+    <link rel="stylesheet" href="../css/core/responsive.css">
+    <link rel="stylesheet" href="../css/pages/timetable.css">
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="../favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="../favicon/apple-touch-icon.png">
+    <link rel="manifest" href="../pwa/manifest.json">
     <!-- Phosphor Icons -->
-    <link rel="stylesheet" href="assets/icons/phosphor-icons.min.css">
+    <link rel="stylesheet" href="../assets/icons/phosphor-icons.min.css">
     <script src="https://unpkg.com/@phosphor-icons/web"
         onerror="this.onerror=null;this.href='assets/icons/phosphor-icons.min.css';"></script>
 </head>
@@ -28,7 +28,7 @@
                 <h1><i class="ph ph-graduation-cap"></i> StudyPlanner</h1>
             </div>
             <nav class="sidebar-nav">
-                <a href="index.html" class="nav-link">
+                <a href="../index.html" class="nav-link">
                     <i class="ph ph-house"></i>
                     <span>Home</span>
                 </a>
@@ -166,11 +166,11 @@
         </div>
     </div>
 
-    <script src="js/nav-active.js"></script>
-    <script src="js/storage.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/notifications.js"></script>
-    <script src="js/timetable.js"></script>
-    <script src="js/sw-register.js"></script>
+    <script src="../js/core/nav-active.js"></script>
+    <script src="../js/core/storage.js"></script>
+    <script src="../js/core/utils.js"></script>
+    <script src="../js/features/notifications.js"></script>
+    <script src="../js/features/timetable.js"></script>
+    <script src="../pwa/sw-register.js"></script>
 </body>
 </html>

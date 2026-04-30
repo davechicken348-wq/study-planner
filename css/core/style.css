@@ -1222,6 +1222,31 @@ footer {
     padding: 2rem;
     position: relative;
     z-index: 1;
+    margin-left: 250px;
+}
+
+/* PWA install badge */
+.pwa-badge {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    color: white;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background 0.2s ease;
+}
+
+.pwa-badge:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
 
 

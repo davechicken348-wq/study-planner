@@ -11,7 +11,10 @@
         const path = location.pathname;
         // Extract the base path (e.g., /Study-Planner/ from /Study-Planner/planner.html)
         const match = path.match(/^(\/[^/]+\/)/);
-        return match ? match[1] : '/';
+        let base = match ? match[1] : '/';
+        // If app is served from a "public" subfolder, strip it (public/ is just an entry point)
+        if (base === '/public/') base = '/';
+        return base;
     }
 
     async function registerSW() {
@@ -25,8 +28,8 @@
             return;
         }
 
-        const basePath = getBasePath();
-        const swPath = basePath + 'sw.js';
+         const basePath = getBasePath();
+         const swPath = basePath + 'pwa/sw.js';
         
         console.log('Attempting to register Service Worker at:', swPath);
 
@@ -42,9 +45,9 @@
             console.error('Service Worker registration failed:', err.message);
             // Try root path as fallback
             if (basePath !== '/') {
-                try {
-                    const fallbackReg = await navigator.serviceWorker.register('/sw.js');
-                    console.log('Service Worker registered at root /sw.js');
+                 try {
+                     const fallbackReg = await navigator.serviceWorker.register('/pwa/sw.js');
+                     console.log('Service Worker registered at root /pwa/sw.js');
                     localStorage.setItem(SW_KEY, 'true');
                 } catch (fallbackErr) {
                     console.error('Fallback registration also failed:', fallbackErr.message);

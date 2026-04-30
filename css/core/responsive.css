@@ -147,7 +147,7 @@
     }
 
     /* --- Hero (index.html) Tablet --- */
-    .container { padding: 1.5rem; }
+    .container { padding: 1.5rem; margin-left: var(--sidebar-width); }
     .hero {
         padding: 2.5rem 2rem;
         max-width: 600px;
@@ -731,7 +731,7 @@
     }
 
     /* --- Hero (index.html) --- */
-    .container { padding: 1.5rem; }
+    .container { padding: 1.5rem; margin-left: 0; }
     .hero { padding: 2rem 1.5rem; }
     .hero h2 { font-size: 1.75rem; }
     .hero-title   { font-size: 2.25rem; }

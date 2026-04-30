@@ -1,0 +1,77 @@
+{
+    "name": "Study Planner - Organize Tasks, Timetable, Calendar",
+    "short_name": "StudyPlanner",
+    "description": "Organize your academic schedule, tasks, and study sessions with Pomodoro timer",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#f0fdf4",
+    "theme_color": "#16a34a",
+    "orientation": "any",
+    "categories": ["education", "productivity"],
+    "icons": [
+        {
+            "src": "/favicon/favicon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/favicon/favicon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/favicon/favicon-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon/favicon-48x48.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon/favicon-32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon/favicon-16x16.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/assets/images/Planner_Wallpaper/Planner1.webp",
+            "sizes": "1280x720",
+            "type": "image/webp",
+            "form_factor": "wide",
+            "label": "Planner view with task management"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Open Planner",
+            "short_name": "Planner",
+            "description": "Go to the task planner",
+            "url": "/public/planner.html",
+            "icons": [{"src": "/favicon/favicon-96x96.png", "sizes": "96x96"}]
+        },
+        {
+            "name": "Open Timetable",
+            "short_name": "Timetable",
+            "description": "View your weekly schedule",
+            "url": "/public/timetable.html",
+            "icons": [{"src": "/favicon/favicon-96x96.png", "sizes": "96x96"}]
+        },
+        {
+            "name": "Open Calendar",
+            "short_name": "Calendar",
+            "description": "Check your calendar events",
+            "url": "/public/calendar.html",
+            "icons": [{"src": "/favicon/favicon-96x96.png", "sizes": "96x96"}]
+        }
+    ]
+}
