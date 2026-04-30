@@ -230,16 +230,39 @@
         /* ── PWA Install ── */
         let deferredPrompt;
         const installBadge = document.getElementById('installBadge');
+
+        // Check if app is already installed (running in standalone mode)
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                           window.navigator.standalone === true ||
+                           document.referrer.includes('android-app://');
+
+        if (!isStandalone) {
+            // Show install badge by default if not installed
+            installBadge.style.display = 'flex';
+        }
+
         window.addEventListener('beforeinstallprompt', e => {
             e.preventDefault();
             deferredPrompt = e;
-            installBadge.style.display = 'flex';
+            // Badge is already shown, just update deferredPrompt
         });
+
         installBadge?.addEventListener('click', async () => {
-            if (!deferredPrompt) return;
+            if (!deferredPrompt) {
+                // If no deferred prompt, try to show instructions or fallback
+                alert('To install this app, use your browser\'s install option or add to home screen.');
+                return;
+            }
             deferredPrompt.prompt();
-            await deferredPrompt.userChoice;
+            const choice = await deferredPrompt.userChoice;
             deferredPrompt = null;
+            if (choice.outcome === 'accepted') {
+                installBadge.style.display = 'none';
+            }
+        });
+
+        // Hide badge if app becomes installed
+        window.addEventListener('appinstalled', () => {
             installBadge.style.display = 'none';
         });
     </script>

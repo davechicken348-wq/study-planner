@@ -574,3 +574,18 @@ body.landing-page {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ── Laptop screens ── */
+@media (min-width: 769px) and (max-width: 1440px) {
+    .landing-wrap {
+        padding: 4rem 2rem;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-card {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
